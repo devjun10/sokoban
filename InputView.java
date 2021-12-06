@@ -10,7 +10,7 @@ public class InputView {
 
     private List<String> commands;
 
-    private InputView() {
+    InputView() {
         commands = Command.getCommands();
     };
 
