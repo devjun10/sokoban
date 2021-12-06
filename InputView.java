@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class InputView {
 
@@ -14,22 +15,18 @@ public class InputView {
         commands = Command.getCommands();
     };
 
-    public static InputView of() {
-        return new InputView();
-    }
-
     private class Input {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public String inputCommand() {
+    public List<String> inputCommand() {
         String value;
         System.out.print(Message.SOKOBAN);
-
+        List<String> words;
         while (true) {
             try {
                 value = input.br.readLine().toLowerCase();
-                validateDirectionContains(value);
+                words = validateCommandContains(value);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
@@ -37,13 +34,21 @@ public class InputView {
                 System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
             }
         }
-        return value;
+        return words;
     }
 
-    private void validateDirectionContains(String direction) {
-        if (!commands.contains(direction)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+    private List<String> validateCommandContains(String direction) {
+        List<String> words = new ArrayList<>();
+        Objects.requireNonNull(direction);
+        String[] temp = direction.split("");
+
+        for(int number= 0; number<temp.length; number++){
+            if (!commands.contains(direction)) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+            }
+            words.add(temp[number]);
         }
+        return words;
     }
 
     public List<StageResult> inputMap(String word) {
