@@ -639,7 +639,7 @@ private Position getPlayerPosition(int[][]map){
 
 ## 2단계
 
-1단계는 예제를 `그대로 화면에 출력`하는 단계였습니다. 따라서 문자열 입력에 대한 예외 처리를 하지 않고 입력된 문자열을 파싱해 Stage1과 Stage2에 대한 정보를 화면에 출력했습니다.
+2단계는 `캐릭터의 위치를 이동`시키는 문제였습니다. 따라서 다른 고려사항은 생각하지 않고 캐릭터가 움직일 칸이 비었으면(" ") 캐릭터의 위치를 이동시켰습니다. 
 <br/>
 
 ![링크]()
@@ -650,17 +650,17 @@ private Position getPlayerPosition(int[][]map){
 <br/>
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
-|:----:|:----:|:---|:---|
-|1|class|&nbsp;Board     |&nbsp; 게임 캐릭터와 구멍, 공 등 각 요소들의 위치가 저장된 클래스 |
+|:----:|:---------------:|:------|:---|
+|1|class|&nbsp;Board     |&nbsp; 게임 캐릭터와 구멍, 공 등 각 요소들의 위치가 저장된 클래스  |
 |2|class|&nbsp;Command   |&nbsp; 명령어(w,a,q)들과 다음 위치의 계산을 돕는 값을 가진 클래스 |
 |3|class|&nbsp;GameResult|&nbsp; 배열의 상태를 담아 반환해주는 클래스                   |
-|4|class|&nbsp;Pair      |&nbsp; x, y 좌표를 묶어서 관리하는 클래스                  |
+|4|class|&nbsp;Pair      |&nbsp; x, y 좌표를 묶어서 관리하는 클래스                   |
 |5|class|&nbsp;Pairs     |&nbsp; Pair의 값들이 저장된 클래스                        |
 
 
 ## 1. Board 클래스
 
-사용자의 입력을 받는 클래스
+GameMachine 내부의 2차원 배열의 값과 연관된 메서드를 가지고 있는 클래스 입니다.
 
 <br/>
 
@@ -687,7 +687,7 @@ void initBoard() {
 
 ### 1-2. String[][] getBoard()
 
-String[][]를 방어적 복사로 넘겨주는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성해서 복사한 후 반환합니다. 
+String[][]를 `방어적 복사`로 넘겨주는 반환하는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성해서 복사한 후 반환합니다. 
 <br/>
 
 ```java
@@ -702,9 +702,9 @@ String[][] getBoard() {
 
 <br/><br/><br/>
 
-### 1-3. String[][] getBoard()
+### 1-3. void update(String[][] updatedBoard)
 
-String[][]를 방어적 복사로 넘겨주는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성해서 복사한 후 반환합니다.
+String[][]를 방어적 복사로 넘겨주는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성하고 복사해서 반환합니다.
 
 <br/>
 
@@ -719,7 +719,7 @@ protected void update(String[][] updatedBoard) {
 
 ### 1-4. Pair findPlayerPosition()
 
-현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `P` 인 칸의 좌표를 Pair로 반환해줍니다.
 <br/>
 
 ```java
@@ -744,7 +744,7 @@ protected Pair findPlayerPosition() {
 
 ### 1-5. Pair validatePosition(int x, int y)
 
-현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+캐릭터가 움직일 칸을 검증하는 메서드입니다. 이동할 칸이 범위 내에 있을 때, 해당 칸이 비었을 때 true를 반환하고 그 외에는 false를 반환합니다.
 <br/>
 
 ```java
@@ -765,7 +765,7 @@ protected boolean validatePosition(int x, int y) {
 
 ### 1-6. Pair validateRange(int x, int y)
 
-현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+Pair(x, y) 값이 이동 가능한 범위 내에 있는지를 체크하는 메서드입니다.
 <br/>
 
 ```java
@@ -776,15 +776,14 @@ private boolean validateRange(int x, int y) {
 
 <br/><br/><br/>
 
-### 1-6. Pair validateRange(int x, int y)
+### 1-7. Pair validateRange(int x, int y)
 
-현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+Pair(x, y)의 값이 String[][] 내부에서 비어있는지를 체크하는 메서드입니다. 
 <br/>
 
 ```java
 private boolean validateMoveable(Pair pair) {
-        return this.board[pair.getX()][pair.getY()].equals(" ")
-                || this.board[pair.getX()][pair.getY()].equals("O");
+        return this.board[pair.getX()][pair.getY()].equals(" ");
     }
 ```
 
@@ -792,7 +791,7 @@ private boolean validateMoveable(Pair pair) {
 
 ## 2. Command 클래스
 
-사용자의 입력을 받는 클래스
+사용자의 입력을 명령으로 바꿔주고, 다음에 이동할 칸의 위치를 계산할 수 있는 내부 좌표값을 가지고 있습니다.
 <br/>
 ```java
 public enum Command {
@@ -819,8 +818,8 @@ public static Command getDirection(String input) {
 ````
 
 <br/><br/><br/>
-### 2-2. Command getDirection(String input)
-사용자의 입력 값으로 그에 맞는 명령을 찾는 메서드입니다.
+### 2-2. static List<String> getCommands()
+명령의 영문 알파벳을 반환하는 메서드입니다. 
 
 ````java
 public static List<String> getCommands(){
@@ -833,7 +832,7 @@ public static List<String> getCommands(){
 
 <br/><br/><br/>
 ### 2-3. List<Integer> getNextPosition()
-다음 이동할 값의 좌표를 얻는 메서드
+다음 이동할 값의 좌표를 얻는 메서드 입니다.
 
 ````java
 public List<Integer> getNextPosition() {
@@ -855,8 +854,6 @@ public String[][] getBoard() {
     }
 ```
 
-
-
 <br/><br/><br/>
 
 ## 4. Pair
@@ -865,7 +862,7 @@ x, y를 한 쌍으로 묶어서 관리해주는 클래스
 
 
 ### 4-1. int getX(), int getY()
-x와 y의 원시 값을 반환하는 메서드
+x와 y의 원시 값을 반환하는 메서드 입니다.
 <br/>
 
 ```java
@@ -880,6 +877,9 @@ public int getY() {
 <br/><br/>
 
 ### 4-2. boolean equals(Object o)
+사용자의 위치를 저장하기 위한 값 객체 입니다. 올바른 값의 비교를 위해 equals와 hashCode를 오버라이드 했습니다.
+<br/>
+
 ```java
 @Override
 public boolean equals(Object o) {
@@ -899,12 +899,13 @@ public int hashCode() {
 <br/><br/><br/>
 
 ## 5. Pairs
-pair의 값들을 저장하고 있는 클래스
+pair의 값들을 저장하고 있는 클래스 입니다.
 <br/><br/>
 
 
 ### static Pair of(int inputX, int inputY)
-x와 y의 원시 값을 반환하는 메서드
+
+x와 y의 원시 값을 반환하는 메서드입니다.
 <br/>
 
 ```java
@@ -931,7 +932,7 @@ public static Pair of(int inputX, int inputY) {
 
 ## 6. InputView 클래스
 
-사용자의 입력을 받는 클래스
+사용자의 입력을 받는 클래스입니다. 
 <br/>
 ```java
 public enum Command {
@@ -946,6 +947,42 @@ public enum Command {
 
 <br/><br/><br/>
 
+```java
+public List<String> inputCommand() {
+        String value;
+        System.out.print(Message.SOKOBAN);
+        List<String> words;
+        while (true) {
+            try {
+                value = input.br.readLine().toLowerCase();
+                words = validateCommandContains(value);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            } catch (Exception e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            }
+        }
+        return words;
+}
+```
+
+<br/><br/><br/>
+
+````java
+private List<String> validateCommandContains(String direction) {
+        List<String> words = new ArrayList<>();
+        Objects.requireNonNull(direction);
+        String[] temp = direction.split("");
+        for(int number= 0; number<temp.length; number++){
+            if (!commands.contains(temp[number])) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+            }
+            words.add(temp[number]);
+        }
+        return words;
+    }
+````
 
 </div>
 

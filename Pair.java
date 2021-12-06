@@ -5,7 +5,9 @@ public class Pair {
     private int x;
     private int y;
 
-    private Pair (){};
+    private Pair (){
+
+    };
 
     Pair(int x, int y) {
         this.x = x;
@@ -31,5 +33,10 @@ public class Pair {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return x+", "+y;
     }
 }

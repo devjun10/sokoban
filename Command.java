@@ -4,10 +4,10 @@ import java.util.stream.Stream;
 
 public enum Command {
 
-    UP("U", "위쪽으로 한 칸 이동", List.of(1, 0)),
-    DOWN("D", "아랫쪽으로 한 칸 이동", List.of(-1, 0)),
-    RIGHT("R", "오른쪽으로 한 칸 이동", List.of(0, -1)),
-    LEFT("L", "왼쪽으로 한 칸 이동", List.of(0, 1)),
+    UP("U", "위쪽으로 한 칸 이동", List.of(-1, 0)),
+    DOWN("D", "아랫쪽으로 한 칸 이동", List.of(1, 0)),
+    RIGHT("R", "오른쪽으로 한 칸 이동", List.of(0, 1)),
+    LEFT("L", "왼쪽으로 한 칸 이동", List.of(0, -1)),
     Q("Q", "프로그램 종료", List.of());
 
     private final String command;
@@ -22,7 +22,7 @@ public enum Command {
 
     public static Command getDirection(String input) {
         return Stream.of(values())
-                .filter(command -> command.command.toLowerCase().equals(input))
+                .filter(position -> position.command.toLowerCase().equals(input))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
@@ -30,6 +30,7 @@ public enum Command {
     public static List<String> getCommands(){
         return Stream.of(values())
                 .map(Command::getCommand)
+                .map(String::toLowerCase)
                 .sorted()
                 .collect(Collectors.toUnmodifiableList());
     }
@@ -42,8 +43,5 @@ public enum Command {
         return nextPosition;
     }
 
-    @Override
-    public String toString() {
-        return this.toString();
-    }
+
 }

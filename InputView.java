@@ -41,9 +41,8 @@ public class InputView {
         List<String> words = new ArrayList<>();
         Objects.requireNonNull(direction);
         String[] temp = direction.split("");
-
         for(int number= 0; number<temp.length; number++){
-            if (!commands.contains(direction)) {
+            if (!commands.contains(temp[number])) {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
             }
             words.add(temp[number]);

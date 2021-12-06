@@ -1,8 +1,8 @@
 public class Board {
 
     private final int BOARD_START = 0;
+    private final int BOARD_HEIGHT = 7;
     private final int BOARD_WIDTH = 11;
-    private final int BOARD_HEIGHT = 11;
     private String[][] board;
 
     private Board() {
@@ -10,7 +10,7 @@ public class Board {
     }
 
     void initBoard() {
-        board = new String[BOARD_WIDTH][BOARD_HEIGHT];
+        board = new String[BOARD_HEIGHT][BOARD_WIDTH];
         this.board[0] = new String[]{" ", " ", "#", "#", "#", "#", "#", "#", "#", " ", " "};
         this.board[1] = new String[]{"#", "#", "#", " ", " ", "O", " ", " ", "#", "#", "#"};
         this.board[2] = new String[]{"#", " ", " ", " ", " ", "o", " ", " ", " ", " ", "#"};
@@ -27,8 +27,8 @@ public class Board {
     ;
 
     String[][] getBoard() {
-        String[][] copyBoard = new String[BOARD_WIDTH][BOARD_HEIGHT];
-        for (int row = BOARD_START; row < BOARD_WIDTH; row++) {
+        String[][] copyBoard = new String[BOARD_HEIGHT][BOARD_WIDTH];
+        for (int row = BOARD_START; row < BOARD_HEIGHT; row++) {
             copyBoard[row] = this.board[row].clone();
         }
         return copyBoard;
@@ -40,18 +40,14 @@ public class Board {
     }
 
     protected Pair findPlayerPosition() {
-        int x = Integer.MAX_VALUE;
-        int y = Integer.MAX_VALUE;
-
-        for (int row = 0; row < 11; row++) {
-            for (int col = 0; col < 11; col++) {
-                if (board[row][col].equals("P")) {
-                    x = row;
-                    y = col;
+        for (int row = 0; row < BOARD_HEIGHT; row++) {
+            for (int col = 0; col < BOARD_WIDTH; col++) {
+                if (this.board[row][col].equals("P")) {
+                    return Pairs.of(row, col);
                 }
             }
         }
-        return Pairs.of(x, y);
+        return null;
     }
 
     protected boolean validatePosition(Pair pair) {
@@ -66,12 +62,11 @@ public class Board {
     }
 
     private boolean validateRange(Pair pair) {
-        return pair.getX() >= 0 && pair.getY() < 11 && pair.getY() >= 0 && pair.getY() < 11;
+        return pair.getX() >= 0 && pair.getX() < 7 && pair.getY() >= 0 && pair.getY() < 11;
     }
 
     private boolean validateMoveable(Pair pair) {
-        return this.board[pair.getX()][pair.getY()].equals(" ")
-                || this.board[pair.getX()][pair.getY()].equals("O");
+        return this.board[pair.getX()][pair.getY()].equals(" ");
     }
 
 }

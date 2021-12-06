@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -7,21 +6,17 @@ public class Main {
     private static final OutputView outputView = new OutputView();
 
     public static void main(String[] args) throws Exception {
-        String word = "Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
-        String[] words = word.split("\n");
-        List<String> lst = new ArrayList<>();
-        for (int i = 0; i < words.length; i++) {
-            lst.add(words[i]);
-        }
-        InputView view = new InputView();
-        List<StageResult> results = view.inputMap(word);
-        OutputView outputView = new OutputView();
-        outputView.print(results);
 
-        Command command = Command.getDirection("q");
-        if(command.equals(Command.Q)){
-            System.out.println("게임 종료");
-            return;
+        GameMachine gameMachine = new GameMachine();
+        GameResult initBoard = gameMachine.getBoard();
+        outputView.initBoard(initBoard);
+        GameManager manager = new GameManager();
+
+        while (true) {
+            List<String> inputValues = inputView.inputCommand();
+            List<Command> commands = manager.getCommand(inputValues);
+            GameResult result = gameMachine.move(commands);
+            outputView.printBoard(result);
         }
     }
 }
