@@ -6,4 +6,12 @@ public class GameMachine {
         return new GameResult(board.getBoard());
     }
 
+    public void move(Command command){
+
+    }
+
+    void updateBoard(String[][] updatedBoard){
+        this.board.update(updatedBoard);
+    }
+
 }

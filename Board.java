@@ -27,4 +27,9 @@ public class Board {
         }
         return copyBoard;
     }
+
+    public void update(String[][] updatedBoard) {
+        this.board = null;
+        this.board = updatedBoard;
+    }
 }
