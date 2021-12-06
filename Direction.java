@@ -26,4 +26,12 @@ public enum Direction {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public List<Integer> getNextPosition() {
+        return nextPosition;
+    }
+
+    @Override
+    public String toString() {
+        return this.toString();
+    }
 }
