@@ -32,4 +32,20 @@ public class Board {
         this.board = null;
         this.board = updatedBoard;
     }
+
+    Pair findPlayerPosition() {
+        int x = Integer.MAX_VALUE;
+        int y = Integer.MAX_VALUE;
+
+        for (int row = 0; row < 11; row++) {
+            for (int col = 0; col < 11; col++) {
+                if (board[row][col].equals("P")) {
+                    x = row;
+                    y = col;
+                }
+            }
+        }
+        return Pairs.of(x, y);
+    }
+
 }

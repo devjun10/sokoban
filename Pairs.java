@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Pairs {
 
@@ -11,5 +12,13 @@ public class Pairs {
                 pairs.add(new Pair(row, col));
             }
         }
+    }
+
+    public static Pair of(int inputX, int inputY) {
+        return pairs.stream()
+                .filter(position -> position.getX() == inputX)
+                .filter(position -> position.getY() == inputY)
+                .findAny()
+                .orElseThrow(NoSuchElementException::new);
     }
 }
