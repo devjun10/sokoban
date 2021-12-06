@@ -1114,8 +1114,6 @@ Stage: 2
 </div>
 </details>
 
-<br/><br/>
-
 <details>
 <summary>📚	 Step 02.</summary>
 <div markdown="2">
