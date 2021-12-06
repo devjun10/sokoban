@@ -135,7 +135,6 @@ Stage 2
 
 <br/><br/><br/>
 
-
 ## ⌨️ 입력명령
 
 ````text
@@ -146,19 +145,10 @@ Stage 2
 - q: 프로그램 종료
 ````
 
-```text
-String word = "Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
-```
-
 <br/><br/><br/>
 
 ## 🖥 출력
 
-아래와 같은 형태로 각 스테이지 정보를 출력한다.
-
-- 플레이어 위치는 배열 [0][0]을 기준으로 처리한다.
-- 스테이지 구분값은 출력하지 않는다
-  <br/><br/>
 
 ```text
 Stage 2
@@ -222,11 +212,7 @@ Bye~
 
 </div>
 </details>
-<br/><br/>
 </details> 
-
-
-
 
 
 <details>
@@ -263,11 +249,12 @@ Bye~
     }
 }
 ```
-
-<br/><br/><br/>
+<br/>
 
 </div>
 </details>
+
+<br/><br/>
 
 ## 목차
 
@@ -1129,6 +1116,105 @@ Stage: 2
 
 <br/><br/>
 
-<br/><br/><br/><br/>
+<details>
+<summary>📚	 Step 02.</summary>
+<div markdown="2">
+
+## ⌨️ 입력
+
+`아래 내용을 문자열로 넘겨서` 처리하는 함수를 작성한다.
+
+```text
+- w: 위쪽
+- a: 왼쪽
+- s: 아래쪽
+- d: 오른쪽
+- q: 프로그램 종료
+```
+
+```java
+public class Main {
+
+  private static final InputView inputView = new InputView();
+  private static final OutputView outputView = new OutputView();
+
+  public static void main(String[] args) throws Exception {
+
+    GameMachine gameMachine = new GameMachine();
+    outputView.initBoard(gameMachine.getBoard().getBoard());
+    GameManager manager = new GameManager();
+
+    while (true) {
+      List<String> inputValues = inputView.inputCommand();
+      List<Command> commands = manager.getCommand(inputValues);
+      GameResult result = gameMachine.move(commands);
+    }
+  }
+}
+```
+
+<br/><br/>
+
+## 🖥 동작 예시
+
+```text
+Stage 2
+
+  #######  
+###  O  ###
+#    o    #
+# Oo P oO #
+###  o  ###
+ #   O  #  
+ ########  
+
+SOKOBAN> ddzw
+
+D: 오른쪽으로 이동합니다.
+
+  #######  
+###  O  ###
+#    o    #
+# Oo  PoO #
+###  o  ###
+ #   O  #  
+ ########  
+
+D: 오른쪽으로 이동합니다.
+
+  #######  
+###  O  ###
+#    o    #
+# Oo  PoO #
+###  o  ###
+ #   O  #  
+ ########  
+
+(경고!) 해당 명령을 수행할 수 없습니다!
+
+  #######  
+###  O  ###
+#    o    #
+# Oo  PoO #
+###  o  ###
+ #   O  #  
+ ########  
+
+W: 윗쪽으로 이동합니다.
+
+  #######  
+###  O  ###
+#    oP   #
+# Oo   oO #
+###  o  ###
+ #   O  #  
+ ########  
+SOKOBAN> q
+
+Bye~
+```
+
+</div>
+</details>
 
 <br/><br/>

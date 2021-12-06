@@ -15,7 +15,6 @@ public class Main {
             List<String> inputValues = inputView.inputCommand();
             List<Command> commands = manager.getCommand(inputValues);
             GameResult result = gameMachine.move(commands);
-            outputView.printBoard(result);
         }
     }
 }

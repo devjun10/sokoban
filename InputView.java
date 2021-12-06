@@ -40,12 +40,19 @@ public class InputView {
     private List<String> validateCommandContains(String direction) {
         List<String> words = new ArrayList<>();
         Objects.requireNonNull(direction);
+        if(direction.isBlank() || direction.isEmpty()){
+            throw new IllegalArgumentException();
+        }
         String[] temp = direction.split("");
         for(int number= 0; number<temp.length; number++){
             if (!commands.contains(temp[number])) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+                words.add(String.valueOf(Command.INVALID_COMMAND));
+                continue;
             }
             words.add(temp[number]);
+        }
+        if(words.size()==0){
+            throw new IllegalArgumentException();
         }
         return words;
     }

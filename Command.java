@@ -1,14 +1,16 @@
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Command {
 
-    UP("U", "위쪽으로 한 칸 이동", List.of(-1, 0)),
-    DOWN("D", "아랫쪽으로 한 칸 이동", List.of(1, 0)),
-    RIGHT("R", "오른쪽으로 한 칸 이동", List.of(0, 1)),
-    LEFT("L", "왼쪽으로 한 칸 이동", List.of(0, -1)),
-    Q("Q", "프로그램 종료", List.of());
+    UP("w", "W: 윗쪽으로 이동합니다.", List.of(-1, 0)),
+    DOWN("s", "S: 아랫쪽으로 이동합니다.", List.of(1, 0)),
+    RIGHT("d", "D: 오른쪽으로 이동합니다.", List.of(0, 1)),
+    LEFT("a", "A: 왼쪽으로 이동합니다.", List.of(0, -1)),
+    INVALID_COMMAND(String.valueOf(Long.MAX_VALUE), "(경고!) 해당 명령을 수행할 수 없습니다!", List.of()),
+    Q("q", "Bye~", List.of());
 
     private final String command;
     private final String description;
@@ -20,11 +22,15 @@ public enum Command {
         this.nextPosition = nextPosition;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public static Command getDirection(String input) {
         return Stream.of(values())
                 .filter(position -> position.command.toLowerCase().equals(input))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElse(INVALID_COMMAND);
     }
 
     public static List<String> getCommands(){
@@ -42,6 +48,4 @@ public enum Command {
     public List<Integer> getNextPosition() {
         return nextPosition;
     }
-
-
 }
