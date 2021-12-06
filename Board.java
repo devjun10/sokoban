@@ -28,9 +28,7 @@ public class Board {
 
     static Board of() {
         return new Board();
-    }
-
-    ;
+    };
 
     String[][] getBoard() {
         String[][] copyBoard = new String[BOARD_HEIGHT][BOARD_WIDTH];
@@ -60,7 +58,6 @@ public class Board {
         if (!validateRange(pair)) {
             return false;
         }
-
         if (!validateMoveable(pair)) {
             return false;
         }
@@ -74,5 +71,4 @@ public class Board {
     private boolean validateMoveable(Pair pair) {
         return this.board[pair.getX()][pair.getY()].equals(" ");
     }
-
 }
