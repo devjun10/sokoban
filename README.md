@@ -857,7 +857,7 @@ public String[][] getBoard() {
 <br/><br/><br/>
 
 ## 4. Pair
-x, y를 한 쌍으로 묶어서 관리해주는 클래스
+x, y를 한 쌍으로 묶어서 관리해주는 클래스 입니다.
 <br/><br/><br/>
 
 
@@ -934,6 +934,7 @@ public static Pair of(int inputX, int inputY) {
 
 사용자의 입력을 받는 클래스입니다. 
 <br/>
+
 ```java
 public enum Command {
 
@@ -946,6 +947,9 @@ public enum Command {
 ```
 
 <br/><br/><br/>
+
+### 6-1.List<String> inputCommand()
+사용자의 입력을 문자열 리스트로 반환하는 메서드입니다.  
 
 ```java
 public List<String> inputCommand() {
@@ -969,6 +973,10 @@ public List<String> inputCommand() {
 
 <br/><br/><br/>
 
+### 6-2.List<String> validateCommandContains(String direction)
+사용자의 입력을 문자열 단위("")로 나누고 각 문자 값이 올바른 지 검증해주는 메서드입니다. 
+<br/>
+
 ````java
 private List<String> validateCommandContains(String direction) {
         List<String> words = new ArrayList<>();
@@ -983,6 +991,57 @@ private List<String> validateCommandContains(String direction) {
         return words;
     }
 ````
+
+<br/><br/>
+
+## 7. OutputView 클래스
+Stage의 정보를 출력해주는 클래스
+<br/>
+
+### 7-1. void initBoard(String[][] board)
+보드의 초기 상태를 출력해주는 메서드
+<br/>
+
+```java
+public void initBoard(String[][] board) {
+        stringBuilder.setLength(0);
+        stringBuilder.append("Stage 2").append("\n").append("\n");
+
+        for (int row = 0; row < board.length; row++) {
+            if (row != 0) {
+                stringBuilder.append("\n");
+            }
+            for (int col = 0; col < board[0].length; col++) {
+                stringBuilder.append(board[row][col]);
+            }
+        }
+        stringBuilder.append("\n");
+        System.out.println(stringBuilder);
+    }
+```
+
+<br/><br/><br/>
+
+### 7-2. void printBoard(GameResult result)
+GameResult(Board의 상태(String[ ][ ]))를 인자로 받아서 이를 화면에 출력해주는 메서드  
+<br/>
+
+```java
+public void printBoard(GameResult result) {
+        stringBuilder.setLength(0);
+        String[][] board = result.getBoard();
+        for (int row = 0; row < board.length; row++) {
+            if (row != 0) {
+                stringBuilder.append("\n");
+            }
+            for (int col = 0; col < board[0].length; col++) {
+                stringBuilder.append(board[row][col]);
+            }
+        }
+        stringBuilder.append("\n");
+        System.out.println(stringBuilder);
+    }
+```
 
 </div>
 

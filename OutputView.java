@@ -4,11 +4,10 @@ public class OutputView {
 
     private final StringBuilder stringBuilder = new StringBuilder();
 
-    public void initBoard(GameResult result) {
+    public void initBoard(String[][] board) {
         stringBuilder.setLength(0);
         stringBuilder.append("Stage 2").append("\n").append("\n");
 
-        String[][] board = result.getBoard();
         for (int row = 0; row < board.length; row++) {
             if (row != 0) {
                 stringBuilder.append("\n");

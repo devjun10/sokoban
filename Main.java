@@ -8,8 +8,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         GameMachine gameMachine = new GameMachine();
-        GameResult initBoard = gameMachine.getBoard();
-        outputView.initBoard(initBoard);
+        outputView.initBoard(gameMachine.getBoard().getBoard());
         GameManager manager = new GameManager();
 
         while (true) {
