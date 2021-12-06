@@ -1,11 +1,20 @@
 public class Board {
 
-    private final int BOARD_START = 11;
+    private final int BOARD_START = 0;
     private final int BOARD_WIDTH = 11;
     private final int BOARD_HEIGHT = 11;
-    private String[][] board = new String[BOARD_WIDTH][BOARD_HEIGHT];
+    private String[][] board;
 
-    private Board() {};
+    private Board() {
+        board = new String[BOARD_WIDTH][BOARD_HEIGHT];
+        this.board[0] = new String[]{" ", " ", "#", "#", "#", "#", "#", "#", "#", " ", " "};
+        this.board[1] = new String[]{"#", "#", "#", " ", " ", "O", " ", " ", "#", "#", "#"};
+        this.board[2] = new String[]{"#", " ", " ", " ", " ", "o", " ", " ", " ", " ", "#"};
+        this.board[3] = new String[]{"#", " ", "O", "o", " ", "P", " ", "o", "O", " ", "#"};
+        this.board[4] = new String[]{"#", "#", "#", " ", " ", "o", " ", " ", "#", "#", "#"};
+        this.board[5] = new String[]{" ", "#", " ", " ", " ", "O", " ", " ", "#", " ", " "};
+        this.board[6] = new String[]{" ", "#", "#", "#", "#", "#", "#", "#", "#", " ", " "};
+    }
 
     static Board of() {
         return new Board();
@@ -14,9 +23,7 @@ public class Board {
     String[][] getBoard() {
         String[][] copyBoard = new String[BOARD_WIDTH][BOARD_HEIGHT];
         for (int row = BOARD_START; row < BOARD_WIDTH; row++) {
-            for (int col = BOARD_START; col < BOARD_HEIGHT; col++) {
-                copyBoard[row][col] = this.board[row][col];
-            }
+            copyBoard[row] = this.board[row].clone();
         }
         return copyBoard;
     }
