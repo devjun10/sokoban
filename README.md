@@ -864,7 +864,10 @@ x, y를 한 쌍으로 묶어서 관리해주는 클래스
 <br/><br/><br/>
 
 
-### 4-1. List<Integer> getNextPosition()
+### 4-1. int getX(), int getY()
+x와 y의 원시 값을 반환하는 메서드
+<br/>
+
 ```java
 public int getX() {
         return x;
@@ -876,7 +879,7 @@ public int getY() {
 ```
 <br/><br/>
 
-### 4-2. List<Integer> getNextPosition()
+### 4-2. boolean equals(Object o)
 ```java
 @Override
 public boolean equals(Object o) {
@@ -892,26 +895,59 @@ public int hashCode() {
     }
 ```
 
+
 <br/><br/><br/>
 
+## 5. Pairs
+pair의 값들을 저장하고 있는 클래스
+<br/><br/>
+
+
+### static Pair of(int inputX, int inputY)
+x와 y의 원시 값을 반환하는 메서드
+<br/>
+
+```java
+public static Pair of(int inputX, int inputY) {
+        return pairs.stream()
+        .filter(position -> position.getX() == inputX)
+        .filter(position -> position.getY() == inputY)
+        .findAny()
+        .orElseThrow(NoSuchElementException::new);
+    }
+```
 
 
 <br/><br/><br/><br/><br/><br/>
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:----:|:---|:---|
-|1|class|&nbsp;InputView|&nbsp; 사용자의 입력을 받는 클래스        |
-|2|class|&nbsp;OutputView|&nbsp; 사용자에게 게임의 결과를 출력해주는 클래스        |
-|3|enum|&nbsp;Message|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
-|4|class|&nbsp;ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
-|5|class|&nbsp;Position|&nbsp; Player의 좌표를 나타내는 클래스|
-|6|class|&nbsp;StageResult|&nbsp; Stage의 정보를 담고 있는 클래스|
+|6|class|&nbsp;InputView|&nbsp; 사용자의 입력을 받는 클래스        |
+|7|class|&nbsp;OutputView|&nbsp; 사용자에게 게임의 결과를 출력해주는 클래스        |
+|8|enum|&nbsp;Message|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
+|9|class|&nbsp;ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
 <br/><br/><br/>
 
+
+## 6. InputView 클래스
+
+사용자의 입력을 받는 클래스
+<br/>
+```java
+public enum Command {
+
+    UP("U", "위쪽으로 한 칸 이동", List.of(1, 0)),
+    DOWN("D", "아랫쪽으로 한 칸 이동", List.of(-1, 0)),
+    RIGHT("R", "오른쪽으로 한 칸 이동", List.of(0, -1)),
+    LEFT("L", "왼쪽으로 한 칸 이동", List.of(0, 1)),
+    Q("Q", "프로그램 종료", List.of());
+
+```
+
+<br/><br/><br/>
+
+
 </div>
-
-
-
 
 </details>
 
