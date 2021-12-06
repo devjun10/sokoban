@@ -26,13 +26,6 @@ public class InputView {
         }
     }
 
-    private void parseString(String value) {
-        String stageFirst;
-        String stageSecond;
-
-        List<String> words = getWordsByLine(value);
-    }
-
     private List<String> getWordsByLine(String value) {
         String[] wordArray = value.split("\n");
         List<String> words = new ArrayList<>();
@@ -55,7 +48,6 @@ public class InputView {
         if (symbol.equals("O")) {
             return 1;
         }
-
         if (symbol.equals("o")) {
             return 2;
         }
@@ -65,7 +57,6 @@ public class InputView {
         if (symbol.equals("=")) {
             return 4;
         }
-
         return 0;
     }
 
