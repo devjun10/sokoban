@@ -5,4 +5,8 @@ public class GameResult {
     public GameResult(String[][] board) {
         this.board = board;
     }
+
+    public String[][] getBoard() {
+        return board;
+    }
 }
