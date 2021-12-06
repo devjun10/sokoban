@@ -1,2 +1,3 @@
-public class FirstStage {
+public class FirstStage implements Stage {
+
 }

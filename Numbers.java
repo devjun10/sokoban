@@ -4,13 +4,22 @@ import java.util.stream.IntStream;
 
 public class Numbers {
 
-    private final List<Number> numbers;
+    private static List<Number> numbers = null;
 
-    Numbers() {
-        this.numbers = IntStream.rangeClosed(0, 15)
+    static {
+        numbers = IntStream.rangeClosed(0, 15)
                 .mapToObj(Number::new)
                 .sorted()
                 .collect(Collectors.toUnmodifiableList());
+    }
+
+    static Number getValue(int value){
+        return numbers.get(value);
+    }
+
+
+    public static void main(String[] args) throws Exception {
+        String word ="asdf asdf sdafas asd fas dfas dfa sdfsa dfs";
     }
 
 }

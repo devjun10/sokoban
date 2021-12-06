@@ -1,12 +1,18 @@
 public class Board {
 
+    private int id;
     private final int BOARD_START = 0;
     private final int BOARD_HEIGHT = 7;
     private final int BOARD_WIDTH = 11;
     private String[][] board;
+    private Answer answer = new Answer(null);
 
     private Board() {
         initBoard();
+    }
+
+    private boolean validateClear(){
+        return answer.checkAnswer(this.board);
     }
 
     void initBoard() {
