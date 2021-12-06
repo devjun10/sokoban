@@ -5,38 +5,14 @@ public class StageResult {
     private int vertical;
     private int holeCount;
     private int ballCount;
+    private int[][] map;
     private Position playerPosition;
 
-    public StageResult(int stageCount, int ho, int vertical, int holeCount, int ballCount, Position playerPosition) {
-        this.stageCount = stageCount;
-        this.ho = ho;
-        this.vertical = vertical;
-        this.holeCount = holeCount;
-        this.ballCount = ballCount;
-        this.playerPosition = playerPosition;
+    public StageResult(int[][] map) {
+        this.map = map;
     }
 
-    public int getStageCount() {
-        return stageCount;
-    }
-
-    public int getHo() {
-        return ho;
-    }
-
-    public int getVertical() {
-        return vertical;
-    }
-
-    public int getHoleCount() {
-        return holeCount;
-    }
-
-    public int getBallCount() {
-        return ballCount;
-    }
-
-    public Position getPlayerPosition() {
-        return playerPosition;
+    public int[][] getMap() {
+        return map;
     }
 }

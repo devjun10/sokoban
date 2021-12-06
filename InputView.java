@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,21 +13,24 @@ public class InputView {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public void inputMap() {
-        String inputValue;
-        while (true) {
-            try {
-                inputValue = input.br.readLine();
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
-            } catch (Exception e) {
-                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
-            }
-        }
+    public List<StageResult> inputMap(String word) throws IOException {
+        return getResult(word);
     }
 
-    private List<String> getWordsByLine(String value) {
+    private List<StageResult> getResult(String word) {
+        List<String> words = getWordsSplitByLine(word);
+        List<StageResult> results = new ArrayList<>();
+
+        StageResult stageFirst = new StageResult(getStageOneMap(words));
+        StageResult stageSecond = new StageResult(getStageSecondMap(words));
+
+
+        results.add(stageFirst);
+        results.add(stageSecond);
+        return results;
+    }
+
+    private List<String> getWordsSplitByLine(String value) {
         String[] wordArray = value.split("\n");
         List<String> words = new ArrayList<>();
         words.addAll(Arrays.asList(wordArray));
@@ -41,7 +45,18 @@ public class InputView {
         return getIntArray(stringArray);
     }
 
-    private int getIntValue(String symbol) {
+    private int[][] getStageSecondMap(List<String> lst) {
+        int[][] intArray = new int[7][11];
+        for (int i = 6; i < 13; i++) {
+            String[] array = lst.get(i).split("");
+            for (int j = 0; j < array.length; j++) {
+                intArray[i - 6][j] = getIntValue(array[j]);
+            }
+        }
+        return intArray;
+    }
+
+    private static int getIntValue(String symbol) {
         if (symbol.equals("#")) {
             return 0;
         }
@@ -70,17 +85,6 @@ public class InputView {
         return intArray;
     }
 
-    private int[][] getStageSecondMap(List<String> lst) {
-        int[][] intArray = new int[6][11];
-        for (int i = 6; i < 13; i++) {
-            String[] array = lst.get(i).split("");
-            for (int j = 0; j < array.length; j++) {
-                intArray[i - 6][j] = getIntValue(array[j]);
-            }
-        }
-        return intArray;
-    }
-
     public static void main(String[] args) throws Exception {
         String word = "Stage 1\n" +
                 "#####\n" +
@@ -100,6 +104,6 @@ public class InputView {
         for (int i = 0; i < words.length; i++) {
             lst.add(words[i]);
         }
-    }
 
+    }
 }
