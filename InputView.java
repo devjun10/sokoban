@@ -21,7 +21,7 @@ public class InputView {
         List<String> words = getWordsSplitByLine(word);
         List<StageResult> results = new ArrayList<>();
 
-        StageResult stageFirst = new StageResult(1, getStageOneMap(words));
+        StageResult stageFirst = new StageResult(1, getStageFirstMap(words));
         StageResult stageSecond = new StageResult(2, getStageSecondMap(words));
 
         results.add(stageFirst);
@@ -36,7 +36,7 @@ public class InputView {
         return words;
     }
 
-    private int[][] getStageOneMap(List<String> lst) {
+    private int[][] getStageFirstMap(List<String> lst) {
         String[][] stringArray = new String[3][5];
         for (int i = 0; i < 3; i++) {
             stringArray[i] = lst.get(i + 1).split("").clone();
@@ -50,6 +50,16 @@ public class InputView {
             String[] array = lst.get(i).split("");
             for (int j = 0; j < array.length; j++) {
                 intArray[i - 6][j] = getIntValue(array[j]);
+            }
+        }
+        return intArray;
+    }
+
+    private int[][] getIntArray(String[][] stringArray) {
+        int[][] intArray = new int[stringArray.length][stringArray[0].length];
+        for (int row = 0; row < stringArray.length; row++) {
+            for (int col = 0; col < stringArray[0].length; col++) {
+                intArray[row][col] = getIntValue(stringArray[row][col]);
             }
         }
         return intArray;
@@ -73,16 +83,6 @@ public class InputView {
             return 4;
         }
         return 5;
-    }
-
-    private int[][] getIntArray(String[][] stringArray) {
-        int[][] intArray = new int[stringArray.length][stringArray[0].length];
-        for (int row = 0; row < stringArray.length; row++) {
-            for (int col = 0; col < stringArray[0].length; col++) {
-                intArray[row][col] = getIntValue(stringArray[row][col]);
-            }
-        }
-        return intArray;
     }
 
     public static void main(String[] args) throws Exception {

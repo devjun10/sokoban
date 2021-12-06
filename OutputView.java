@@ -2,9 +2,8 @@ import java.util.List;
 
 public class OutputView {
 
-    void print(List<StageResult> results) {
+    public void print(List<StageResult> results) {
         String[][] stageFirst = getStringArray(results.get(0).getMap());
-//        String [][] stageSecond
         for(int i=0; i<3; i++){
             System.out.println();
             for(int col=0; col<5; col++){

@@ -22,7 +22,6 @@ public class StageResult {
         return map;
     }
 
-
     private int getHoleCount(int[][] map) {
         int count = 0;
         for (int row = 0; row < map.length; row++) {
@@ -30,7 +29,6 @@ public class StageResult {
                 if (map[row][col] == 1) {
                     count++;
                 }
-
             }
         }
         return count;

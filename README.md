@@ -184,7 +184,7 @@ Stage 2
 
 <br/><br/><br/>
 
-## InputView 클래스
+## 1. InputView 클래스
 
 사용자의 입력을 받는 클래스
 
@@ -224,28 +224,259 @@ private List<StageResult> getResult(String word){
 
 ### 1-3. getWordsSplitByLine(String word)
 
-인자로 word를 받아 List<String> 형태로 단어를 나눠주는 메서드입니다. 
+인자로 word를 받아 List<String> 형태로 단어를 나눠주는 메서드입니다.
 
 ````java
 private List<String> getWordsSplitByLine(String word){
         String[]wordArray=word.split("\n");
         List<String> words=new ArrayList<>();
-        
+
         words.addAll(Arrays.asList(wordArray));
-        
+
         return words;
         }
 ````
 
-## OutputView
+<br/><br/>
 
-## Message
+### 1-4. getStageFirstMap(List<String> lst)
 
-## ErrorMessage
+인자로 word 리스트를 받아 첫 번째 맵의 구성을 int[][] 형태로 반환해주는 메서드입니다. 각 칸들의 심볼을 int로 변환해서 값을 저장시켜줍니다.
 
-## Position
+````java
+private int[][]getStageOneMap(List<String> lst){
+        String[][]stringArray=new String[3][5];
+        for(int i=0;i< 3;i++){
+        stringArray[i]=lst.get(i+1).split("").clone();
+        }
+        return getIntArray(stringArray);
+        }
+````
 
-## StageResult
+<br/><br/>
+
+### 1-5. getStageSecondMap(List<String> lst)
+
+인자로 word 리스트를 받아 두 번째 맵의 구성을 int[][] 형태로 반환해주는 메서드입니다. 각 칸들의 심볼을 int로 변환해서 값을 저장시켜줍니다.
+
+````java
+private int[][]getStageSecondMap(List<String> lst){
+        int[][]intArray=new int[7][11];
+        for(int i=6;i< 13;i++){
+        String[]array=lst.get(i).split("");
+        for(int j=0;j<array.length;j++){
+        intArray[i-6][j]=getIntValue(array[j]);
+        }
+        }
+        return intArray;
+        }
+````
+
+<br/><br/>
+
+### 1-7. getIntArray(String[][] stringArray)
+
+문자 배열을 인자로 받아 int[][] 로 반환하는 메서드입니다. 각 칸의 심볼을 맞는 int 값으로 변경해줍니다.
+
+````java
+private int[][]getIntArray(String[][]stringArray){
+        int[][]intArray=new int[stringArray.length][stringArray[0].length];
+        for(int row=0;row<stringArray.length;row++){
+        for(int col=0;col<stringArray[0].length;col++){
+        intArray[row][col]=getIntValue(stringArray[row][col]);
+        }
+        }
+        return intArray;
+        }
+````
+
+<br/><br/>
+
+### 1-7. getIntValue(String symbol)
+
+인자로 문자를 받아 int를 반환하는 메서드입니다. 각 칸의 심볼을 맞는 int 값으로 변경해줍니다.
+
+````java
+private static int getIntValue(String symbol){
+
+        if(symbol.equals("#")){
+        return 0;
+        }
+        if(symbol.equals("O")){
+        return 1;
+        }
+        if(symbol.equals("o")){
+        return 2;
+        }
+        if(symbol.equals("P")){
+        return 3;
+        }
+        if(symbol.equals("=")){
+        return 4;
+        }
+        return 5;
+        }
+````
+
+<br/><br/><br/><br/>
+
+## 2. OutputView
+
+Stage의 정보를 출력해주는 클래스
+
+<br/><br/>
+
+### 2-1. public void print(List<StageResult> results)
+
+Stage들에 대한 정보를 인자로 받아 화면에 출력해주는 메서드 입니다.
+
+```java
+public void print(List<StageResult> results){
+        String[][]stageFirst=getStringArray(results.get(0).getMap());
+        for(int i=0;i<3;i++){
+        System.out.println();
+        for(int col=0;col<5;col++){
+        System.out.print(stageFirst[i][col]);
+        }
+        }
+        }
+```
+
+### 2-2. private String[][] getStringArray(int[][] map);
+Stage 정보 중 int[][]를 인자로 받아 String[][]로 변환해주는 메서드입니다. 
+<br/><br/>
+
+```java
+private String[][]getStringArray(int[][]map){
+        String[][]stringArray=new String[3][5];
+        for(int i=0;i<map.length;i++){
+            for(int j=0;j<map[0].length;j++){
+            stringArray[i][j]=getStringValue(map[i][j]);
+            }
+        }
+        return stringArray;
+    }
+```
+
+<br/><br/>
+
+### 2-3. private static int getIntValue(String symbol);
+int를 인자로 받아 String 값으로 변환해주는 메서드입니다.
+
+````java
+private String getStringValue(int symbol){
+        if(symbol==0){
+        return"#";
+        }
+        if(symbol==1){
+        return"O";
+        }
+        if(symbol==2){
+        return"o";
+        }
+        if(symbol==3){
+        return"P";
+        }
+        if(symbol==4){
+        return"P";
+        }
+        return" ";
+        }
+````
+<br/><br/>
+
+## 3.Message
+사용자에게 보여질 메시지를 관리하기 위한 enum 클래스입니다. 
+
+<br/><br/>
+
+## 4.ErrorMessage
+사용자에게 보여질 오류 메시지를 관리하기 위한 enum 클래스입니다.
+
+<br/><br/>
+
+## 5.Position
+사용자의 위치를 저장하기 위한 값 객체 입니다. 올바른 값의 비교를 위해 equals와 hashCode를 오버라이드 했습니다.
+
+```java
+@Override
+public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return x == position.x && y == position.y;
+    }
+
+@Override
+public int hashCode() {
+        return Objects.hash(x, y);
+    }
+```
+<br/><br/>
+
+## 6.StageResult
+각 Stage에 대한 정보를 담고 있는 값 객체입니다.
+
+<br/><br/>
+
+### 6-1. getHoleCount(int[][] map)
+int[][]를 인자로 받아 구멍(hole)의 개수를 반환하는 메서드입니다.
+<br/><br/>
+
+```java
+private int getHoleCount(int[][] map) {
+        int count = 0;
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[0].length; col++) {
+                if (map[row][col] == 1) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+```
+<br/><br/><br/>
+### 6-2. getHoleCount(int[][] map)
+int[][]를 인자로 받아 공(ball)의 개수를 반환하는 메서드입니다.
+<br/><br/>
+
+```java
+private int getBallCount(int[][] map) {
+        int count = 0;
+        for (int row = 0; row < map.length; row++) {
+        for (int col = 0; col < map[0].length; col++) {
+        if (map[row][col] == 2) {
+        count++;
+        }
+        }
+        }
+        return count;
+        }
+```
+<br/><br/><br/>
+
+### 6-3. getHoleCount(int[][] map)
+int[][]를 인자로 받아 플레이어의 위치(x, y)의 좌표를 반환하는 메서드입니다.
+<br/><br/>
+
+```java
+private Position getPlayerPosition(int[][] map) {
+        int count = 0;
+        int playerX = Integer.MAX_VALUE;
+        int playerY = Integer.MAX_VALUE;
+        for (int row = 0; row < map.length; row++) {
+        for (int col = 0; col < map[0].length; col++) {
+        if (map[row][col] == 3) {
+        playerX = row;
+        playerY = col;
+        }
+        }
+        }
+        return new Position(playerX, playerY);
+        }
+```
+
 
 </div>
 </details>
