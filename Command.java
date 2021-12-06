@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.stream.Stream;
 
-public enum Direction {
+public enum Command {
 
     UP("U", "위쪽으로 한 칸 이동", List.of(1, 0)),
     DOWN("D", "아랫쪽으로 한 칸 이동", List.of(-1, 0)),
@@ -13,13 +13,13 @@ public enum Direction {
     private final String description;
     private final List<Integer> nextPosition;
 
-    Direction(String command, String description, List<Integer> nextPosition) {
+    Command(String command, String description, List<Integer> nextPosition) {
         this.command = command;
         this.description = description;
         this.nextPosition = nextPosition;
     }
 
-    public static Direction getDirection(String input) {
+    public static Command getDirection(String input) {
         return Stream.of(values())
                 .filter(command -> command.command.toLowerCase().equals(input))
                 .findAny()

@@ -17,5 +17,11 @@ public class Main {
         List<StageResult> results = view.inputMap(word);
         OutputView outputView = new OutputView();
         outputView.print(results);
+
+        Command command = Command.getDirection("q");
+        if(command.equals(Command.Q)){
+            System.out.println("게임 종료");
+            return;
+        }
     }
 }
