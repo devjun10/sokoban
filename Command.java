@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Command {
@@ -24,6 +25,17 @@ public enum Command {
                 .filter(command -> command.command.toLowerCase().equals(input))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static List<String> getCommands(){
+        return Stream.of(values())
+                .map(Command::getCommand)
+                .sorted()
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    public String getCommand() {
+        return command;
     }
 
     public List<Integer> getNextPosition() {

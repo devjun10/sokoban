@@ -8,6 +8,16 @@ public class InputView {
 
     private Input input = new Input();
 
+    private List<String> commands;
+
+    private InputView() {
+        commands = Command.getCommands();
+    };
+
+    public static InputView of() {
+        return new InputView();
+    }
+
     private class Input {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     }
@@ -31,7 +41,7 @@ public class InputView {
     }
 
     private void validateDirectionContains(String direction) {
-        if (!directions.contains(direction)) {
+        if (!commands.contains(direction)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
         }
     }
