@@ -18,7 +18,9 @@ public class Board {
 
     static Board of() {
         return new Board();
-    };
+    }
+
+    ;
 
     String[][] getBoard() {
         String[][] copyBoard = new String[BOARD_WIDTH][BOARD_HEIGHT];
@@ -46,6 +48,25 @@ public class Board {
             }
         }
         return Pairs.of(x, y);
+    }
+
+    protected boolean validatePosition(int x, int y) {
+        if (!validateRange(x, y)) {
+            return false;
+        }
+
+        if (!validateMoveable(x, y)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateRange(int x, int y) {
+        return x >= 0 && x < 11 && y >= 0 && y < 11;
+    }
+
+    private boolean validateMoveable(int x, int y) {
+        return this.board[x][y].equals(" ") || this.board[x][y].equals("O");
     }
 
 }

@@ -15,11 +15,11 @@ public class GameMachine {
         int nextY = x + command.getNextPosition().get(1);
 
         String[][] newBoard = this.board.getBoard();
-        newBoard[nextX][nextY] = "P";
-        newBoard[x][y] = " ";
-
-        this.board.update(newBoard);
-
+        if (this.board.validatePosition(nextX, nextY)) {
+            newBoard[nextX][nextY] = "P";
+            newBoard[x][y] = " ";
+            this.board.update(newBoard);
+        }
     }
 
     void updateBoard(String[][] updatedBoard) {
