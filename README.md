@@ -628,6 +628,294 @@ private Position getPlayerPosition(int[][]map){
 </details>
 
 
+
+
+[comment]: <> (풀이과정 및 코드 설명 2단계)
+
+
+<details>
+<summary>📚	 Step 02.</summary>
+<div markdown="1">
+
+## 2단계
+
+1단계는 예제를 `그대로 화면에 출력`하는 단계였습니다. 따라서 문자열 입력에 대한 예외 처리를 하지 않고 입력된 문자열을 파싱해 Stage1과 Stage2에 대한 정보를 화면에 출력했습니다.
+<br/>
+
+![링크]()
+
+
+## 2단계
+추가/및 변경된 클래스
+<br/>
+
+|No|종류|<center>이름</center>|<center>역할 및 책임</center>|
+|:----:|:----:|:---|:---|
+|1|class|&nbsp;Board     |&nbsp; 게임 캐릭터와 구멍, 공 등 각 요소들의 위치가 저장된 클래스 |
+|2|class|&nbsp;Command   |&nbsp; 명령어(w,a,q)들과 다음 위치의 계산을 돕는 값을 가진 클래스 |
+|3|class|&nbsp;GameResult|&nbsp; 배열의 상태를 담아 반환해주는 클래스                   |
+|4|class|&nbsp;Pair      |&nbsp; x, y 좌표를 묶어서 관리하는 클래스                  |
+|5|class|&nbsp;Pairs     |&nbsp; Pair의 값들이 저장된 클래스                        |
+
+
+## 1. Board 클래스
+
+사용자의 입력을 받는 클래스
+
+<br/>
+
+### 1-1. void initBoard()
+
+Board 클래스 객체가 생성될 때 String[][] 배열을 초기화시켜주는 메서드입니다.
+<br/><br/>
+
+```java
+void initBoard() {
+        board = new String[BOARD_WIDTH][BOARD_HEIGHT];
+        this.board[0] = new String[]{" ", " ", "#", "#", "#", "#", "#", "#", "#", " ", " "};
+        this.board[1] = new String[]{"#", "#", "#", " ", " ", "O", " ", " ", "#", "#", "#"};
+        this.board[2] = new String[]{"#", " ", " ", " ", " ", "o", " ", " ", " ", " ", "#"};
+        this.board[3] = new String[]{"#", " ", "O", "o", " ", "P", " ", "o", "O", " ", "#"};
+        this.board[4] = new String[]{"#", "#", "#", " ", " ", "o", " ", " ", "#", "#", "#"};
+        this.board[5] = new String[]{" ", "#", " ", " ", " ", "O", " ", " ", "#", " ", " "};
+        this.board[6] = new String[]{" ", "#", "#", "#", "#", "#", "#", "#", "#", " ", " "};
+    }
+```
+
+
+<br/><br/><br/>
+
+### 1-2. String[][] getBoard()
+
+String[][]를 방어적 복사로 넘겨주는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성해서 복사한 후 반환합니다. 
+<br/>
+
+```java
+String[][] getBoard() {
+        String[][] copyBoard = new String[BOARD_WIDTH][BOARD_HEIGHT];
+        for (int row = BOARD_START; row < BOARD_WIDTH; row++) {
+            copyBoard[row] = this.board[row].clone();
+        }
+        return copyBoard;
+    }
+```
+
+<br/><br/><br/>
+
+### 1-3. String[][] getBoard()
+
+String[][]를 방어적 복사로 넘겨주는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성해서 복사한 후 반환합니다.
+
+<br/>
+
+```java
+protected void update(String[][] updatedBoard) {
+        this.board = null;
+        this.board = updatedBoard;
+    }
+```
+
+<br/><br/><br/>
+
+### 1-4. Pair findPlayerPosition()
+
+현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+<br/>
+
+```java
+protected Pair findPlayerPosition() {
+        int x = Integer.MAX_VALUE;
+        int y = Integer.MAX_VALUE;
+
+        for (int row = 0; row < 11; row++) {
+            for (int col = 0; col < 11; col++) {
+                if (board[row][col].equals("P")) {
+                    x = row;
+                    y = col;
+                }
+            }
+        }
+        return Pairs.of(x, y);
+    }
+```
+
+
+<br/><br/><br/>
+
+### 1-5. Pair validatePosition(int x, int y)
+
+현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+<br/>
+
+```java
+protected boolean validatePosition(int x, int y) {
+        if (!validateRange(x, y)) {
+            return false;
+        }
+
+        if (!validateMoveable(x, y)) {
+            return false;
+        }
+        return true;
+    }
+```
+
+
+<br/><br/><br/>
+
+### 1-6. Pair validateRange(int x, int y)
+
+현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+<br/>
+
+```java
+private boolean validateRange(int x, int y) {
+        return x >= 0 && x < 11 && y >= 0 && y < 11;
+    }
+```
+
+<br/><br/><br/>
+
+### 1-6. Pair validateRange(int x, int y)
+
+현재 캐릭터의 위치를 찾는 메서드입니다. String[][] 배열을 순회하며 `"P"` 인 칸의 좌표를 Pair로 반환해줍니다.
+<br/>
+
+```java
+private boolean validateMoveable(Pair pair) {
+        return this.board[pair.getX()][pair.getY()].equals(" ")
+                || this.board[pair.getX()][pair.getY()].equals("O");
+    }
+```
+
+<br/><br/><br/>
+
+## 2. Command 클래스
+
+사용자의 입력을 받는 클래스
+<br/>
+```java
+public enum Command {
+
+    UP("U", "위쪽으로 한 칸 이동", List.of(1, 0)),
+    DOWN("D", "아랫쪽으로 한 칸 이동", List.of(-1, 0)),
+    RIGHT("R", "오른쪽으로 한 칸 이동", List.of(0, -1)),
+    LEFT("L", "왼쪽으로 한 칸 이동", List.of(0, 1)),
+    Q("Q", "프로그램 종료", List.of());
+
+```
+
+<br/><br/><br/>
+### 2-1. Command getDirection(String input)
+사용자의 입력 값으로 그에 맞는 명령을 찾는 메서드입니다. 
+
+````java
+public static Command getDirection(String input) {
+        return Stream.of(values())
+                .filter(command -> command.command.toLowerCase().equals(input))
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+}
+````
+
+<br/><br/><br/>
+### 2-2. Command getDirection(String input)
+사용자의 입력 값으로 그에 맞는 명령을 찾는 메서드입니다.
+
+````java
+public static List<String> getCommands(){
+        return Stream.of(values())
+        .map(Command::getCommand)
+        .sorted()
+        .collect(Collectors.toUnmodifiableList());
+}
+````
+
+<br/><br/><br/>
+### 2-3. List<Integer> getNextPosition()
+다음 이동할 값의 좌표를 얻는 메서드
+
+````java
+public List<Integer> getNextPosition() {
+        return nextPosition;
+    }
+````
+
+
+
+<br/><br/><br/>
+
+## 3. GameResult
+보드의 상태를 받아서 반환해주는 클래스
+<br/>
+
+```java
+public String[][] getBoard() {
+        return board;
+    }
+```
+
+
+
+<br/><br/><br/>
+
+## 4. Pair
+x, y를 한 쌍으로 묶어서 관리해주는 클래스
+<br/><br/><br/>
+
+
+### 4-1. List<Integer> getNextPosition()
+```java
+public int getX() {
+        return x;
+    }
+
+public int getY() {
+        return y;
+    }
+```
+<br/><br/>
+
+### 4-2. List<Integer> getNextPosition()
+```java
+@Override
+public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair pair = (Pair) o;
+        return x == pair.x && y == pair.y;
+    }
+
+@Override
+public int hashCode() {
+        return Objects.hash(x, y);
+    }
+```
+
+<br/><br/><br/>
+
+
+
+<br/><br/><br/><br/><br/><br/>
+
+|No|종류|<center>이름</center>|<center>역할 및 책임</center>|
+|:----:|:----:|:---|:---|
+|1|class|&nbsp;InputView|&nbsp; 사용자의 입력을 받는 클래스        |
+|2|class|&nbsp;OutputView|&nbsp; 사용자에게 게임의 결과를 출력해주는 클래스        |
+|3|enum|&nbsp;Message|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
+|4|class|&nbsp;ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
+|5|class|&nbsp;Position|&nbsp; Player의 좌표를 나타내는 클래스|
+|6|class|&nbsp;StageResult|&nbsp; Stage의 정보를 담고 있는 클래스|
+<br/><br/><br/>
+
+</div>
+
+
+
+
+</details>
+
+
 <br/><br/><br/><br/><br/>
 
 ## 테스트 케이스

@@ -6,6 +6,10 @@ public class Board {
     private String[][] board;
 
     private Board() {
+        initBoard();
+    }
+
+    void initBoard() {
         board = new String[BOARD_WIDTH][BOARD_HEIGHT];
         this.board[0] = new String[]{" ", " ", "#", "#", "#", "#", "#", "#", "#", " ", " "};
         this.board[1] = new String[]{"#", "#", "#", " ", " ", "O", " ", " ", "#", "#", "#"};
@@ -30,7 +34,7 @@ public class Board {
         return copyBoard;
     }
 
-    public void update(String[][] updatedBoard) {
+    protected void update(String[][] updatedBoard) {
         this.board = null;
         this.board = updatedBoard;
     }
@@ -50,23 +54,24 @@ public class Board {
         return Pairs.of(x, y);
     }
 
-    protected boolean validatePosition(int x, int y) {
-        if (!validateRange(x, y)) {
+    protected boolean validatePosition(Pair pair) {
+        if (!validateRange(pair)) {
             return false;
         }
 
-        if (!validateMoveable(x, y)) {
+        if (!validateMoveable(pair)) {
             return false;
         }
         return true;
     }
 
-    private boolean validateRange(int x, int y) {
-        return x >= 0 && x < 11 && y >= 0 && y < 11;
+    private boolean validateRange(Pair pair) {
+        return pair.getX() >= 0 && pair.getY() < 11 && pair.getY() >= 0 && pair.getY() < 11;
     }
 
-    private boolean validateMoveable(int x, int y) {
-        return this.board[x][y].equals(" ") || this.board[x][y].equals("O");
+    private boolean validateMoveable(Pair pair) {
+        return this.board[pair.getX()][pair.getY()].equals(" ")
+                || this.board[pair.getX()][pair.getY()].equals("O");
     }
 
 }
