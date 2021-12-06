@@ -1,5 +1,6 @@
 public enum Message {
 
+    STAGE_INFO("Stage: "),
     HORIZONTAL_LENGTH("가로크기: "),
     VERTICAL_LENGTH("세로크기: "),
     HOLE_COUNT("구멍 수: "),

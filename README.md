@@ -21,7 +21,7 @@
 
 ## ⌨️ 입력
 
-아래 내용을 문자열로 넘겨서 처리하는 함수를 작성한다.
+아래 내용을 문자열로 넘겨서 처리하는 함수를 작성한다. 복사는 아래 text를 이용하시면 됩니다. **아래 문자는 편의를 위해 "\n"을 조정했습니다.
 <br/>
 
 ````text
@@ -40,6 +40,9 @@ Stage 2
  ########
 ````
 
+```text
+String word = "Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
+```
 <br/><br/><br/>
 위 값을 읽어 2차원 배열로 변환 저장한다.
 <br/>
@@ -190,132 +193,130 @@ Stage 2
 
 <br/>
 
-### 1-1. inputMap(String word)
+### 1-1. List<StageResult> inputMap(String word)
 
 인자로 word를 받아 List<StageResult>의 형태로 최종 반환해주는 메서드 입니다. List 내부에는 Stage1과 Stage2에 대한 정보가 담겨있습니다.
 
 ````java
-public List<StageResult> inputMap(String word)throws IOException{
+public List<StageResult> inputMap(String word) {
         return getResult(word);
-        }
+    }
 ````
 
 <br/><br/>
 
-### 1-2. getResult(String word)
+### 1-2. List<StageResult> getResult(String word)
 
 인자로 word를 받아 각 Stage에 대한 실제 정보를 생성해주는 메서드입니다. 메서드 내부에서 도우미 메서드의 도움을 받아 Stage1과 Stage2에 대한 정보를 생성합니다.
 
 ```java
-private List<StageResult> getResult(String word){
-        List<String> words=getWordsSplitByLine(word);
-        List<StageResult> results=new ArrayList<>();
+private List<StageResult> getResult(String word) {
+        List<String> words = getWordsSplitByLine(word);
+        List<StageResult> results = new ArrayList<>();
 
-        StageResult stageFirst=new StageResult(1,getStageOneMap(words));
-        StageResult stageSecond=new StageResult(2,getStageSecondMap(words));
+        StageResult stageFirst = new StageResult(1, getStageFirstMap(words));
+        StageResult stageSecond = new StageResult(2, getStageSecondMap(words));
 
         results.add(stageFirst);
         results.add(stageSecond);
         return results;
-        }
+    }
 ```
 
 <br/><br/>
 
-### 1-3. getWordsSplitByLine(String word)
+### 1-3. List<String> getWordsSplitByLine(String word)
 
 인자로 word를 받아 List<String> 형태로 단어를 나눠주는 메서드입니다.
 
 ````java
-private List<String> getWordsSplitByLine(String word){
-        String[]wordArray=word.split("\n");
-        List<String> words=new ArrayList<>();
-
+private List<String> getWordsSplitByLine(String word) {
+        String[] wordArray = word.split("\n");
+        List<String> words = new ArrayList<>();
         words.addAll(Arrays.asList(wordArray));
-
         return words;
-        }
+    }
 ````
 
 <br/><br/>
 
-### 1-4. getStageFirstMap(List<String> lst)
+### 1-4. int[][] getStageFirstMap(List<String> lst)
 
 인자로 word 리스트를 받아 첫 번째 맵의 구성을 int[][] 형태로 반환해주는 메서드입니다. 각 칸들의 심볼을 int로 변환해서 값을 저장시켜줍니다.
 
 ````java
-private int[][]getStageOneMap(List<String> lst){
-        String[][]stringArray=new String[3][5];
-        for(int i=0;i< 3;i++){
-        stringArray[i]=lst.get(i+1).split("").clone();
+private int[][] getStageFirstMap(List<String> lst) {
+        String[][] stringArray = new String[3][5];
+        for (int i = 0; i < 3; i++) {
+            stringArray[i] = lst.get(i + 1).split("").clone();
         }
         return getIntArray(stringArray);
-        }
+    }
 ````
 
 <br/><br/>
 
-### 1-5. getStageSecondMap(List<String> lst)
+### 1-5. int[][] getStageSecondMap(List<String> lst)
 
 인자로 word 리스트를 받아 두 번째 맵의 구성을 int[][] 형태로 반환해주는 메서드입니다. 각 칸들의 심볼을 int로 변환해서 값을 저장시켜줍니다.
 
 ````java
-private int[][]getStageSecondMap(List<String> lst){
-        int[][]intArray=new int[7][11];
-        for(int i=6;i< 13;i++){
-        String[]array=lst.get(i).split("");
-        for(int j=0;j<array.length;j++){
-        intArray[i-6][j]=getIntValue(array[j]);
-        }
+private int[][] getStageSecondMap(List<String> lst) {
+        int[][] intArray = new int[7][11];
+        for (int i = 6; i < 13; i++) {
+            String[] array = lst.get(i).split("");
+            int count = array.length;
+            for (int j = 0; j < count; j++) {
+            intArray[i - 6][j] = getIntValue(array[j]);
+                }
         }
         return intArray;
-        }
+    }
 ````
 
 <br/><br/>
 
-### 1-7. getIntArray(String[][] stringArray)
+### 1-6. int[][] getIntArray(String[][] stringArray)
 
 문자 배열을 인자로 받아 int[][] 로 반환하는 메서드입니다. 각 칸의 심볼을 맞는 int 값으로 변경해줍니다.
 
 ````java
-private int[][]getIntArray(String[][]stringArray){
-        int[][]intArray=new int[stringArray.length][stringArray[0].length];
-        for(int row=0;row<stringArray.length;row++){
-        for(int col=0;col<stringArray[0].length;col++){
-        intArray[row][col]=getIntValue(stringArray[row][col]);
-        }
+private int[][] getIntArray(String[][] stringArray) {
+        int[][] intArray = new int[stringArray.length][stringArray[0].length];
+        for (int row = 0; row < stringArray.length; row++) {
+            for (int col = 0; col < stringArray[0].length; col++) {
+                intArray[row][col] = getIntValue(stringArray[row][col]);
+            }
         }
         return intArray;
-        }
+    }
 ````
 
 <br/><br/>
 
-### 1-7. getIntValue(String symbol)
+### 1-7. int getIntValue(String symbol)
 
 인자로 문자를 받아 int를 반환하는 메서드입니다. 각 칸의 심볼을 맞는 int 값으로 변경해줍니다.
 
 ````java
-private static int getIntValue(String symbol){
-
-        if(symbol.equals("#")){
-        return 0;
+private int getIntValue(String symbol) {
+        if (symbol.equals("#")) {
+            return 0;
         }
-        if(symbol.equals("O")){
-        return 1;
+        if (symbol.equals("O")) {
+            return 1;
         }
-        if(symbol.equals("o")){
-        return 2;
+        if (symbol.equals("o")) {
+            return 2;
         }
-        if(symbol.equals("P")){
-        return 3;
+        if (symbol.equals("P")) {
+            return 3;
         }
-        if(symbol.equals("=")){
-        return 4;
+        if (symbol.equals(" ")) {
+            return 5;
         }
         return 5;
-        }
+    }
 ````
 
 <br/><br/><br/><br/>
@@ -326,64 +327,77 @@ Stage의 정보를 출력해주는 클래스
 
 <br/><br/>
 
-### 2-1. public void print(List<StageResult> results)
+### 2-1. void print(List<StageResult> results)
 
 Stage들에 대한 정보를 인자로 받아 화면에 출력해주는 메서드 입니다.
 
 ```java
-public void print(List<StageResult> results){
-        String[][]stageFirst=getStringArray(results.get(0).getMap());
-        for(int i=0;i<3;i++){
-        System.out.println();
-        for(int col=0;col<5;col++){
-        System.out.print(stageFirst[i][col]);
+public void print(List<StageResult> results) {
+        stringBuilder.setLength(0);
+        for (int number = 0; number < results.size(); number++) {
+            StageResult stageInfo = results.get(number);
+            stringBuilder.append(Message.STAGE_INFO).append(stageInfo.getStage()).append("\n");
+            String[][] stageMap = getStringArray(results.get(number).getMap());
+            for (int row = 0; row < stageInfo.getMap().length; row++) {
+                stringBuilder.append("\n");
+                for (int col = 0; col < stageInfo.getMap()[0].length; col++) {
+                    stringBuilder.append(stageMap[row][col]);
+                }
+            }
+        stringBuilder.append("\n").append("\n").append(Message.HORIZONTAL_LENGTH).append(stageInfo.getHorizontalCount()).append("\n")
+        .append(Message.VERTICAL_LENGTH).append(stageInfo.getVerticalCount()).append("\n")
+        .append(Message.HOLE_COUNT).append(stageInfo.getHoleCount()).append("\n")
+        .append(Message.BALL_COUNT).append(stageInfo.getBallCount()).append("\n")
+        .append(Message.PLAYER_POSITION).append(stageInfo.getPlayerPosition()).append("\n").append("\n");
         }
-        }
-        }
+        System.out.println(stringBuilder);
+    }
 ```
 
-### 2-2. private String[][] getStringArray(int[][] map);
+<br/><br/><br/>
+
+### 2-2. String[][] getStringArray(int[][] map)
 Stage 정보 중 int[][]를 인자로 받아 String[][]로 변환해주는 메서드입니다. 
 <br/><br/>
 
 ```java
-private String[][]getStringArray(int[][]map){
-        String[][]stringArray=new String[3][5];
-        for(int i=0;i<map.length;i++){
-            for(int j=0;j<map[0].length;j++){
-            stringArray[i][j]=getStringValue(map[i][j]);
-            }
+private String[][] getStringArray(int[][] map) {
+        String[][] stringArray = new String[map.length][map[0].length];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+            stringArray[i][j] = getStringValue(map[i][j]);
+                }
         }
         return stringArray;
     }
 ```
 
-<br/><br/>
+<br/><br/><br/>
 
-### 2-3. private static int getIntValue(String symbol);
+### 2-3. String getStringValue(int symbol)
 int를 인자로 받아 String 값으로 변환해주는 메서드입니다.
 
 ````java
-private String getStringValue(int symbol){
-        if(symbol==0){
-        return"#";
+private String getStringValue(int symbol) {
+        if (symbol == 0) {
+            return "#";
         }
-        if(symbol==1){
-        return"O";
+        if (symbol == 1) {
+            return "O";
         }
-        if(symbol==2){
-        return"o";
+        if (symbol == 2) {
+            return "o";
         }
-        if(symbol==3){
-        return"P";
+        if (symbol == 3) {
+            return "P";
         }
-        if(symbol==4){
-        return"P";
+        if (symbol == 5) {
+            return " ";
         }
-        return" ";
-        }
+        return " ";
+    }
 ````
-<br/><br/>
+<br/><br/><br/><br/>
 
 ## 3.Message
 사용자에게 보여질 메시지를 관리하기 위한 enum 클래스입니다. 
@@ -397,6 +411,7 @@ private String getStringValue(int symbol){
 
 ## 5.Position
 사용자의 위치를 저장하기 위한 값 객체 입니다. 올바른 값의 비교를 위해 equals와 hashCode를 오버라이드 했습니다.
+<br/>
 
 ```java
 @Override
@@ -412,14 +427,14 @@ public int hashCode() {
         return Objects.hash(x, y);
     }
 ```
-<br/><br/>
+<br/><br/><br/>
 
 ## 6.StageResult
 각 Stage에 대한 정보를 담고 있는 값 객체입니다.
 
 <br/><br/>
 
-### 6-1. getHoleCount(int[][] map)
+### 6-1. int getHoleCount(int[][] map)
 int[][]를 인자로 받아 구멍(hole)의 개수를 반환하는 메서드입니다.
 <br/><br/>
 
@@ -437,7 +452,7 @@ private int getHoleCount(int[][] map) {
     }
 ```
 <br/><br/><br/>
-### 6-2. getHoleCount(int[][] map)
+### 6-2. int getBallCount(int[][] map)
 int[][]를 인자로 받아 공(ball)의 개수를 반환하는 메서드입니다.
 <br/><br/>
 
@@ -445,18 +460,18 @@ int[][]를 인자로 받아 공(ball)의 개수를 반환하는 메서드입니�
 private int getBallCount(int[][] map) {
         int count = 0;
         for (int row = 0; row < map.length; row++) {
-        for (int col = 0; col < map[0].length; col++) {
-        if (map[row][col] == 2) {
-        count++;
-        }
-        }
+            for (int col = 0; col < map[0].length; col++) {
+                if (map[row][col] == 2) {
+                    count++;
+                }
+            }
         }
         return count;
-        }
+    }
 ```
 <br/><br/><br/>
 
-### 6-3. getHoleCount(int[][] map)
+### 6-3. Position getPlayerPosition(int[][] map)
 int[][]를 인자로 받아 플레이어의 위치(x, y)의 좌표를 반환하는 메서드입니다.
 <br/><br/>
 
@@ -466,15 +481,15 @@ private Position getPlayerPosition(int[][] map) {
         int playerX = Integer.MAX_VALUE;
         int playerY = Integer.MAX_VALUE;
         for (int row = 0; row < map.length; row++) {
-        for (int col = 0; col < map[0].length; col++) {
-        if (map[row][col] == 3) {
-        playerX = row;
-        playerY = col;
-        }
-        }
+            for (int col = 0; col < map[0].length; col++) {
+                if (map[row][col] == 3) {
+                    playerX = row;
+                    playerY = col;
+                }
+            }
         }
         return new Position(playerX, playerY);
-        }
+    }
 ```
 
 
@@ -499,7 +514,29 @@ private Position getPlayerPosition(int[][] map) {
 `아래 내용을 문자열로 넘겨서` 처리하는 함수를 작성한다.
 
 ```java
-String word="Stage 1\n"+"#####\n"+"#OoP#\n"+"#####\n"+"=====\n"+"Stage 2\n"+"  #######\n"+"###  O  ###\n"+"#    o    #\n"+"# Oo P oO #\n"+"###  o  ###\n"+" #   O  # \n"+" ########";
+String word = "Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
+```
+
+```java
+public class Main {
+    private static final InputView inputView = new InputView();
+    private static final OutputView outputView = new OutputView();
+
+    public static void main(String[] args) throws Exception {
+        String word = "Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
+        String[] words = word.split("\n");
+        List<String> lst = new ArrayList<>();
+        
+        for (int i = 0; i < words.length; i++) {
+            lst.add(words[i]);
+        }
+        
+        InputView view = new InputView();
+        List<StageResult> results = view.inputMap(word);
+        OutputView outputView = new OutputView();
+        outputView.print(results);
+    }
+}
 ```
 
 <br/><br/>
@@ -507,7 +544,7 @@ String word="Stage 1\n"+"#####\n"+"#OoP#\n"+"#####\n"+"=====\n"+"Stage 2\n"+"  #
 ## 🖥 출력
 
 ```text
-Stage 1
+Stage: 1
 
 #####
 #OoP#
@@ -515,25 +552,25 @@ Stage 1
 
 가로크기: 5
 세로크기: 3
-구멍의 수: 1
+구멍 수: 1
 공의 수: 1
-플레이어 위치 (2, 4)
+플레이어 위치: (2, 4)
 
-Stage 2
+Stage: 2
 
-  #######
+  #######  
 ###  O  ###
 #    o    #
 # Oo P oO #
 ###  o  ###
- #   O  # 
- ########
+ #   O  #  
+ ########  
 
-가로크기: 10
+가로크기: 11
 세로크기: 7
-구멍의 수: 4
+구멍 수: 4
 공의 수: 4
-플레이어 위치 (5, 6)
+플레이어 위치: (4, 6)
 ```
 
 </div>
