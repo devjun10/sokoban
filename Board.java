@@ -33,7 +33,7 @@ public class Board {
         this.board = updatedBoard;
     }
 
-    Pair findPlayerPosition() {
+    protected Pair findPlayerPosition() {
         int x = Integer.MAX_VALUE;
         int y = Integer.MAX_VALUE;
 
