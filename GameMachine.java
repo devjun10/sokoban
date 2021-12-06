@@ -6,7 +6,7 @@ public class GameMachine {
         return new GameResult(board.getBoard());
     }
 
-    public void move(Command command) {
+    public GameResult move(Command command) {
         Pair currentPlayerPosition = this.board.findPlayerPosition();
         int x = currentPlayerPosition.getX();
         int y = currentPlayerPosition.getY();
@@ -18,11 +18,13 @@ public class GameMachine {
         if (this.board.validatePosition(nextX, nextY)) {
             newBoard[nextX][nextY] = "P";
             newBoard[x][y] = " ";
-            this.board.update(newBoard);
+            updateBoard(newBoard);
+            return new GameResult(this.board.getBoard());
         }
+        return new GameResult(this.board.getBoard());
     }
 
-    void updateBoard(String[][] updatedBoard) {
+    private void updateBoard(String[][] updatedBoard) {
         this.board.update(updatedBoard);
     }
 
