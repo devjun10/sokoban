@@ -25,6 +25,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return x + ", " + y;
+        return "(" + (x+1) + ", " + (y+1) + ")";
     }
 }
