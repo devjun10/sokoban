@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +10,30 @@ public class InputView {
 
     private class Input {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    public String inputCommand() {
+        String value;
+        System.out.print(Message.SOKOBAN);
+
+        while (true) {
+            try {
+                value = input.br.readLine().toLowerCase();
+                validateDirectionContains(value);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            } catch (Exception e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            }
+        }
+        return value;
+    }
+
+    private void validateDirectionContains(String direction) {
+        if (!directions.contains(direction)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+        }
     }
 
     public List<StageResult> inputMap(String word) {
