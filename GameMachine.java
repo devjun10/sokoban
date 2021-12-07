@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class GameMachine {
 
@@ -10,8 +11,15 @@ public class GameMachine {
         return new GameResult(board.getBoard());
     }
 
+    Stage getStage(int value){
+        return stages.getStage(value);
+    }
+
     private void updateBoard(int[][] updatedBoard) {
         this.board.update(updatedBoard);
     }
 
+    public GameResult play(List<Command> commands) {
+        return null;
+    }
 }

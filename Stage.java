@@ -1,5 +1,6 @@
 public class Stage {
 
+
     private Board board = Board.of();
     private StageInformation stageInformation;
 
