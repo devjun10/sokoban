@@ -312,8 +312,6 @@ Stage 5
 <br/><br/>
 </details>
 
-</details> 
-
 <details>
 <summary>📚	Step 04.</summary>
 <div markdown="4">
@@ -360,6 +358,10 @@ S>  3L
 </div>
 <br/><br/>
 </details>
+
+
+
+</details> 
 
 
 
