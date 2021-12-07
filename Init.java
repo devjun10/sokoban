@@ -41,7 +41,7 @@ public class Init {
         return null;
     }
 
-    String joiningTextFileWord(){
+    String[] joiningTextFileWord(){
         try {
             stringBuilder.setLength(0);
             File file = new File("map.txt");
@@ -49,25 +49,27 @@ public class Init {
             BufferedReader bufReader = new BufferedReader(filereader);
             String line = "";
             while ((line = bufReader.readLine()) != null) {
-//                while (line.length() < maxValue) {
-//                    line += " ";
-//                }
                 stringBuilder.append(line);
-//                stringBuilder.append(",").append(line);
             }
             bufReader.close();
         } catch (IOException e) {
             System.out.println(e);
         }
-        return stringBuilder.toString();
+        return splitByStage(stringBuilder.toString());
     }
 
     private String[] splitByStage(String word){
         return word.split("==========");
     }
 
-    private String[][] getMap(String[] words){
-        String word = "999999\n900409\n929999\n909000\n919000\n999000";
+    private String[][] getMap(String word, int id){
+        StageInformation info = stageInfo.getInformation(id);
+        String[][] stringArray = new String[info.getHeight()][info.getWidth()];
+
+        return null;
+    }
+
+    private String[] get(String word){
         word = word.replaceAll("9", "#");
         word = word.replaceAll("0", " ");
         word = word.replaceAll("1", "O");
@@ -77,37 +79,6 @@ public class Init {
         word = word.replaceAll("5", "P");
         return null;
     }
-
-//    public static void main(String[] args) {
-//        Init init = new Init();
-//        System.out.println(init.joiningTextFileWord());
-//        try {
-//            stringBuilder.setLength(0);
-//            File file = new File("map.txt");
-//            FileReader filereader = new FileReader(file);
-//            BufferedReader bufReader = new BufferedReader(filereader);
-//            String line = "";
-//            while ((line = bufReader.readLine()) != null) {
-//                while (line.length() < 6) {
-//                    line += " ";
-//                }
-//                stringBuilder.append(",");
-//                stringBuilder.append(line);
-//            }
-//            String word = stringBuilder.toString();
-//            word = word.substring(1);
-//            String[] words = word.split("==========");
-//
-//            for(int i=0; i<words.length; i++){
-//                String[] sp = words[i].split(",");
-//            }
-//            bufReader.close();
-//        } catch (FileNotFoundException e) {
-//            System.out.println(e);
-//        } catch (IOException e) {
-//            System.out.println(e);
-//        }
-//    }
 
     public static void main(String[] args) throws Exception {
         String word = "999999\n900409\n929999\n909000\n919000\n999000";
