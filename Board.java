@@ -5,7 +5,10 @@ public class Board {
 
     private Answer answer;
 
-    private Board(){};
+    private Board() {
+    }
+
+    ;
 
     public Board(int[][] board) {
         this.board = board;
@@ -45,13 +48,13 @@ public class Board {
         return gameResult;
     }
 
-    public int[][] move( Pair position, int[][] board, Pair nextPosition){
+    public int[][] move(Pair position, int[][] board, Pair nextPosition) {
         board[position.getX()][position.getY()] -= 4;
         board[nextPosition.getX()][nextPosition.getY()] += 4;
         return board;
     }
 
-    public int[][] pushBall(Pair position, int[][] board, Pair nextPosition, Command command){
+    public int[][] pushBall(Pair position, int[][] board, Pair nextPosition, Command command) {
         board[position.getX()][position.getY()] -= 4;
         board[nextPosition.getX()][nextPosition.getY()] += 4;
         board[nextPosition.getX()][nextPosition.getY()] -= 2;
@@ -59,8 +62,8 @@ public class Board {
         return board;
     }
 
-    public void checkGameResult(GameResult result){
-        if(result.getBoard() ==null){
+    public void checkGameResult(GameResult result) {
+        if (result.getBoard() == null) {
             result.addBoard(getBoard());
         }
     }
@@ -81,7 +84,7 @@ public class Board {
     }
 
     public boolean moveable(Pair pair) {
-        return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1 ;
+        return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1;
     }
 
     public boolean isBlank(int x, int y) {
@@ -132,7 +135,7 @@ public class Board {
     protected Pair findPlayerPosition() {
         for (int row = 0; row < this.board.length; row++) {
             for (int col = 0; col < this.board[0].length; col++) {
-                if (this.board[row][col] == 4 || this.board[row][col] == 5) {
+                if (isPlayer(row, col)) {
                     return Pairs.of(row, col);
                 }
             }
@@ -140,15 +143,8 @@ public class Board {
         return null;
     }
 
-    protected boolean validatePush(Pair pair) {
-        if (!validateRange(pair)) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validateRange(Pair pair) {
-        return pair.getX() >= 0 && pair.getX() < this.board.length && pair.getY() >= 0 && pair.getY() < this.board[0].length;
+    private boolean isPlayer(int x, int y) {
+        return this.board[x][y] == 4 || this.board[x][y] == 5;
     }
 
     protected boolean isAnswer() {

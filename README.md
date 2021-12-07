@@ -16,7 +16,7 @@
 <br/><br/>
 
 <details>
-<summary>📚	 Step 01.</summary>
+<summary>📔	 Step 01.</summary>
 <div markdown="1">
 
 ## 🖥 1단계 코딩 요구사항
@@ -25,6 +25,21 @@
 - 자기만의 기준으로 최대한 간결하게 코드를 작성한다.
 - Readme.md에 풀이 과정 및 코드 설명, 실행 결과를 기술하고 코드와 같이 gist에 포함해야 한다.
 - 제출시 gist URL과 revision 번호를 함께 제출한다.
+
+<br/><br/><br/>
+
+위 값을 읽어 2차원 배열로 변환 저장한다.
+<br/>
+
+| 기호  |<center>의미</center>| <center>스테이지 구분</center>|                                                        
+|:---:|:----|:------------------------------:|
+|  #  |&nbsp; 벽(Wall)       |&nbsp; 0|
+|  O  |&nbsp; 구멍(Hall)      |&nbsp; 1|
+|  o  |&nbsp; 공(Ball)       |&nbsp; 2|
+|  P  |&nbsp; 플레이어(Player) |&nbsp; 3|
+|  =  |&nbsp; 스테이지 구분         |&nbsp; 4|
+
+<br/><br/><br/>
 
 ## ⌨️ 입력
 
@@ -50,18 +65,6 @@ Stage 2
 ```text
 String word = "Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
 ```
-
-<br/><br/><br/>
-위 값을 읽어 2차원 배열로 변환 저장한다.
-<br/>
-
-| 기호  |<center>의미</center>| <center>스테이지 구분</center>|                                                        
-|:---:|:----|:------------------------------:|
-|  #  |&nbsp; 벽(Wall)       |&nbsp; 0|
-|  O  |&nbsp; 구멍(Hall)      |&nbsp; 1|
-|  o  |&nbsp; 공(Ball)       |&nbsp; 2|
-|  P  |&nbsp; 플레이어(Player) |&nbsp; 3|
-|  =  |&nbsp; 스테이지 구분         |&nbsp; 4|
 
 <br/><br/><br/>
 
@@ -112,7 +115,7 @@ Stage 2
 [comment]: <> (2단계)
 
 <details>
-<summary>📚	 Step 02.</summary>
+<summary>	📕	 Step 02.</summary>
 <div markdown="2-2">
 
 ## 🖥 2단계 코딩 요구사항
@@ -207,22 +210,24 @@ Bye~
 <br/><br/><br/>
 
 
+
 </div>
 </details>
-</details> 
+
 
 
 
 
 <details>
-<summary>📚	 Step 03.</summary>
+<summary>📗	 Step 03.</summary>
 <div markdown="3">
 <br/>
 
 ## 3단계 : 소코반 완성하기
-- 정상적인 소코반 게임을 완성하며 [해당 링크](https://www.cbc.ca/kids/games/play/sokoban)를 참조한다. 
 
-<br/><br/><br/>
+- 정상적인 소코반 게임을 완성하며 [해당 링크](https://www.cbc.ca/kids/games/play/sokoban)를 참조한다.
+
+<br/><br/>
 
 ## ✍🏻 기능 요구사항
 
@@ -235,16 +240,15 @@ Bye~
 
 <br/>
 
- - ### 참고
-   - 플레이어는 o를 밀어서 이동할 수 있지만 당길 수는 없다.
-   - o를 O 지점에 밀어 넣으면 0으로 변경된다.
-   - 플레이어는 O를 통과할 수 있다.
-   - 플레이어는 #을 통과할 수 없다.
-   - 0 상태의 o를 밀어내면 다시 o와 O로 분리된다.
-   - 플레이어가 움직일 때마다 턴수를 카운트한다.
-   - 상자가 두 개 연속으로 붙어있는 경우 밀 수 없다.
-   - 기타 필요한 로직은은 실제 게임을 참고해서 완성한다.
-
+- ### 참고
+    - 플레이어는 o를 밀어서 이동할 수 있지만 당길 수는 없다.
+    - o를 O 지점에 밀어 넣으면 0으로 변경된다.
+    - 플레이어는 O를 통과할 수 있다.
+    - 플레이어는 #을 통과할 수 없다.
+    - 0 상태의 o를 밀어내면 다시 o와 O로 분리된다.
+    - 플레이어가 움직일 때마다 턴수를 카운트한다.
+    - 상자가 두 개 연속으로 붙어있는 경우 밀 수 없다.
+    - 기타 필요한 로직은은 실제 게임을 참고해서 완성한다.
 
 <br/><br/><br/>
 
@@ -267,22 +271,48 @@ function main() {
 ````
 
 <br/><br/><br/>
-위 값을 읽어 2차원 배열로 변환 저장한다.
-<br/>
 
-|No| 기호  |<center>의미</center>| <center>스테이지 구분</center>|                                                        
-|:----:|:---:|:----|:------------------------------:|
-|1|`#`|&nbsp; 벽(Wall)       |&nbsp; 9|
-|2|` `|&nbsp; 빈 칸(Blank)    |&nbsp; 0|
-|3|`O`|&nbsp; 구멍(Hall)      |&nbsp; 1|
-|4|`o`|&nbsp; 공(Ball)       |&nbsp; 2|
-|5|`O`|&nbsp; 구멍 + 공       |&nbsp; 3|
-|6|`P`|&nbsp; 플레이어(Player) |&nbsp; 4|
-|7|`P`|&nbsp; 플레이어 + 구멍   |&nbsp; 5|
+## 🖥 실행 예시
+
+```text
+소코반의 세계에 오신 것을 환영합니다!
+^오^
+
+Stage 1
+
+#####
+#OoP#
+#####
+
+SOKOBAN> A
+
+#####
+#0P #
+#####
+
+빠밤! Stage 1 클리어!
+턴수: 1
+
+Stage 2
+...
+
+Stage 5
+...
+
+빠밤! Stage 5 클리어!
+턴수: 5
+
+전체 게임을 클리어하셨습니다!
+축하드립니다! 
+```
 
 </div>
 <br/><br/>
 </details>
+
+</details> 
+
+
 
 
 
@@ -343,7 +373,7 @@ function main() {
 # 풀이 과정 및 코드 설명
 
 <details>
-<summary>📚	 Step 01.</summary>
+<summary>📔	 Step 01.</summary>
 <div markdown="1">
 
 ## 1단계
@@ -691,7 +721,7 @@ private Position getPlayerPosition(int[][]map){
 
 
 <details>
-<summary>📚	 Step 02.</summary>
+<summary>📕	 Step 02.</summary>
 <div markdown="1">
 
 ## 2단계
@@ -1108,12 +1138,516 @@ public void printBoard(GameResult result){
         }
 ```
 
+<br/><br/><br/>
 </div>
 
 </details>
 
 
+
+
+
+<details>
+<summary>📘	 Step 03.</summary>
+<div markdown="1">
+
+
+<br/><br/>
+
+## 3단계
+
+캐릭터의 위치를 계산하기 위해 int[ ] [ ] 배열을 도입했습니다. 캐릭터의 위치를 계산하면서 이동시키는 과정이 많이 까다로웠는데, 첫 번째 미션을 하면서 int[ ] [ ]배열을 사용했던 것에서 아이디어를 얻을
+수 있었습니다. 이후 숫자를 아래와 같이 정의하고 이를 문자열로 변환하기만 했습니다.
+
+<br/><br/><br/>
+위 값을 읽어 2차원 배열로 변환 저장한다.
+<br/>
+
+|No| 기호  |<center>의미</center>| <center>스테이지 구분</center>|                                                        
+|:----:|:---:|:----|:------------------------------:|
+|1|`#`|&nbsp; 벽(Wall)       |&nbsp; 9|
+|2|` `|&nbsp; 빈 칸(Blank)    |&nbsp; 0|
+|3|`O`|&nbsp; 구멍(Hall)      |&nbsp; 1|
+|4|`o`|&nbsp; 공(Ball)       |&nbsp; 2|
+|5|`O`|&nbsp; 구멍 + 공       |&nbsp; 3|
+|6|`P`|&nbsp; 플레이어(Player) |&nbsp; 4|
+|7|`P`|&nbsp; 플레이어 + 구멍   |&nbsp; 5|
+
+<br/><br/><br/><br/>
+
+추가/및 변경된 클래스
+<br/>
+
+|No|종류|<center>이름</center>|<center>역할 및 책임</center>|
+|:----:|:---------------:|:------|:---|
+|1|class|&nbsp;Answer               |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
+|2|class|&nbsp;Disk                 |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+|3|class|&nbsp;Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 저장하는 클래스                  |
+|4|class|&nbsp;Stage                |&nbsp; Board와 Stageinformation을 담고 있는 클래스                   |
+|5|class|&nbsp;Stages               |&nbsp; Stage들을 저장하고 있는 클래스                                 |
+|6|class|&nbsp;StageInformation     |&nbsp; 가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스               |
+|7|class|&nbsp;StageInformationList |&nbsp; StageInformation 클래스들을 저장하고 있는 클래스                 |
+
 <br/><br/><br/><br/><br/>
+
+## 1. Answer
+
+초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
+
+### 1-1. int[][]calculateAnswer(int[][]array)
+
+<br/><br/>
+
+```java
+private int[][]calculateAnswer(int[][]array){
+        int[][]temp=new int[array.length][array[0].length];
+        for(int row=0;row<array.length;row++){
+        for(int col=0;col<array[0].length;col++){
+        temp[row][col]=changeNumber(array[row][col]);
+        }
+        }
+        return temp;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-2. int changeNumber(int value)
+
+<br/><br/>
+
+```java
+private int changeNumber(int value){
+        if(value==1)return 3;
+        if(value==2)return 0;
+        if(value==4)return 0;
+        return value;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-3. boolean isAnswer(int[][] array)
+
+<br/><br/>
+
+```java
+public boolean isAnswer(int[][]array){
+        int[][]map=deleteCharacter(array);
+        int[][]answer=this.answer;
+        for(int row=0;row<answer.length;row++){
+        if(checkColumn(row,map[row])){
+        return false;
+        }
+        }
+        return true;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-4. boolean checkColumn(int row, int[] array)
+
+<br/><br/>
+
+```java
+private boolean checkColumn(int row,int[]array){
+        for(int col=0;col<answer[0].length;col++){
+        if(array[col]!=this.answer[row][col]){
+        return true;
+        }
+        }
+        return false;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-4. boolean checkColumn(int row, int[] array)
+
+<br/><br/>
+
+```java
+private boolean checkColumn(int row,int[]array){
+        for(int col=0;col<answer[0].length;col++){
+        if(array[col]!=this.answer[row][col]){
+        return true;
+        }
+        }
+        return false;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-5. int[][] getOriginal() {
+
+<br/><br/>
+
+```java
+public int[][]getOriginal(){
+        int[][]temp=new int[original.length][original[0].length];
+        for(int row=0;row<original.length;row++){
+        for(int col=0;col<original[0].length;col++){
+        temp[row][col]=original[row][col];
+        }
+        }
+        return temp;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-5. int[][] deleteCharacter(int[][] array)
+
+<br/><br/>
+
+```java
+private int[][]deleteCharacter(int[][]array){
+        int[][]temp=new int[array.length][array[0].length];
+        for(int row=0;row<array.length;row++){
+        for(int col=0;col<array[0].length;col++){
+        temp[row][col]=changeCharacter(array[row][col]);
+        }
+        }
+        return temp;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-5. int changeCharacter(int value)
+
+<br/><br/>
+
+```java
+private int changeCharacter(int value){
+        if(value==4){
+        return 0;
+        }
+        return value;
+        }
+```
+
+<br/><br/><br/><br/>
+
+## 2. Disk
+
+Init에 관련된 정보를 담고 있는 클래스
+
+<br/>
+
+## 3. Init
+
+각 Stage와 Sokoban 게임의 정보를 저장하는 클래스
+
+<br/><br/><br/>
+
+## 4. Stage
+
+Board와 Stageinformation을 담고 있는 클래스
+<br/>
+
+### 4-1. List<GameResult> execute(List<Command> commandList)
+
+```java
+public List<GameResult> execute(List<Command> commandList){
+        List<GameResult> results=new ArrayList<>();
+        for(Command command:commandList){
+        if(command.equals(Command.R)){
+        return List.of(resetStage());
+        }
+        results.add(this.board.push(command));
+        }
+        return results;
+        }
+```
+
+<br/>
+
+### 4-2. GameResult resetStage()
+
+```java
+public GameResult resetStage(){
+        this.board.reset();
+        return new GameResult(this.board.getBoard());
+        }
+```
+
+<br/><br/><br/>
+
+## 5. Stages
+
+Stage들을 저장하고 있는 클래스
+
+```java
+public class Stages {
+
+    private static final Map<Integer, Stage> stages = new HashMap<>();
+
+    private Stages() {
+    }
+
+    public static void putStage(int id, StageInformation information, Board board) {
+        stages.put(id, new Stage(board, information));
+    }
+
+    public static Stages of() {
+        return new Stages();
+    }
+
+    public Stage getStage(int value) {
+        return stages.get(value);
+    }
+}
+```
+
+<br/><br/><br/>
+
+## 6. StageInformation
+
+가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스
+
+```java
+public class Stages {
+
+    private static final Map<Integer, Stage> stages = new HashMap<>();
+
+    private Stages() {
+    }
+
+    public static void putStage(int id, StageInformation information, Board board) {
+        stages.put(id, new Stage(board, information));
+    }
+
+    public static Stages of() {
+        return new Stages();
+    }
+
+    public Stage getStage(int value) {
+        return stages.get(value);
+    }
+}
+```
+
+<br/><br/><br/>
+
+## 7. StageInformationList
+
+StageInformation 클래스들을 저장하고 있는 클래스
+
+```java
+public class Stages {
+
+    private static final Map<Integer, Stage> stages = new HashMap<>();
+
+    private Stages() {
+    }
+
+    public static void putStage(int id, StageInformation information, Board board) {
+        stages.put(id, new Stage(board, information));
+    }
+
+    public static Stages of() {
+        return new Stages();
+    }
+
+    public Stage getStage(int value) {
+        return stages.get(value);
+    }
+}
+```
+
+주요 변경 클래스
+<br/>
+
+|No|종류|<center>이름</center>|<center>역할 및 책임</center>|
+|:----:|:---------------:|:------|:---|
+|1|class|&nbsp;Board                |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
+|2|class|&nbsp;GameMachine          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+|3|class|&nbsp;GameManager          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+
+<br/><br/><br/><br/><br/>
+
+## 1. Board
+
+초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
+
+### 1-1. GameResult push(Command command)
+
+<br/><br/>
+
+```java
+GameResult push(Command command){
+        GameResult gameResult=new GameResult();
+        Pair pair=findPlayerPosition();
+
+        int moveBlockX=pair.getX()+command.getNextPosition().get(0);
+        int moveBlockY=pair.getY()+command.getNextPosition().get(1);
+        int[][]newBoard=copyBoard();
+
+        if(moveable(Pairs.of(moveBlockX,moveBlockY))){
+        int[][]updatedBoard=move(pair,newBoard,Pairs.of(moveBlockX,moveBlockY));
+        update(updatedBoard);
+        gameResult.addBoard(this.getBoard());
+        }else if(pushable(Pairs.of(moveBlockX,moveBlockY),command)){
+        int[][]updatedBoard=pushBall(pair,newBoard,Pairs.of(moveBlockX,moveBlockY),command);
+        update(updatedBoard);
+        gameResult.addBoard(this.getBoard());
+        }
+        checkGameResult(gameResult);
+        return gameResult;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-1. GameResult push(Command command)
+
+<br/><br/>
+
+```java
+public int[][] move( Pair position, int[][] board, Pair nextPosition){
+        board[position.getX()][position.getY()] -= 4;
+        board[nextPosition.getX()][nextPosition.getY()] += 4;
+        return board;
+        }
+
+public int[][] pushBall(Pair position, int[][] board, Pair nextPosition, Command command){
+        board[position.getX()][position.getY()] -= 4;
+        board[nextPosition.getX()][nextPosition.getY()] += 4;
+        board[nextPosition.getX()][nextPosition.getY()] -= 2;
+        board[nextPosition.getX() + command.getNextPosition().get(0)][nextPosition.getY() + command.getNextPosition().get(1)] += 2;
+        return board;
+        }
+```
+
+<br/><br/><br/>
+
+### 1-1. GameResult push(Command command)
+
+<br/><br/>
+
+```java
+    public boolean isBall(int x, int y) {
+        return this.board[x][y] == 2;
+        }
+
+public boolean moveable(Pair pair) {
+        return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1 ;
+        }
+
+public boolean isBlank(int x, int y) {
+        return this.board[x][y] == 0;
+        }
+
+public boolean isHall(int x, int y) {
+        return this.board[x][y] == 1;
+        }
+
+public boolean isBallOnTheHole(int x, int y) {
+        return this.board[x][y] == 3;
+        }
+```
+
+<br/><br/><br/>
+
+
+
+
+
+
+### 1-1. GameResult push(Command command)
+
+<br/><br/>
+
+```java
+    }
+
+protected Pair findPlayerPosition() {
+        for (int row = 0; row < this.board.length; row++) {
+        for (int col = 0; col < this.board[0].length; col++) {
+        if (isPlayer(row, col)) {
+        return Pairs.of(row, col);
+        }
+        }
+        }
+        return null;
+        }
+
+private boolean isPlayer(int x, int y) {
+        return this.board[x][y] == 4 || this.board[x][y] == 5;
+        }
+
+protected boolean isAnswer() {
+        return answer.isAnswer(this.board);
+        }
+
+public void reset() {
+        int[][] reset = this.answer.getOriginal();
+        update(reset);
+        }
+```
+
+<br/><br/><br/>
+
+
+
+## 2. GameMachine
+
+초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
+
+### 1-1. GameResult push(Command command)
+
+
+<br/><br/>
+
+```java
+    Stage getStage(int value){
+        return stages.getStage(value);
+        }
+
+public List<GameResult> play(int stageNumber, List<Command> commands) {
+        Stage stage = stages.getStage(stageNumber);
+        return stage.execute(commands);
+        }
+
+
+```
+
+
+<br/><br/><br/><br/>
+
+## 2. GameMachine
+
+초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
+
+### 1-1. GameResult push(Command command)
+
+
+<br/><br/>
+
+```java
+    Stage getStage(int value){
+        return stages.getStage(value);
+        }
+
+public List<GameResult> play(int stageNumber, List<Command> commands) {
+        Stage stage = stages.getStage(stageNumber);
+        return stage.execute(commands);
+        }
+
+
+```
+
+
+
+
+
+</div>
+</details>
+
+<br/><br/><br/><br/>
 
 ## 테스트 케이스
 
@@ -1122,7 +1656,7 @@ public void printBoard(GameResult result){
 
 
 <details>
-<summary>📚	 Step 01.</summary>
+<summary>📔	 Step 01.</summary>
 <div markdown="1">
 
 ## ⌨️ 입력
@@ -1193,7 +1727,7 @@ Stage: 2
 </details>
 
 <details>
-<summary>📚	 Step 02.</summary>
+<summary>📕	 Step 02.</summary>
 <div markdown="2">
 
 ## ⌨️ 입력

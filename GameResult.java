@@ -24,6 +24,4 @@ public class GameResult {
     public void addBoard(String[][] board) {
         this.board = board;
     }
-
-
 }

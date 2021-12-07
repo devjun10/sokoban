@@ -30,21 +30,20 @@ public class Answer {
         int[][] map = deleteCharacter(array);
         int[][] answer = this.answer;
         for (int row = 0; row < answer.length; row++) {
-            for(int col=0; col<answer[0].length; col++){
-                if(map[row][col]!=answer[row][col]){
-                    return false;
-                }
+            if(checkColumn(row, map[row])){
+                return false;
             }
         }
         return true;
     }
 
-    public int[][] getAnswer() {
-        int[][] temp = new int[answer.length][answer[0].length];
-        for (int row = 0; row < answer.length; row++) {
-            temp[row] = this.answer[row].clone();
+    private boolean checkColumn(int row, int[] array){
+        for(int col=0; col<answer[0].length; col++){
+            if(array[col] != this.answer[row][col]){
+                return true;
+            }
         }
-        return temp;
+        return false;
     }
 
     public int[][] getOriginal() {
