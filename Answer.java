@@ -1,23 +1,23 @@
 public class Answer {
 
-    private String[][] answer;
+    private int[][] answer;
 
-    public Answer(String[][] answer) {
+    public Answer(int[][] answer) {
         this.answer = answer;
     }
 
-    public String[][] getAnswer() {
+    public int[][] getAnswer() {
         return answer;
     }
 
-    public boolean checkAnswer(String[][] board) {
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
-                if (board[row][col].equals(this.answer[row][col])) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+//    public boolean checkAnswer(int[][] board) {
+//        for (int row = 0; row < board.length; row++) {
+//            for (int col = 0; col < board[0].length; col++) {
+//                if (board[row][col].equals(this.answer[row][col])) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 }

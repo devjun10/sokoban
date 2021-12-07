@@ -10,6 +10,7 @@ public enum Command {
     RIGHT("d", "D: 오른쪽으로 이동합니다.", List.of(0, 1)),
     LEFT("a", "A: 왼쪽으로 이동합니다.", List.of(0, -1)),
     INVALID_COMMAND(String.valueOf(Long.MAX_VALUE), "(경고!) 해당 명령을 수행할 수 없습니다!", List.of()),
+    R("r", "R: 스테이지를 초기화합니다.", List.of()),
     Q("q", "Bye~", List.of());
 
     private final String command;

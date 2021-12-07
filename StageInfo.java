@@ -11,8 +11,9 @@ public class StageInfo {
     static StageInfo of() {
         List<StageInformation> lst = List.of(
                 new StageInformation(1, 6, 6),
-                new StageInformation(2, 6, 5),
-                new StageInformation(3, 6, 6)
+                new StageInformation(2, 5, 6),
+                new StageInformation(3, 6, 6),
+                new StageInformation(4, 6, 7)
         );
         stages = lst;
         return new StageInfo();
@@ -26,6 +27,10 @@ public class StageInfo {
     }
 
     public static List<StageInformation> getStages() {
+        return stages;
+    }
+
+    List<StageInformation> getStageInformation(){
         return stages;
     }
 }
