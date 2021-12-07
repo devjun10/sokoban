@@ -5,7 +5,7 @@ public class GameMachine {
     private Disk disk = Disk.of();
     private Stages stages = Stages.of();
     private Board board = Board.of();
-
+    private Slot slot = Slot.of();
 
     GameResult getBoard() {
         return new GameResult(board.getBoard());

@@ -48,4 +48,7 @@ public class SaveData {
         return temp;
     }
 
+    public void addAll(List<GameResult> executeResult) {
+
+    }
 }
