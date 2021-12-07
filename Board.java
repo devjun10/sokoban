@@ -1,7 +1,8 @@
 public class Board {
 
     private int id;
-    private final int BOARD_START = 0;
+    private int BOARD_WIDTH;
+    private int BOARD_HEIGHT;
 
     private int[][] board;
     private Answer answer;
@@ -19,6 +20,9 @@ public class Board {
         this.board[4] = new int[]{9, 1, 9, 0, 0, 0};
         this.board[5] = new int[]{9, 9, 9, 0, 0, 0};
 
+        this.BOARD_WIDTH = board[0].length;
+        this.BOARD_HEIGHT = board.length;
+
         this.answer = new Answer(copyBoard(this.board));
     }
 
@@ -31,15 +35,23 @@ public class Board {
                 System.out.print(board.board[i][j]);
             }
         }
-        Command command = Command.getDirection("w");
+        Command command = Command.getDirection("a");
         System.out.println();
         Pair playerPosition = board.findPlayerPosition();
-        int nextX = playerPosition.getX() + command.getNextPosition().get(0);
-        int nextY = playerPosition.getY() + command.getNextPosition().get(1);
 
+        Command command2 = Command.getDirection("d");
+        board.push(playerPosition, command);
 
-        System.out.println(playerPosition.getX());
-        System.out.println(playerPosition.getY());
+        Pair playerPosition2 = board.findPlayerPosition();
+        board.push(playerPosition2, command2);
+
+        for (int i = 0; i < 6; i++) {
+            System.out.println();
+            for (int j = 0; j < 6; j++) {
+                System.out.print(board.board[i][j]);
+            }
+        }
+
 
     }
 
@@ -64,14 +76,47 @@ public class Board {
         this.board = this.answer.getAnswer();
     }
 
-    void push(Pair pair) {
+    void push(Pair pair, Command command) {
+        int currentX = pair.getX();
+        int currentY = pair.getY();
+        int pushBlockX = pair.getX() + command.getNextPosition().get(0);
+        int pushBlockY = pair.getY() + command.getNextPosition().get(1);
 
+        if (moveable(Pairs.of(pushBlockX, pushBlockY), command)) {
+            System.out.println(11);
+            this.board[currentX][currentY] -= 4;
+            this.board[pushBlockX + command.getNextPosition().get(0)][pushBlockY + command.getNextPosition().get(1)] += 4;
+            update(board);
+            return;
+        }
+
+        System.out.println("=====");
+
+    }
+
+    public boolean moveable(Pair pair, Command command) {
+        int x = pair.getX();
+        int y = pair.getY();
+
+        int fonrtOfBallX = x + command.getNextPosition().get(0);
+        int fonrtOfBallY = y + command.getNextPosition().get(1);
+        return (isBall(x, y) && this.board[fonrtOfBallX][fonrtOfBallY] == 0)
+                || (isBall(x, y) && this.board[fonrtOfBallX][fonrtOfBallY] == 1) || this.board[x][y] == 0 || this.board[x][y] == 1;
+    }
+
+    public boolean isBall(int x, int y) {
+        return this.board[x][y] == 2;
+    }
+
+    // 벽을 만났을 대
+    public boolean isWall(int x, int y) {
+        return this.board[x][y] == 9;
     }
 
     String[][] getBoard() {
         String[][] copyBoard = new String[this.board[0].length][this.board.length];
-        for (int row = BOARD_START; row < this.board.length; row++) {
-            for (int col = BOARD_START; col < this.board[0].length; col++) {
+        for (int row = BOARD_HEIGHT; row < this.board.length; row++) {
+            for (int col = BOARD_WIDTH; col < this.board[0].length; col++) {
                 copyBoard[row][col] = changeIntSymbol(this.board[row][col]);
             }
         }
@@ -94,34 +139,17 @@ public class Board {
         return null;
     }
 
-    protected boolean validatePosition(Pair pair) {
+    protected boolean validatePush(Pair pair) {
         if (!validateRange(pair)) {
-            return false;
-        }
-        if (!validateMoveable(pair)) {
             return false;
         }
         return true;
     }
 
     private boolean validateRange(Pair pair) {
-        return pair.getX() >= 0 && pair.getX() < 7 && pair.getY() >= 0 && pair.getY() < 11;
+        return pair.getX() >= 0 && pair.getX() < BOARD_HEIGHT && pair.getY() >= 0 && pair.getY() < BOARD_WIDTH;
     }
 
-    private boolean validateMoveable(Pair pair) {
-        return this.board[pair.getX()][pair.getY()] == 9 && this.board[pair.getX()][pair.getY()] == 1;
-    }
-
-    public static String changeSymbol(String word) {
-        word = word.replaceAll("9", "#");
-        word = word.replaceAll("0", " ");
-        word = word.replaceAll("1", "O");
-        word = word.replaceAll("2", "o");
-        word = word.replaceAll("3", "0");
-        word = word.replaceAll("4", "P");
-        word = word.replaceAll("5", "P");
-        return word;
-    }
 
     public static String changeIntSymbol(int value) {
         if (value == 5) return "P";
