@@ -46,7 +46,6 @@ public class Init {
     }
 
     static String joiningTextFileWord(){
-        String word = null;
         try {
             stringBuilder.setLength(0);
             File file = new File("map.txt");
@@ -59,12 +58,19 @@ public class Init {
                 }
                 stringBuilder.append(",").append(line);
             }
-            word = stringBuilder.substring(1);
             bufReader.close();
         } catch (IOException e) {
             System.out.println(e);
         }
-        return word;
+        return stringBuilder.substring(1);
+    }
+
+    static int getMaxLength(){
+        return 1;
+    }
+
+    private String[] splitByStage(String word){
+        return word.split("==========");
     }
 
     public static void main(String[] args) {
@@ -97,6 +103,8 @@ public class Init {
             System.out.println(e);
         }
 
-        lst.forEach(word -> System.out.println(word.length()));
+//        lst.forEach(word -> System.out.println(word.length()));
+        Init init = new Init();
+        System.out.println(joiningTextFileWord());
     }
 }
