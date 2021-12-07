@@ -1,6 +1,7 @@
 public enum Message {
 
     STAGE_INFO("Stage "),
+    BLANK("\n"),
     CLEAR("클리어!"),
     CLEAR_CELEBRATION("전체 게임을 클리어하셨습니다!"),
     TURN_COUNT("턴수:"),

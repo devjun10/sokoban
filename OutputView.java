@@ -6,7 +6,6 @@ public class OutputView {
 
     public void initBoard(String[][] board) {
         stringBuilder.setLength(0);
-        stringBuilder.append("Stage 2").append("\n").append("\n");
 
         for (int row = 0; row < board.length; row++) {
             if (row != 0) {

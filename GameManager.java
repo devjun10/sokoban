@@ -13,6 +13,15 @@ public class GameManager {
         System.out.println(Message.CELEBRATION);
     }
 
+    public void sayTurnCount(int value) {
+        System.out.println(Message.TURN_COUNT + "" + value);
+    }
+
+    public void sayTurnClear(int value) {
+
+        System.out.println(Message.BLANK + "" + Message.STAGE_INFO + "" + value + "" + Message.CLEAR + Message.BLANK);
+    }
+
     public List<Command> getCommand(List<String> direction) {
         List<Command> commands = new ArrayList<>();
         for (int i = 0; i < direction.size(); i++) {
@@ -23,6 +32,18 @@ public class GameManager {
         return commands;
     }
 
+    public int stageUp(int value) {
+        return value += 1;
+    }
+
+    public int plusTurn(int value) {
+        return value + 1;
+    }
+
+    public int turnInit() {
+        return 0;
+    }
+
     private void validateQuit(Command command) {
         if (command.getCommand().equals("q")) {
             System.out.println();
@@ -31,10 +52,4 @@ public class GameManager {
         }
     }
 
-    public List<GameResult> manageResult(List<GameResult> results) {
-        List<GameResult> addResult = new ArrayList<>();
-
-
-        return null;
-    }
 }

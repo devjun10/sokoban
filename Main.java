@@ -11,16 +11,24 @@ public class Main {
 
         manager.sayHello();
         int stageNumber = 1;
+        int turn = 0;
 
-        while (true) {
+        while (stageNumber<5) {
             Stage stage = gameMachine.getStage(stageNumber);
             outputView.initBoard(stage.getBoard());
             while (!stage.isAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
                 outputView.printResult(result);
+                turn = manager.plusTurn(turn);
+                manager.sayTurnCount(turn);
             }
-            stageNumber++;
+            turn = manager.turnInit();
+            if(turn==0){
+                manager.sayTurnClear(stageNumber);
+            }
+            stageNumber = manager.stageUp(stageNumber);
         }
+        manager.sayGoodBye();
     }
 }
