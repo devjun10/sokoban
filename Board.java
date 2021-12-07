@@ -26,25 +26,13 @@ public class Board {
         this.answer = new Answer(copyBoard(this.board));
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args){
         Board board = new Board();
-
-        for (int i = 0; i < 6; i++) {
-            System.out.println();
-            for (int j = 0; j < 6; j++) {
-                System.out.print(board.board[i][j]);
-            }
-        }
         Command command = Command.getDirection("a");
-        System.out.println();
         Pair playerPosition = board.findPlayerPosition();
-
-        Command command2 = Command.getDirection("d");
+        System.out.println(playerPosition);
         board.push(playerPosition, command);
 
-        Pair playerPosition2 = board.findPlayerPosition();
-        board.push(playerPosition2, command2);
-
         for (int i = 0; i < 6; i++) {
             System.out.println();
             for (int j = 0; j < 6; j++) {
@@ -52,7 +40,17 @@ public class Board {
             }
         }
 
+        Command commandSecond = Command.getDirection("a");
+        Pair movedPlayer = board.findPlayerPosition();
+        System.out.println("Moved= "+movedPlayer);
+        board.push(movedPlayer, commandSecond);
 
+        for (int i = 0; i < 6; i++) {
+            System.out.println();
+            for (int j = 0; j < 6; j++) {
+                System.out.print(board.board[i][j]);
+            }
+        }
     }
 
     static Board of() {
@@ -76,41 +74,44 @@ public class Board {
         this.board = this.answer.getAnswer();
     }
 
-    void push(Pair pair, Command command) {
+    GameResult push(Pair pair, Command command) {
         int currentX = pair.getX();
         int currentY = pair.getY();
-        int pushBlockX = pair.getX() + command.getNextPosition().get(0);
-        int pushBlockY = pair.getY() + command.getNextPosition().get(1);
 
-        if (moveable(Pairs.of(pushBlockX, pushBlockY), command)) {
-            System.out.println(11);
-            this.board[currentX][currentY] -= 4;
-            this.board[pushBlockX + command.getNextPosition().get(0)][pushBlockY + command.getNextPosition().get(1)] += 4;
-            update(board);
-            return;
+        int moveBlockX = pair.getX() + command.getNextPosition().get(0);
+        int moveBlockY = pair.getY() + command.getNextPosition().get(1);
+        int[][] newBoard = copyBoard();
+        if (moveable(pair)) {
+            newBoard[currentX][currentY] -= 4;
+            newBoard[moveBlockX][moveBlockY] += 4;
+            update(newBoard);
         }
-
-        System.out.println("=====");
-
+        else if (pushable(Pairs.of(moveBlockX, moveBlockY), command)) {
+            newBoard[currentX][currentY] -= 4;
+            newBoard[moveBlockX + command.getNextPosition().get(0)][moveBlockY + command.getNextPosition().get(1)] += 4;
+            newBoard[moveBlockX][moveBlockY] -= 2;
+            newBoard[moveBlockX + command.getNextPosition().get(0)][moveBlockY + command.getNextPosition().get(1)] += 2;
+            update(newBoard);
+        }
+        return new GameResult(this.getBoard());
     }
 
-    public boolean moveable(Pair pair, Command command) {
+    public boolean pushable(Pair pair, Command command) {
         int x = pair.getX();
         int y = pair.getY();
 
         int fonrtOfBallX = x + command.getNextPosition().get(0);
         int fonrtOfBallY = y + command.getNextPosition().get(1);
-        return (isBall(x, y) && this.board[fonrtOfBallX][fonrtOfBallY] == 0)
-                || (isBall(x, y) && this.board[fonrtOfBallX][fonrtOfBallY] == 1) || this.board[x][y] == 0 || this.board[x][y] == 1;
+
+        return (isBall(x, y) && this.board[fonrtOfBallX][fonrtOfBallY] == 0) || (isBall(x, y) && this.board[fonrtOfBallX][fonrtOfBallY] == 1);
+    }
+
+    public boolean moveable(Pair pair) {
+        return this.board[pair.getY()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1;
     }
 
     public boolean isBall(int x, int y) {
         return this.board[x][y] == 2;
-    }
-
-    // 벽을 만났을 대
-    public boolean isWall(int x, int y) {
-        return this.board[x][y] == 9;
     }
 
     String[][] getBoard() {
@@ -123,8 +124,17 @@ public class Board {
         return copyBoard;
     }
 
+    int[][] copyBoard() {
+        int[][] copyBoard = new int[this.board.length][this.board[0].length];
+        for (int row = 0; row < this.board.length; row++) {
+            copyBoard[row] = this.board[row].clone();
+        }
+        return copyBoard;
+    }
+
     protected void update(int[][] updatedBoard) {
         this.board = null;
+        System.out.println("Update!!!!!!!!!!");
         this.board = updatedBoard;
     }
 

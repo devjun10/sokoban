@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,9 +9,15 @@ public class Init {
 
     private static final StringBuilder stringBuilder = new StringBuilder();
     private static final StageInfo stageInfo = StageInfo.of();
+    private static final Boards boards = Boards.of();
 
     static {
+        List<StageInformation> information = stageInfo.getStageInformation();
+        List<Board> boards = null;
 
+        for (int i = 0; i < 4; i++) {
+
+        }
     }
 
     List<StageInformation> getStageInformation() {
@@ -37,6 +46,7 @@ public class Init {
         } catch (IOException e) {
             System.out.println(e);
         }
+        System.out.println(stringBuilder.toString());
         return splitByStage(stringBuilder.toString());
     }
 
@@ -44,44 +54,25 @@ public class Init {
         return word.split("==========");
     }
 
-    public static List<String[][]> getMap(String[] word) {
-        List<String[][]> lst = new ArrayList<>();
-        List<StageInformation> information = stageInfo.getStageInformation();
-//        StageInformation info = stageInfo.getInformation(1);
-        for (int row = 0; row < word.length; row++) {
-            StageInformation info = information.get(row);
-            System.out.println(info);
-            String temp = word[row];
-            temp = changeSymbol(temp);
-            String[][] a = getWordAsList(temp, info.getHeight(), info.getWidth());
-            lst.add(a);
-            for (int f = 0; f < info.getHeight(); f++) {
-                System.out.println();
-                for (int col = 0; col < info.getWidth(); col++) {
-                    System.out.print(a[f][col]);
-                }
-            }
-        }
-        return lst;
+    private static String[] splitByComma(String word) {
+        return word.split(",");
     }
 
-    public static String[][] getWordAsList(String word, int height, int width) {
-        String[][] temp = new String[height][width];
-        List<String> lst = new ArrayList<>();
-        System.out.println(word);
 
-        for(int row=0 ; row<height; row++) {
-            for (int i = 0; i < word.length(); i++) {
-                temp[row][word.length() % width] = String.valueOf(word.charAt(i));
-            }
-        }
-        for(int row=0; row<height; row++){
-            System.out.println();
-            for(int col=0; col<width; col++){
-                System.out.print(temp[row][col]);
-            }
-        }
+    public static List<String[][]> getWordAsList(String word) {
+        List<String[][]> temp = new ArrayList<>();
+        List<StageInformation> information = StageInfo.getStages();
+        //999999,900409,929999,909000,919000,999000
+        String[] stages = splitByComma(word);// 각 스테이지 별로 나뉘어 져 있음
 
+        for (int count = 0; count < stages.length; count++) {
+            StageInformation info = information.get(count);
+            String[][] array = new String[info.getHeight()][info.getWidth()];
+            for (int row = 0; row < info.getHeight(); row++) {
+                array[row] = stages[count].split(",");
+            }
+
+        }
 
         return temp;
     }
@@ -98,10 +89,23 @@ public class Init {
     }
 
     public static void main(String[] args) throws Exception {
-        String[] a = joiningTextFileWord();
-        getMap(a);
-        System.out.println(getMap(a).size());
+        String[] word = joiningTextFileWord();
+        for (int i = 0; i < word.length; i++) {
+            System.out.println(word[i]);
+        }
+        String temp = word[0];
+//        String[][] array = getWordAsList(temp, 6, 6);
+//        for (int row = 0; row < 6; row++) {
+//            System.out.println();
+//            for (int col = 0; col < 6; col++) {
+//                System.out.print(array[row][col]);
+//            }
+//        }
+
+
     }
 }
+
+
 
 

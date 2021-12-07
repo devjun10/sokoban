@@ -1,11 +1,12 @@
 public enum Message {
 
-    STAGE_INFO("Stage: "),
-    HORIZONTAL_LENGTH("가로크기: "),
-    VERTICAL_LENGTH("세로크기: "),
-    HOLE_COUNT("구멍 수: "),
-    BALL_COUNT("공의 수: "),
-    PLAYER_POSITION("플레이어 위치: "),
+    STAGE_INFO("Stage "),
+    CLEAR("클리어!"),
+    CLEAR_CELEBRATION("전체 게임을 클리어하셨습니다!"),
+    TURN_COUNT("턴수:"),
+    CELEBRATION("축하드립니다!"),
+    DOT("..."),
+
     SOKOBAN("SOKOBAN> ");
 
     private final String message;
