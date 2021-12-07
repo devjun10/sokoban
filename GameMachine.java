@@ -19,7 +19,8 @@ public class GameMachine {
         this.board.update(updatedBoard);
     }
 
-    public GameResult play(List<Command> commands) {
-        return null;
+    public List<GameResult> play(int stageNumber, List<Command> commands) {
+        Stage stage = stages.getStage(stageNumber);
+        return stage.execute(commands);
     }
 }

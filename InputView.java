@@ -50,7 +50,7 @@ public class InputView {
             }
             words.add(temp[number]);
         }
-        if(words.size()==0){
+        if(words.isEmpty()){
             throw new IllegalArgumentException();
         }
         return words;

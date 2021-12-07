@@ -34,7 +34,7 @@ public enum Command {
                 .orElse(INVALID_COMMAND);
     }
 
-    public static List<String> getCommands(){
+    public static List<String> getCommands() {
         return Stream.of(values())
                 .map(Command::getCommand)
                 .map(String::toLowerCase)

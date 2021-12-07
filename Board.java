@@ -34,7 +34,9 @@ public class Board {
         return answer.getAnswer();
     }
 
-    GameResult push(Pair pair, Command command) {
+    GameResult push(Command command) {
+        Pair pair = findPlayerPosition();
+
         int moveBlockX = pair.getX() + command.getNextPosition().get(0);
         int moveBlockY = pair.getY() + command.getNextPosition().get(1);
         int[][] newBoard = copyBoard();
@@ -59,11 +61,17 @@ public class Board {
         int y = pair.getY();
         int fonrtOfBallX = x + command.getNextPosition().get(0);
         int fonrtOfBallY = y + command.getNextPosition().get(1);
-        return (isBall(x, y) && isBlank(fonrtOfBallX, fonrtOfBallY)) || (isBall(x, y) && isHall(fonrtOfBallX, fonrtOfBallY));
+        return (isBall(x, y) && isBlank(fonrtOfBallX, fonrtOfBallY))
+                || (isBall(x, y) && isHall(fonrtOfBallX, fonrtOfBallY))
+                || isBallOnTheHole(x, y) && isBlank(fonrtOfBallX, fonrtOfBallY);
+    }
+
+    public boolean isBall(int x, int y) {
+        return this.board[x][y] == 2;
     }
 
     public boolean moveable(Pair pair) {
-        return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1;
+        return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1 ;
     }
 
     public boolean isBlank(int x, int y) {
@@ -74,8 +82,8 @@ public class Board {
         return this.board[x][y] == 1;
     }
 
-    public boolean isBall(int x, int y) {
-        return this.board[x][y] == 2;
+    public boolean isBallOnTheHole(int x, int y) {
+        return this.board[x][y] == 3;
     }
 
     String[][] getBoard() {

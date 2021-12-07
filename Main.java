@@ -11,24 +11,20 @@ public class Main {
         GameManager manager = new GameManager();
 
         manager.sayHello();
-        int stageNumber = 1;
+        int stageNumber = 3;
 
         while (true) {
             Stage stage = gameMachine.getStage(stageNumber);
+            outputView.initBoard(stage.board());
+
             while (true) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
-                GameResult result = gameMachine.play(commands);
+                List<GameResult> result = gameMachine.play(stageNumber, commands);
+                outputView.printResult(result);
+//                return;
             }
         }
 
-//        Stage stage = Stages.of().getStage(1);
-//
-//        String[][] array = stage.board();
-//        for (int row = 0; row < array.length; row++) {
-//            System.out.println();
-//            for (int col = 0; col < array[0].length; col++) {
-//                System.out.print(array[row][col]);
-//            }
-//        }
+
     }
 }
