@@ -77,4 +77,15 @@ public class Board {
     private boolean validateMoveable(Pair pair) {
         return this.board[pair.getX()][pair.getY()].equals(" ");
     }
+
+    public static String changeSymbol(String word){
+        word = word.replaceAll("9", "#");
+        word = word.replaceAll("0", " ");
+        word = word.replaceAll("1", "O");
+        word = word.replaceAll("2", "o");
+        word = word.replaceAll("3", "0");
+        word = word.replaceAll("4", "P");
+        word = word.replaceAll("5", "P");
+        return word;
+    }
 }
