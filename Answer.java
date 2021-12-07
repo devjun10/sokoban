@@ -47,6 +47,16 @@ public class Answer {
         return temp;
     }
 
+    public int[][] getOriginal() {
+        int[][] temp = new int[original.length][original[0].length];
+        for (int row = 0; row < original.length; row++) {
+            for (int col = 0; col < original[0].length; col++) {
+                temp[row][col] = original[row][col];
+            }
+        }
+        return temp;
+    }
+
     private int[][] deleteCharacter(int[][] array) {
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {

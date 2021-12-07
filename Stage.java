@@ -20,9 +20,17 @@ public class Stage {
     public List<GameResult> execute(List<Command> commandList) {
         List<GameResult> results = new ArrayList<>();
         for (Command command : commandList) {
+            if(command.equals(Command.R)){
+                return List.of(resetStage());
+            }
             results.add(this.board.push(command));
         }
         return results;
+    }
+
+    public GameResult resetStage(){
+        this.board.reset();
+        return new GameResult(this.board.getBoard());
     }
 
     @Override
@@ -32,7 +40,7 @@ public class Stage {
                 '}';
     }
 
-    public boolean isAnswer() {
-        return this.board.isAnswer();
+    public boolean isNotAnswer() {
+        return !this.board.isAnswer();
     }
 }

@@ -3,7 +3,6 @@ import java.util.List;
 
 public class GameManager {
 
-
     public void sayHello() {
         System.out.println(Message.GREET);
     }
@@ -18,7 +17,6 @@ public class GameManager {
     }
 
     public void sayTurnClear(int value) {
-
         System.out.println(Message.BLANK + "" + Message.STAGE_INFO + "" + value + "" + Message.CLEAR + Message.BLANK);
     }
 
@@ -26,6 +24,9 @@ public class GameManager {
         List<Command> commands = new ArrayList<>();
         for (int i = 0; i < direction.size(); i++) {
             Command command = Command.getDirection(direction.get(i));
+            if(command.equals(Command.R)){
+                return List.of(Command.R);
+            }
             validateQuit(command);
             commands.add(command);
         }
@@ -52,4 +53,7 @@ public class GameManager {
         }
     }
 
+    public void sayTurnReset() {
+        System.out.println(Message.TURN_RESET);
+    }
 }

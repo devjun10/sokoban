@@ -154,4 +154,9 @@ public class Board {
     protected boolean isAnswer() {
         return answer.isAnswer(this.board);
     }
+
+    public void reset() {
+        int[][] reset = this.answer.getOriginal();
+        update(reset);
+    }
 }

@@ -8,6 +8,7 @@ public enum Message {
     CELEBRATION("축하드립니다!"),
     DOT("..."),
     GREET("소코반의 세계에 오신 것을 환영합니다!\n^오^\n"),
+    TURN_RESET("해당 턴을 초기화 합니다.\n"),
     SOKOBAN("SOKOBAN> ");
 
     private final String message;

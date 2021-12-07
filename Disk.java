@@ -7,4 +7,5 @@ public class Disk {
     public static Disk of() {
         return new Disk();
     }
+
 }

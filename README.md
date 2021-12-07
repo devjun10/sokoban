@@ -26,7 +26,6 @@
 - Readme.md에 풀이 과정 및 코드 설명, 실행 결과를 기술하고 코드와 같이 gist에 포함해야 한다.
 - 제출시 gist URL과 revision 번호를 함께 제출한다.
 
-
 ## ⌨️ 입력
 
 아래 내용을 문자열로 넘겨서 처리하는 함수를 작성한다. 복사는 아래 text를 이용하시면 됩니다. **아래 문자는 편의를 위해 "\n"을 조정했습니다.
@@ -116,7 +115,6 @@ Stage 2
 <summary>📚	 Step 02.</summary>
 <div markdown="2-2">
 
-
 ## 🖥 2단계 코딩 요구사항
 
 - 너무 크지 않은 함수 단위로 구현하고 중복된 코드를 줄이도록 노력한다.
@@ -148,7 +146,6 @@ Stage 2
 <br/><br/><br/>
 
 ## 🖥 출력
-
 
 ```text
 Stage 2
@@ -215,6 +212,80 @@ Bye~
 </details> 
 
 
+
+
+<details>
+<summary>📚	 Step 03.</summary>
+<div markdown="3">
+<br/>
+
+## 3단계 : 소코반 완성하기
+- 정상적인 소코반 게임을 완성하며 [해당 링크](https://www.cbc.ca/kids/games/play/sokoban)를 참조한다. 
+
+<br/><br/><br/>
+
+## ✍🏻 기능 요구사항
+
+- 난이도를 고려하여 스테이지 1부터 5까지 플레이 가능한 map.txt 파일을 스스로 작성한다.
+- 지도 파일 map.txt를 문자열로 읽어서 처리하도록 개선한다.
+- 처음 시작시 Stage 1의 지도와 프롬프트가 표시된다.
+- r 명령 입력시 스테이지를 초기화 한다.
+- 모든 o를 O자리에 이동시키면 클리어 화면을 표시하고 다음 스테이지로 표시한다.
+- 주어진 모든 스테이지를 클리어시 축하메시지를 출력하고 게임을 종료한다.
+
+<br/>
+
+ - ### 참고
+   - 플레이어는 o를 밀어서 이동할 수 있지만 당길 수는 없다.
+   - o를 O 지점에 밀어 넣으면 0으로 변경된다.
+   - 플레이어는 O를 통과할 수 있다.
+   - 플레이어는 #을 통과할 수 없다.
+   - 0 상태의 o를 밀어내면 다시 o와 O로 분리된다.
+   - 플레이어가 움직일 때마다 턴수를 카운트한다.
+   - 상자가 두 개 연속으로 붙어있는 경우 밀 수 없다.
+   - 기타 필요한 로직은은 실제 게임을 참고해서 완성한다.
+
+
+<br/><br/><br/>
+
+## 🖥 3단계 코딩 요구사항
+
+- 가능한 한 커밋을 자주 하고 구현의 의미가 명확하게 전달되도록 커밋 메시지를 작성한다.
+- 함수나 메소드는 한 번에 한 가지 일을 하고 가능하면 20줄이 넘지 않도록 구현한다.
+- 함수나 메소드의 들여쓰기를 가능하면 적게(3단계까지만) 할 수 있도록 노력한다.
+
+<br/>
+
+````javascript
+function main() {
+    for () { // 들여쓰기 1단계
+        if () { // 들여쓰기 2단계
+            return; // 들여쓰기 3단계
+        }
+    }
+}
+````
+
+<br/><br/><br/>
+위 값을 읽어 2차원 배열로 변환 저장한다.
+<br/>
+
+|No| 기호  |<center>의미</center>| <center>스테이지 구분</center>|                                                        
+|:----:|:---:|:----|:------------------------------:|
+|1|`#`|&nbsp; 벽(Wall)       |&nbsp; 9|
+|2|` `|&nbsp; 빈 칸(Blank)    |&nbsp; 0|
+|3|`O`|&nbsp; 구멍(Hall)      |&nbsp; 1|
+|4|`o`|&nbsp; 공(Ball)       |&nbsp; 2|
+|5|`O`|&nbsp; 구멍 + 공       |&nbsp; 3|
+|6|`P`|&nbsp; 플레이어(Player) |&nbsp; 4|
+|7|`P`|&nbsp; 플레이어 + 구멍   |&nbsp; 5|
+
+</div>
+<br/><br/>
+</details>
+
+
+
 <details>
 <summary>📌 코딩 컨벤션</summary>
 <div markdown="2">
@@ -249,6 +320,7 @@ Bye~
     }
 }
 ```
+
 <br/>
 
 </div>
@@ -615,8 +687,6 @@ private Position getPlayerPosition(int[][]map){
 </details>
 
 
-
-
 [comment]: <> (풀이과정 및 코드 설명 2단계)
 
 
@@ -626,13 +696,13 @@ private Position getPlayerPosition(int[][]map){
 
 ## 2단계
 
-2단계는 `캐릭터의 위치를 이동`시키는 문제였습니다. 따라서 다른 고려사항은 생각하지 않고 캐릭터가 움직일 칸이 비었으면(" ") 캐릭터의 위치를 이동시켰습니다. 
+2단계는 `캐릭터의 위치를 이동`시키는 문제였습니다. 따라서 다른 고려사항은 생각하지 않고 캐릭터가 움직일 칸이 비었으면(" ") 캐릭터의 위치를 이동시켰습니다.
 <br/>
 
 ![링크]()
 
-
 ## 2단계
+
 추가/및 변경된 클래스
 <br/>
 
@@ -643,7 +713,6 @@ private Position getPlayerPosition(int[][]map){
 |3|class|&nbsp;GameResult|&nbsp; 배열의 상태를 담아 반환해주는 클래스                   |
 |4|class|&nbsp;Pair      |&nbsp; x, y 좌표를 묶어서 관리하는 클래스                   |
 |5|class|&nbsp;Pairs     |&nbsp; Pair의 값들이 저장된 클래스                        |
-
 
 ## 1. Board 클래스
 
@@ -657,34 +726,33 @@ Board 클래스 객체가 생성될 때 String[][] 배열을 초기화시켜주�
 <br/><br/>
 
 ```java
-void initBoard() {
-        board = new String[BOARD_WIDTH][BOARD_HEIGHT];
-        this.board[0] = new String[]{" ", " ", "#", "#", "#", "#", "#", "#", "#", " ", " "};
-        this.board[1] = new String[]{"#", "#", "#", " ", " ", "O", " ", " ", "#", "#", "#"};
-        this.board[2] = new String[]{"#", " ", " ", " ", " ", "o", " ", " ", " ", " ", "#"};
-        this.board[3] = new String[]{"#", " ", "O", "o", " ", "P", " ", "o", "O", " ", "#"};
-        this.board[4] = new String[]{"#", "#", "#", " ", " ", "o", " ", " ", "#", "#", "#"};
-        this.board[5] = new String[]{" ", "#", " ", " ", " ", "O", " ", " ", "#", " ", " "};
-        this.board[6] = new String[]{" ", "#", "#", "#", "#", "#", "#", "#", "#", " ", " "};
-    }
+void initBoard(){
+        board=new String[BOARD_WIDTH][BOARD_HEIGHT];
+        this.board[0]=new String[]{" "," ","#","#","#","#","#","#","#"," "," "};
+        this.board[1]=new String[]{"#","#","#"," "," ","O"," "," ","#","#","#"};
+        this.board[2]=new String[]{"#"," "," "," "," ","o"," "," "," "," ","#"};
+        this.board[3]=new String[]{"#"," ","O","o"," ","P"," ","o","O"," ","#"};
+        this.board[4]=new String[]{"#","#","#"," "," ","o"," "," ","#","#","#"};
+        this.board[5]=new String[]{" ","#"," "," "," ","O"," "," ","#"," "," "};
+        this.board[6]=new String[]{" ","#","#","#","#","#","#","#","#"," "," "};
+        }
 ```
-
 
 <br/><br/><br/>
 
 ### 1-2. String[][] getBoard()
 
-String[][]를 `방어적 복사`로 넘겨주는 반환하는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성해서 복사한 후 반환합니다. 
+String[][]를 `방어적 복사`로 넘겨주는 반환하는 메서드입니다. 사이드 이펙트를 제거하기 위해 매 번 배열을 생성해서 복사한 후 반환합니다.
 <br/>
 
 ```java
-String[][] getBoard() {
-        String[][] copyBoard = new String[BOARD_WIDTH][BOARD_HEIGHT];
-        for (int row = BOARD_START; row < BOARD_WIDTH; row++) {
-            copyBoard[row] = this.board[row].clone();
+String[][]getBoard(){
+        String[][]copyBoard=new String[BOARD_WIDTH][BOARD_HEIGHT];
+        for(int row=BOARD_START;row<BOARD_WIDTH; row++){
+        copyBoard[row]=this.board[row].clone();
         }
         return copyBoard;
-    }
+        }
 ```
 
 <br/><br/><br/>
@@ -696,10 +764,10 @@ String[][]를 방어적 복사로 넘겨주는 메서드입니다. 사이드 이
 <br/>
 
 ```java
-protected void update(String[][] updatedBoard) {
-        this.board = null;
-        this.board = updatedBoard;
-    }
+protected void update(String[][]updatedBoard){
+        this.board=null;
+        this.board=updatedBoard;
+        }
 ```
 
 <br/><br/><br/>
@@ -710,22 +778,21 @@ protected void update(String[][] updatedBoard) {
 <br/>
 
 ```java
-protected Pair findPlayerPosition() {
-        int x = Integer.MAX_VALUE;
-        int y = Integer.MAX_VALUE;
+protected Pair findPlayerPosition(){
+        int x=Integer.MAX_VALUE;
+        int y=Integer.MAX_VALUE;
 
-        for (int row = 0; row < 11; row++) {
-            for (int col = 0; col < 11; col++) {
-                if (board[row][col].equals("P")) {
-                    x = row;
-                    y = col;
-                }
-            }
+        for(int row=0;row< 11;row++){
+        for(int col=0;col< 11;col++){
+        if(board[row][col].equals("P")){
+        x=row;
+        y=col;
         }
-        return Pairs.of(x, y);
-    }
+        }
+        }
+        return Pairs.of(x,y);
+        }
 ```
-
 
 <br/><br/><br/>
 
@@ -735,18 +802,17 @@ protected Pair findPlayerPosition() {
 <br/>
 
 ```java
-protected boolean validatePosition(int x, int y) {
-        if (!validateRange(x, y)) {
-            return false;
+protected boolean validatePosition(int x,int y){
+        if(!validateRange(x,y)){
+        return false;
         }
 
-        if (!validateMoveable(x, y)) {
-            return false;
+        if(!validateMoveable(x,y)){
+        return false;
         }
         return true;
-    }
+        }
 ```
-
 
 <br/><br/><br/>
 
@@ -756,22 +822,22 @@ Pair(x, y) 값이 이동 가능한 범위 내에 있는지를 체크하는 메�
 <br/>
 
 ```java
-private boolean validateRange(int x, int y) {
-        return x >= 0 && x < 11 && y >= 0 && y < 11;
-    }
+private boolean validateRange(int x,int y){
+        return x>=0&&x< 11&&y>=0&&y< 11;
+        }
 ```
 
 <br/><br/><br/>
 
 ### 1-7. Pair validateRange(int x, int y)
 
-Pair(x, y)의 값이 String[][] 내부에서 비어있는지를 체크하는 메서드입니다. 
+Pair(x, y)의 값이 String[][] 내부에서 비어있는지를 체크하는 메서드입니다.
 <br/>
 
 ```java
-private boolean validateMoveable(Pair pair) {
+private boolean validateMoveable(Pair pair){
         return this.board[pair.getX()][pair.getY()].equals(" ");
-    }
+        }
 ```
 
 <br/><br/><br/>
@@ -780,6 +846,7 @@ private boolean validateMoveable(Pair pair) {
 
 사용자의 입력을 명령으로 바꿔주고, 다음에 이동할 칸의 위치를 계산할 수 있는 내부 좌표값을 가지고 있습니다.
 <br/>
+
 ```java
 public enum Command {
 
@@ -792,21 +859,25 @@ public enum Command {
 ```
 
 <br/><br/><br/>
+
 ### 2-1. Command getDirection(String input)
-사용자의 입력 값으로 그에 맞는 명령을 찾는 메서드입니다. 
+
+사용자의 입력 값으로 그에 맞는 명령을 찾는 메서드입니다.
 
 ````java
-public static Command getDirection(String input) {
+public static Command getDirection(String input){
         return Stream.of(values())
-                .filter(command -> command.command.toLowerCase().equals(input))
-                .findAny()
-                .orElseThrow(IllegalArgumentException::new);
-}
+        .filter(command->command.command.toLowerCase().equals(input))
+        .findAny()
+        .orElseThrow(IllegalArgumentException::new);
+        }
 ````
 
 <br/><br/><br/>
+
 ### 2-2. static List<String> getCommands()
-명령의 영문 알파벳을 반환하는 메서드입니다. 
+
+명령의 영문 알파벳을 반환하는 메서드입니다.
 
 ````java
 public static List<String> getCommands(){
@@ -814,81 +885,84 @@ public static List<String> getCommands(){
         .map(Command::getCommand)
         .sorted()
         .collect(Collectors.toUnmodifiableList());
-}
+        }
 ````
 
 <br/><br/><br/>
+
 ### 2-3. List<Integer> getNextPosition()
+
 다음 이동할 값의 좌표를 얻는 메서드 입니다.
 
 ````java
-public List<Integer> getNextPosition() {
+public List<Integer> getNextPosition(){
         return nextPosition;
-    }
+        }
 ````
-
-
 
 <br/><br/><br/>
 
 ## 3. GameResult
+
 보드의 상태를 받아서 반환해주는 클래스
 <br/>
 
 ```java
-public String[][] getBoard() {
+public String[][]getBoard(){
         return board;
-    }
+        }
 ```
 
 <br/><br/><br/>
 
 ## 4. Pair
+
 x, y를 한 쌍으로 묶어서 관리해주는 클래스 입니다.
 <br/><br/><br/>
 
-
 ### 4-1. int getX(), int getY()
+
 x와 y의 원시 값을 반환하는 메서드 입니다.
 <br/>
 
 ```java
-public int getX() {
+public int getX(){
         return x;
-    }
+        }
 
-public int getY() {
+public int getY(){
         return y;
-    }
+        }
 ```
+
 <br/><br/>
 
 ### 4-2. boolean equals(Object o)
+
 사용자의 위치를 저장하기 위한 값 객체 입니다. 올바른 값의 비교를 위해 equals와 hashCode를 오버라이드 했습니다.
 <br/>
 
 ```java
 @Override
-public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pair pair = (Pair) o;
-        return x == pair.x && y == pair.y;
-    }
+public boolean equals(Object o){
+        if(this==o)return true;
+        if(o==null||getClass()!=o.getClass())return false;
+        Pair pair=(Pair)o;
+        return x==pair.x&&y==pair.y;
+        }
 
 @Override
-public int hashCode() {
-        return Objects.hash(x, y);
-    }
+public int hashCode(){
+        return Objects.hash(x,y);
+        }
 ```
-
 
 <br/><br/><br/>
 
 ## 5. Pairs
+
 pair의 값들을 저장하고 있는 클래스 입니다.
 <br/><br/>
-
 
 ### static Pair of(int inputX, int inputY)
 
@@ -896,15 +970,14 @@ x와 y의 원시 값을 반환하는 메서드입니다.
 <br/>
 
 ```java
-public static Pair of(int inputX, int inputY) {
+public static Pair of(int inputX,int inputY){
         return pairs.stream()
-        .filter(position -> position.getX() == inputX)
-        .filter(position -> position.getY() == inputY)
+        .filter(position->position.getX()==inputX)
+        .filter(position->position.getY()==inputY)
         .findAny()
         .orElseThrow(NoSuchElementException::new);
-    }
+        }
 ```
-
 
 <br/><br/><br/><br/><br/><br/>
 
@@ -914,12 +987,12 @@ public static Pair of(int inputX, int inputY) {
 |7|class|&nbsp;OutputView|&nbsp; 사용자에게 게임의 결과를 출력해주는 클래스        |
 |8|enum|&nbsp;Message|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
 |9|class|&nbsp;ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
-<br/><br/><br/>
 
+<br/><br/><br/>
 
 ## 6. InputView 클래스
 
-사용자의 입력을 받는 클래스입니다. 
+사용자의 입력을 받는 클래스입니다.
 <br/>
 
 ```java
@@ -936,98 +1009,103 @@ public enum Command {
 <br/><br/><br/>
 
 ### 6-1.List<String> inputCommand()
-사용자의 입력을 문자열 리스트로 반환하는 메서드입니다.  
+
+사용자의 입력을 문자열 리스트로 반환하는 메서드입니다.
 
 ```java
-public List<String> inputCommand() {
+public List<String> inputCommand(){
         String value;
         System.out.print(Message.SOKOBAN);
         List<String> words;
-        while (true) {
-            try {
-                value = input.br.readLine().toLowerCase();
-                words = validateCommandContains(value);
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
-            } catch (Exception e) {
-                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
-            }
+        while(true){
+        try{
+        value=input.br.readLine().toLowerCase();
+        words=validateCommandContains(value);
+        break;
+        }catch(IllegalArgumentException e){
+        System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+        }catch(Exception e){
+        System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+        }
         }
         return words;
-}
+        }
 ```
 
 <br/><br/><br/>
 
 ### 6-2.List<String> validateCommandContains(String direction)
-사용자의 입력을 문자열 단위("")로 나누고 각 문자 값이 올바른 지 검증해주는 메서드입니다. 
+
+사용자의 입력을 문자열 단위("")로 나누고 각 문자 값이 올바른 지 검증해주는 메서드입니다.
 <br/>
 
 ````java
-private List<String> validateCommandContains(String direction) {
-        List<String> words = new ArrayList<>();
+private List<String> validateCommandContains(String direction){
+        List<String> words=new ArrayList<>();
         Objects.requireNonNull(direction);
-        String[] temp = direction.split("");
-        for(int number= 0; number<temp.length; number++){
-            if (!commands.contains(temp[number])) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
-            }
-            words.add(temp[number]);
+        String[]temp=direction.split("");
+        for(int number=0;number<temp.length;number++){
+        if(!commands.contains(temp[number])){
+        throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+        }
+        words.add(temp[number]);
         }
         return words;
-    }
+        }
 ````
 
 <br/><br/>
 
 ## 7. OutputView 클래스
+
 Stage의 정보를 출력해주는 클래스
 <br/>
 
 ### 7-1. void initBoard(String[][] board)
+
 보드의 초기 상태를 출력해주는 메서드
 <br/>
 
 ```java
-public void initBoard(String[][] board) {
+public void initBoard(String[][]board){
         stringBuilder.setLength(0);
         stringBuilder.append("Stage 2").append("\n").append("\n");
 
-        for (int row = 0; row < board.length; row++) {
-            if (row != 0) {
-                stringBuilder.append("\n");
-            }
-            for (int col = 0; col < board[0].length; col++) {
-                stringBuilder.append(board[row][col]);
-            }
+        for(int row=0;row<board.length;row++){
+        if(row!=0){
+        stringBuilder.append("\n");
+        }
+        for(int col=0;col<board[0].length;col++){
+        stringBuilder.append(board[row][col]);
+        }
         }
         stringBuilder.append("\n");
         System.out.println(stringBuilder);
-    }
+        }
 ```
 
 <br/><br/><br/>
 
 ### 7-2. void printBoard(GameResult result)
+
 GameResult(Board의 상태(String[ ][ ]))를 인자로 받아서 이를 화면에 출력해주는 메서드  
 <br/>
 
 ```java
-public void printBoard(GameResult result) {
+public void printBoard(GameResult result){
         stringBuilder.setLength(0);
-        String[][] board = result.getBoard();
-        for (int row = 0; row < board.length; row++) {
-            if (row != 0) {
-                stringBuilder.append("\n");
-            }
-            for (int col = 0; col < board[0].length; col++) {
-                stringBuilder.append(board[row][col]);
-            }
+        String[][]board=result.getBoard();
+        for(int row=0;row<board.length;row++){
+        if(row!=0){
+        stringBuilder.append("\n");
+        }
+        for(int col=0;col<board[0].length;col++){
+        stringBuilder.append(board[row][col]);
+        }
         }
         stringBuilder.append("\n");
         System.out.println(stringBuilder);
-    }
+        }
 ```
 
 </div>
@@ -1133,21 +1211,21 @@ Stage: 2
 ```java
 public class Main {
 
-  private static final InputView inputView = new InputView();
-  private static final OutputView outputView = new OutputView();
+    private static final InputView inputView = new InputView();
+    private static final OutputView outputView = new OutputView();
 
-  public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-    GameMachine gameMachine = new GameMachine();
-    outputView.initBoard(gameMachine.getBoard().getBoard());
-    GameManager manager = new GameManager();
+        GameMachine gameMachine = new GameMachine();
+        outputView.initBoard(gameMachine.getBoard().getBoard());
+        GameManager manager = new GameManager();
 
-    while (true) {
-      List<String> inputValues = inputView.inputCommand();
-      List<Command> commands = manager.getCommand(inputValues);
-      GameResult result = gameMachine.move(commands);
+        while (true) {
+            List<String> inputValues = inputView.inputCommand();
+            List<Command> commands = manager.getCommand(inputValues);
+            GameResult result = gameMachine.move(commands);
+        }
     }
-  }
 }
 ```
 
