@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -34,7 +33,37 @@ public class Init {
         List<Board> boards = new ArrayList<>();
     }
 
-    static String joiningTextFileWord() {
+    public static List<String[][]> getMaps(){
+        String[][] result = getStages();
+        List<String[][]> answer = new ArrayList<>();
+        for (int i = 0; i < result.length; i++) {
+            String[] temp = result[i];
+            String[][] array = new String[temp.length][temp[0].length()];
+            for(int j=0; j<temp.length; j++){
+                array[j] = temp[j].split("");
+            }
+            answer.add(array);
+        }
+        return answer;
+    }
+
+    public static String[][] getStages() {
+        String[] eachStages = joiningTextFileWord();
+        int rows = eachStages.length;
+        String[][] result = new String[rows][];
+
+        for (int i = 0; i < rows; i++) {
+            String[] temp = eachStages[i].split(",");
+            int tempCols = temp.length;
+            result[i] = new String[tempCols];
+            for (int j = 0; j < tempCols; j++) {
+                result[i][j] = temp[j];
+            }
+        }
+        return result;
+    }
+
+    static String[] joiningTextFileWord() {
         try {
             stringBuilder.setLength(0);
             File file = new File("map.txt");
@@ -48,7 +77,7 @@ public class Init {
         } catch (IOException e) {
             System.out.println(e);
         }
-        return stringBuilder.toString();
+        return splitByStage(stringBuilder.toString());
     }
 
     private static String[] splitByStage(String word) {
@@ -59,19 +88,7 @@ public class Init {
         return word.split(",");
     }
 
-    public static List<String[][]> getWordArray(String word) {
-        List<String[][]> temp = new ArrayList<>();
-        List<StageInformation> information = StageInfo.getStages();
-        //999999,900409,929999,909000,919000,999000
-        String[] stages = splitByComma(word);// 각 스테이지 별로 나뉘어 져 있음
-        for (int i = 0; i < stages.length; i++) {
-            String each = stages[i];
-//            System.out.println(each);
 
-        }
-
-        return temp;
-    }
 
     public static String changeSymbol(String word) {
         word = word.replaceAll("9", "#");
@@ -85,11 +102,37 @@ public class Init {
     }
 
     public static void main(String[] args) throws Exception {
-        String maps = joiningTextFileWord();
-        String[] eachStages = splitByStage(maps);// 스테이지 별로
-        List<StageInformation> information = StageInfo.getStages();
-        List<String> lst = Arrays.asList(eachStages);
-        lst.forEach(System.out::println);
+        String[] eachStages = joiningTextFileWord();// 스테이지 별로
+        int rows = eachStages.length;
+        String[][] result = new String[rows][];
+
+        for (int i = 0; i < rows; i++) {
+            String[] temp = eachStages[i].split(",");
+            int tempCols = temp.length;
+            result[i] = new String[tempCols];
+            for (int j = 0; j < tempCols; j++) {
+                result[i][j] = temp[j];
+            }
+        }
+
+        List<String[][]> answer = new ArrayList<>();
+        for (int i = 0; i < result.length; i++) {
+            String[] temp = result[i];
+            String[][] array = new String[temp.length][temp[0].length()];
+            for(int j=0; j<temp.length; j++){
+                array[j] = temp[j].split("");
+            }
+            answer.add(array);
+        }
+        System.out.println("==============");
+        String[][] test = getMaps().get(0);
+        for(int row=0; row<test.length; row++){
+            System.out.println();
+            for(int col=0 ; col<test[0].length; col++){
+                System.out.print(test[row][col]);
+            }
+        }
+
 
     }
 }
