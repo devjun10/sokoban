@@ -33,4 +33,19 @@ public class SaveData {
         compileData.add(copyBoard);
     }
 
+    public void resetData() {
+        int[][] importantData = copyBoard();
+        compileData.clear();
+        compileData.add(importantData);
+    }
+
+    private int[][] copyBoard() {
+        int[][] firstElement = this.rollbackData.get(0);
+        int[][] temp = new int[firstElement.length][firstElement[0].length];
+        for (int row = 0; row < firstElement.length; row++) {
+            temp[row] = firstElement[row].clone();
+        }
+        return temp;
+    }
+
 }
