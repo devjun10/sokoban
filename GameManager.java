@@ -20,6 +20,10 @@ public class GameManager {
         System.out.println(Message.BLANK + "" + Message.STAGE_INFO + "" + value + "" + Message.CLEAR + Message.BLANK);
     }
 
+    public void sayTurnReset() {
+        System.out.println(Message.TURN_RESET);
+    }
+
     public List<Command> getCommand(List<String> direction) {
         List<Command> commands = new ArrayList<>();
         for (int i = 0; i < direction.size(); i++) {
@@ -51,9 +55,5 @@ public class GameManager {
             System.out.println(command.getDescription());
             System.exit(1);
         }
-    }
-
-    public void sayTurnReset() {
-        System.out.println(Message.TURN_RESET);
     }
 }

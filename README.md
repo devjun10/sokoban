@@ -1632,24 +1632,28 @@ public void reset(){
 
 <br/><br/><br/>
 
-### 9-1. void sayHello(), sayGoodBye())
+### 9-1. void sayHello(), sayGoodBye(), sayTurnCount(int value), sayTurnReset()
+
 게임과 연관된 시작, 마무리, 턴 횟수 등의 메시지를 전달하는 메서드.
 <br/><br/>
-Stages 클래스에서 필요한 Stage를 가져온다.
 
 ```java
-public void sayHello() {
+public void sayHello(){
         System.out.println(Message.GREET);
-    }
+        }
 
-public void sayGoodBye() {
+public void sayGoodBye(){
         System.out.println(Message.CLEAR_CELEBRATION);
         System.out.println(Message.CELEBRATION);
-    }
+        }
 
-public void sayTurnCount(int value) {
-        System.out.println(Message.TURN_COUNT + "" + value);
-    }    
+public void sayTurnCount(int value){
+        System.out.println(Message.TURN_COUNT+""+value);
+        }
+
+public void sayTurnReset(){
+        System.out.println(Message.TURN_RESET);
+        }
 ```
 
 <br/><br/><br/>
@@ -1660,68 +1664,57 @@ public void sayTurnCount(int value) {
 stageNumber을 통해 해당 스테이지를 찾고 명령을 전달한다.
 
 ```java
-public List<Command> getCommand(List<String> direction) {
-        List<Command> commands = new ArrayList<>();
-        for (int i = 0; i < direction.size(); i++) {
-        Command command = Command.getDirection(direction.get(i));
-            if(command.equals(Command.R)){
-                return List.of(Command.R);
+public List<Command> getCommand(List<String> direction){
+        List<Command> commands=new ArrayList<>();
+        for(int i=0;i<direction.size();i++){
+        Command command=Command.getDirection(direction.get(i));
+        if(command.equals(Command.R)){
+        return List.of(Command.R);
         }
         validateQuit(command);
         commands.add(command);
         }
         return commands;
-    }
+        }
 ```
 
 <br/><br/><br/>
 
 ### 9-3. int stageUp(int value)
+
 다음 단계로 진행하기 위해 스테이지를 한 단계 올리는 메서드.
 <br/><br/>
 
-
 ```java
-public int stageUp(int value) {
-        return value += 1;
-    }
-
-public int plusTurn(int value) {
-        return value;
-    }
-
-public int turnInit() {
-        return 0;
-    }
+public int stageUp(int value){
+        return value+=1;
+        }
 ```
-
 
 <br/><br/><br/>
 
 ### 9-4. int plusTurn(int value)
+
 턴의 횟수를 1 증가시키는 메서드.
 <br/><br/>
 
-
 ```java
-public int plusTurn(int value) {
+public int plusTurn(int value){
         return value;
-    }
+        }
 ```
 
+### 9-5. int turnInit()
 
-### 9-5. int stageUp(int value)
-다음 단계로 진행하기 위해 스테이지를 한 단계 올리는 메서드.
+다음 Stage로 넘어갔을 때 턴 수를 초기화하는 메서드.
 <br/><br/>
 
-
 ```java
 
-public int turnInit() {
+public int turnInit(){
         return 0;
-    }
+        }
 ```
-
 
 <br/><br/><br/>
 
