@@ -1572,13 +1572,12 @@ private boolean isPlayer(int x,int y){
 
 <br/><br/><br/>
 
-### 1-1. GameResult push(Command command)
+### 8-4. Pair findPlayerPosition()
 
+캐릭터의 위치를 찾기 위한 메서드.
 <br/><br/>
 
 ```java
-    }
-
 protected Pair findPlayerPosition(){
         for(int row=0;row< this.board.length;row++){
         for(int col=0;col< this.board[0].length;col++){
@@ -1588,10 +1587,6 @@ protected Pair findPlayerPosition(){
         }
         }
         return null;
-        }
-
-private boolean isPlayer(int x,int y){
-        return this.board[x][y]==4||this.board[x][y]==5;
         }
 
 protected boolean isAnswer(){
@@ -1606,49 +1601,129 @@ public void reset(){
 
 <br/><br/><br/>
 
-## 2. GameMachine
+### 8-5. boolean isAnswer();
 
-초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
-
-### 1-1. GameResult push(Command command)
-
+정답을 찾아서 비교하기 위한 메서드. Answer 클래스 내부의 answer 값을 통해 정답을 체크한다.  
 <br/><br/>
 
 ```java
-    Stage getStage(int value){
-        return stages.getStage(value);
+protected boolean isAnswer(){
+        return answer.isAnswer(this.board);
         }
-
-public List<GameResult> play(int stageNumber,List<Command> commands){
-        Stage stage=stages.getStage(stageNumber);
-        return stage.execute(commands);
-        }
-
-
 ```
 
-<br/><br/><br/><br/>
+<br/><br/><br/>
 
-## 2. GameMachine
+### 8-6. void reset()
 
-초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
-
-### 1-1. GameResult push(Command command)
-
+해당 스테이지의 초기 값을 반환하는 메서드. Answer내부의 original 값을 통해 초기 상태로 업데이트 한다.    
 <br/><br/>
 
 ```java
-    Stage getStage(int value){
-        return stages.getStage(value);
+public void reset(){
+        int[][]reset=this.answer.getOriginal();
+        update(reset);
         }
-
-public List<GameResult> play(int stageNumber,List<Command> commands){
-        Stage stage=stages.getStage(stageNumber);
-        return stage.execute(commands);
-        }
-
-
 ```
+
+## 9. GameManager
+
+사용자의 입력을 명령으로 변환해주고 게임의 횟수, 메시지/게임에 대한 정보 전달의 역할을 담당한다.
+
+<br/><br/><br/>
+
+### 9-1. void sayHello(), sayGoodBye())
+게임과 연관된 시작, 마무리, 턴 횟수 등의 메시지를 전달하는 메서드.
+<br/><br/>
+Stages 클래스에서 필요한 Stage를 가져온다.
+
+```java
+public void sayHello() {
+        System.out.println(Message.GREET);
+    }
+
+public void sayGoodBye() {
+        System.out.println(Message.CLEAR_CELEBRATION);
+        System.out.println(Message.CELEBRATION);
+    }
+
+public void sayTurnCount(int value) {
+        System.out.println(Message.TURN_COUNT + "" + value);
+    }    
+```
+
+<br/><br/><br/>
+
+### 9-2. List<GameResult> play(int stageNumber,List<Command> commands)
+
+<br/><br/>
+stageNumber을 통해 해당 스테이지를 찾고 명령을 전달한다.
+
+```java
+public List<Command> getCommand(List<String> direction) {
+        List<Command> commands = new ArrayList<>();
+        for (int i = 0; i < direction.size(); i++) {
+        Command command = Command.getDirection(direction.get(i));
+            if(command.equals(Command.R)){
+                return List.of(Command.R);
+        }
+        validateQuit(command);
+        commands.add(command);
+        }
+        return commands;
+    }
+```
+
+<br/><br/><br/>
+
+### 9-3. int stageUp(int value)
+다음 단계로 진행하기 위해 스테이지를 한 단계 올리는 메서드.
+<br/><br/>
+
+
+```java
+public int stageUp(int value) {
+        return value += 1;
+    }
+
+public int plusTurn(int value) {
+        return value;
+    }
+
+public int turnInit() {
+        return 0;
+    }
+```
+
+
+<br/><br/><br/>
+
+### 9-4. int plusTurn(int value)
+턴의 횟수를 1 증가시키는 메서드.
+<br/><br/>
+
+
+```java
+public int plusTurn(int value) {
+        return value;
+    }
+```
+
+
+### 9-5. int stageUp(int value)
+다음 단계로 진행하기 위해 스테이지를 한 단계 올리는 메서드.
+<br/><br/>
+
+
+```java
+
+public int turnInit() {
+        return 0;
+    }
+```
+
+
+<br/><br/><br/>
 
 </div>
 </details>

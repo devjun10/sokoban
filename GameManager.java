@@ -38,7 +38,7 @@ public class GameManager {
     }
 
     public int plusTurn(int value) {
-        return value + 1;
+        return value;
     }
 
     public int turnInit() {

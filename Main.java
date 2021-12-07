@@ -26,7 +26,7 @@ public class Main {
                 }
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
                 outputView.printResult(result);
-                turn = manager.plusTurn(turn);
+                turn = manager.plusTurn(turn+result.size());
                 manager.sayTurnCount(turn);
             }
             turn = manager.turnInit();
