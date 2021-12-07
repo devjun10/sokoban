@@ -7,7 +7,11 @@ public class Answer {
     }
 
     public int[][] getAnswer() {
-        return answer;
+        int[][] temp = new int[answer.length][answer[0].length];
+        for (int row = 0; row < answer.length; row++) {
+            temp[row] = this.answer[row].clone();
+        }
+        return temp;
     }
 
 //    public boolean checkAnswer(int[][] board) {

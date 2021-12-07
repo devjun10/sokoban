@@ -1,10 +1,9 @@
-import java.util.List;
 
 public class GameMachine {
 
     private Stages stages;
     private Board board = Board.of();
-//
+
     GameResult getBoard() {
         return new GameResult(board.getBoard());
     }

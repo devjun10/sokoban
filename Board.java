@@ -2,18 +2,44 @@ public class Board {
 
     private int id;
     private final int BOARD_START = 0;
-    private final int BOARD_HEIGHT = 7;
-    private final int BOARD_WIDTH = 11;
-    private int[][] board;
-    private Answer answer = new Answer(this.board);
 
+    private int[][] board;
+    private Answer answer;
 
     private Board() {
         initBoard();
     }
 
-
     void initBoard() {
+        this.board = new int[6][6];
+        this.board[0] = new int[]{9, 9, 9, 9, 9, 9};
+        this.board[1] = new int[]{9, 0, 0, 4, 0, 9};
+        this.board[2] = new int[]{9, 2, 9, 9, 9, 9};
+        this.board[3] = new int[]{9, 0, 9, 0, 0, 0};
+        this.board[4] = new int[]{9, 1, 9, 0, 0, 0};
+        this.board[5] = new int[]{9, 9, 9, 0, 0, 0};
+
+        this.answer = new Answer(copyBoard(this.board));
+    }
+
+    public static void main(String[] args) throws Exception {
+        Board board = new Board();
+
+        for (int i = 0; i < 6; i++) {
+            System.out.println();
+            for (int j = 0; j < 6; j++) {
+                System.out.print(board.board[i][j]);
+            }
+        }
+        Command command = Command.getDirection("w");
+        System.out.println();
+        Pair playerPosition = board.findPlayerPosition();
+        int nextX = playerPosition.getX() + command.getNextPosition().get(0);
+        int nextY = playerPosition.getY() + command.getNextPosition().get(1);
+
+
+        System.out.println(playerPosition.getX());
+        System.out.println(playerPosition.getY());
 
     }
 
@@ -21,6 +47,17 @@ public class Board {
         return new Board();
     }
 
+    int[][] copyBoard(int[][] array) {
+        int[][] temp = new int[array.length][array[0].length];
+        for (int row = 0; row < array.length; row++) {
+            temp[row] = array[row].clone();
+        }
+        return temp;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
 
     void init() {
         this.board = null;
@@ -47,8 +84,8 @@ public class Board {
     }
 
     protected Pair findPlayerPosition() {
-        for (int row = 0; row < BOARD_HEIGHT; row++) {
-            for (int col = 0; col < BOARD_WIDTH; col++) {
+        for (int row = 0; row < this.board.length; row++) {
+            for (int col = 0; col < this.board[0].length; col++) {
                 if (this.board[row][col] == 4 || this.board[row][col] == 5) {
                     return Pairs.of(row, col);
                 }
