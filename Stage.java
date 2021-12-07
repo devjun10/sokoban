@@ -6,7 +6,10 @@ public class Stage {
     private Board board;
     private StageInformation stageInformation;
 
-    Stage() {};
+    Stage() {
+    }
+
+    ;
 
     Stage(Board board, StageInformation stageInformation) {
         this.board = board;
@@ -20,23 +23,20 @@ public class Stage {
     public List<GameResult> execute(List<Command> commandList) {
         List<GameResult> results = new ArrayList<>();
         for (Command command : commandList) {
-            if(command.equals(Command.R)){
-                return List.of(resetStage());
-            }
-            if(command.equals(Command.Q)){
+            if (command.equals(Command.Q)) {
                 results.add(new GameResult());
                 return results;
             }
-            if(command.equals(Command.R)){
-                results.add(new GameResult(this.board.getBoard(), Command.R.getCommand()));
-                return results;
+            if (command.equals(Command.R)) {
+                results.add(new GameResult(Command.R.getCommand()));
+                continue;
             }
             results.add(this.board.push(command));
         }
         return results;
     }
 
-    public GameResult resetStage(){
+    public GameResult resetStage() {
         this.board.reset();
         return new GameResult(this.board.getBoard());
     }

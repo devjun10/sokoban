@@ -10,7 +10,7 @@ public class Main {
         GameManager manager = new GameManager();
 
         manager.sayHello();
-        int stageNumber = 4;
+        int stageNumber = 1;
         int turn = 0;
 
         while (stageNumber < 5) {
@@ -20,14 +20,17 @@ public class Main {
 
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
-                if (commands.get(0).equals(Command.R)) {
-                    stage.resetStage();
-                    turn = 0;
-                    manager.sayTurnReset();
-                    continue;
-                }
+
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
                 for (GameResult gameResult : result) {
+                    if (gameResult.getBoard()==null && gameResult.getMessage().equals(Command.R.getCommand())) {
+                        stage.resetStage();
+                        turn = 0;
+                        manager.sayTurnReset();
+                        outputView.initBoard(stage.getBoard());
+                        break;
+                    }
+
                     if (gameResult.getBoard() == null) {
                         manager.sayTurnCount(turn);
                         manager.sayTurnOff();
