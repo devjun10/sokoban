@@ -10,14 +10,14 @@ public class Main {
         GameManager manager = new GameManager();
 
         manager.sayHello();
-        int stageNumber = 1;
+        int stageNumber = 4;
         int turn = 0;
 
         while (stageNumber < 5) {
             Stage stage = gameMachine.getStage(stageNumber);
             outputView.initBoard(stage.getBoard());
             boolean flag = false;
-            Loop1:
+
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
                 if (commands.get(0).equals(Command.R)) {
