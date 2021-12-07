@@ -48,13 +48,13 @@ public class Board {
         return gameResult;
     }
 
-    public int[][] move(Pair position, int[][] board, Pair nextPosition) {
+    private int[][] move(Pair position, int[][] board, Pair nextPosition) {
         board[position.getX()][position.getY()] -= 4;
         board[nextPosition.getX()][nextPosition.getY()] += 4;
         return board;
     }
 
-    public int[][] pushBall(Pair position, int[][] board, Pair nextPosition, Command command) {
+    private int[][] pushBall(Pair position, int[][] board, Pair nextPosition, Command command) {
         board[position.getX()][position.getY()] -= 4;
         board[nextPosition.getX()][nextPosition.getY()] += 4;
         board[nextPosition.getX()][nextPosition.getY()] -= 2;
@@ -62,13 +62,13 @@ public class Board {
         return board;
     }
 
-    public void checkGameResult(GameResult result) {
+    private void checkGameResult(GameResult result) {
         if (result.getBoard() == null) {
             result.addBoard(getBoard());
         }
     }
 
-    public boolean pushable(Pair pair, Command command) {
+    private boolean pushable(Pair pair, Command command) {
         // 다음 항
         int x = pair.getX();
         int y = pair.getY();
@@ -79,24 +79,28 @@ public class Board {
                 || isBallOnTheHole(x, y) && isBlank(fonrtOfBallX, fonrtOfBallY);
     }
 
-    public boolean isBall(int x, int y) {
+    private boolean isBall(int x, int y) {
         return this.board[x][y] == 2;
     }
 
-    public boolean moveable(Pair pair) {
+    private boolean moveable(Pair pair) {
         return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1;
     }
 
-    public boolean isBlank(int x, int y) {
+    private boolean isBlank(int x, int y) {
         return this.board[x][y] == 0;
     }
 
-    public boolean isHall(int x, int y) {
+    private boolean isHall(int x, int y) {
         return this.board[x][y] == 1;
     }
 
-    public boolean isBallOnTheHole(int x, int y) {
+    private boolean isBallOnTheHole(int x, int y) {
         return this.board[x][y] == 3;
+    }
+
+    private boolean isPlayer(int x, int y) {
+        return this.board[x][y] == 4 || this.board[x][y] == 5;
     }
 
     String[][] getBoard() {
@@ -117,7 +121,7 @@ public class Board {
         return copyBoard;
     }
 
-    public static String changeIntSymbol(int value) {
+    private static String changeIntSymbol(int value) {
         if (value == 5) return "P";
         if (value == 0) return " ";
         if (value == 1) return "O";
@@ -127,12 +131,12 @@ public class Board {
         return "#";
     }
 
-    protected void update(int[][] updatedBoard) {
+    private void update(int[][] updatedBoard) {
         this.board = null;
         this.board = updatedBoard;
     }
 
-    protected Pair findPlayerPosition() {
+    private Pair findPlayerPosition() {
         for (int row = 0; row < this.board.length; row++) {
             for (int col = 0; col < this.board[0].length; col++) {
                 if (isPlayer(row, col)) {
@@ -143,15 +147,11 @@ public class Board {
         return null;
     }
 
-    private boolean isPlayer(int x, int y) {
-        return this.board[x][y] == 4 || this.board[x][y] == 5;
-    }
-
     protected boolean isAnswer() {
         return answer.isAnswer(this.board);
     }
 
-    public void reset() {
+    protected void reset() {
         int[][] reset = this.answer.getOriginal();
         update(reset);
     }

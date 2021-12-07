@@ -1156,11 +1156,9 @@ public void printBoard(GameResult result){
 
 ## 3단계
 
-캐릭터의 위치를 계산하기 위해 int[ ] [ ] 배열을 도입했습니다. 캐릭터의 위치를 계산하면서 이동시키는 과정이 많이 까다로웠는데, 첫 번째 미션을 하면서 int[ ] [ ]배열을 사용했던 것에서 아이디어를 얻을
-수 있었습니다. 이후 숫자를 아래와 같이 정의하고 이를 문자열로 변환하기만 했습니다.
+`캐릭터의 위치를 계산`하기 위해 `int[ ] [ ]`을 도입했습니다. 캐릭터의 위치가 String[][] 일 때 이를 계산하면서 이동시키는 과정이 많이 까다로운 데, 모든 계산을 int로한 후 마지막에 출력만
+문자로 변환해서 반환하면 되기 때문입니다. 3단계에서 나타내는 심볼은 아래와 같습니다.
 
-<br/><br/><br/>
-위 값을 읽어 2차원 배열로 변환 저장한다.
 <br/>
 
 |No| 기호  |<center>의미</center>| <center>스테이지 구분</center>|                                                        
@@ -1175,14 +1173,15 @@ public void printBoard(GameResult result){
 
 <br/><br/><br/><br/>
 
-추가/및 변경된 클래스
+## 추가/및 변경된 클래스
+
 <br/>
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:---|
 |1|class|&nbsp;Answer               |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
 |2|class|&nbsp;Disk                 |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
-|3|class|&nbsp;Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 저장하는 클래스                  |
+|3|class|&nbsp;Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스                  |
 |4|class|&nbsp;Stage                |&nbsp; Board와 Stageinformation을 담고 있는 클래스                   |
 |5|class|&nbsp;Stages               |&nbsp; Stage들을 저장하고 있는 클래스                                 |
 |6|class|&nbsp;StageInformation     |&nbsp; 가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스               |
@@ -1192,10 +1191,12 @@ public void printBoard(GameResult result){
 
 ## 1. Answer
 
-초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
+초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스. 다음 스테이지로 넘어가기 위해서는 모든 퍼즐을 맞췄는지 체크해야 하는데, 이에 관한 값을 담고 있습니다. 또한 original이라는
+원본 배열을 추가로 저장하고 있는데, 이는 명령어 R이 들어왔을 때 해당 값을 반환하기 위함입니다.
 
 ### 1-1. int[][]calculateAnswer(int[][]array)
 
+정답 배열을 저장하기 위해 캐릭터의 위치를 지우고 값을 저장하는 메서드입니다. changeNumber 메서드를 통해 불필요한 값들을 제거합니다.
 <br/><br/>
 
 ```java
@@ -1214,6 +1215,7 @@ private int[][]calculateAnswer(int[][]array){
 
 ### 1-2. int changeNumber(int value)
 
+배열에서 불필요한 값을 지우기 위해 값을 바꿔주는 메서드입니다. 예를들어 캐릭터는 정답을 체크하는 과정에서 아무 필요가 없기 때문에 4의 값을 0으로 바꿔줍니다.
 <br/><br/>
 
 ```java
@@ -1229,6 +1231,7 @@ private int changeNumber(int value){
 
 ### 1-3. boolean isAnswer(int[][] array)
 
+정답 값을 현재 배열과 비교하는 메서드입니다. 기존 배열에 캐릭터를 지워주기 위해 deleteCharacter라는 메서드를 사용했습니다.
 <br/><br/>
 
 ```java
@@ -1248,23 +1251,7 @@ public boolean isAnswer(int[][]array){
 
 ### 1-4. boolean checkColumn(int row, int[] array)
 
-<br/><br/>
-
-```java
-private boolean checkColumn(int row,int[]array){
-        for(int col=0;col<answer[0].length;col++){
-        if(array[col]!=this.answer[row][col]){
-        return true;
-        }
-        }
-        return false;
-        }
-```
-
-<br/><br/><br/>
-
-### 1-4. boolean checkColumn(int row, int[] array)
-
+기존 배열과 현재 배열의 값을 비교하는 메서드입니다. * 객체지향 체조원칙을 지키기 위해 이중 for문을 분리했습니다.  
 <br/><br/>
 
 ```java
@@ -1282,6 +1269,7 @@ private boolean checkColumn(int row,int[]array){
 
 ### 1-5. int[][] getOriginal() {
 
+사용자가 reset 버튼을 눌렀을 때 원본 배열을 반환하기 위한 메서드입니다. 방어적 복사로 사이드 이펙트를 제거하려고 했습니다.
 <br/><br/>
 
 ```java
@@ -1298,8 +1286,9 @@ public int[][]getOriginal(){
 
 <br/><br/><br/>
 
-### 1-5. int[][] deleteCharacter(int[][] array)
+### 1-6. int[][] deleteCharacter(int[][] array)
 
+정답을 비교하는 과정에서 캐릭터는 불필요하기 때문에 이를 제거하기 위한 메서드입니다.
 <br/><br/>
 
 ```java
@@ -1316,8 +1305,9 @@ private int[][]deleteCharacter(int[][]array){
 
 <br/><br/><br/>
 
-### 1-5. int changeCharacter(int value)
+### 1-7. int changeCharacter(int value)
 
+캐릭터(4)를 빈칸(0)으로 바꿔주는 deleteCharacter의 도우미 메서드입니다.
 <br/><br/>
 
 ```java
@@ -1333,22 +1323,43 @@ private int changeCharacter(int value){
 
 ## 2. Disk
 
-Init에 관련된 정보를 담고 있는 클래스
+Sokoban 내부의 데이터를 저장/불러오기 위한 클래스. Init메서드를 통해 애플리케이션이 동작할 때 필요한 데이터를 모두 초기화 한다.
+<br/>
+
+````java
+public class Disk {
+
+    private Init init = Init.of();
+
+    private Disk() {
+    }
+
+    ;
+
+    public static Disk of() {
+        return new Disk();
+    }
+
+}
+
+````
 
 <br/>
 
 ## 3. Init
 
-각 Stage와 Sokoban 게임의 정보를 저장하는 클래스
+각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스.
 
 <br/><br/><br/>
 
 ## 4. Stage
 
-Board와 Stageinformation을 담고 있는 클래스
+Board와 Stageinformation을 담고 있는 클래스.
 <br/>
 
 ### 4-1. List<GameResult> execute(List<Command> commandList)
+
+실행후 결과를 반환하는 메서드.
 
 ```java
 public List<GameResult> execute(List<Command> commandList){
@@ -1367,6 +1378,8 @@ public List<GameResult> execute(List<Command> commandList){
 
 ### 4-2. GameResult resetStage()
 
+리셋 명령어를 처리하기 위한 메서드. Answer 내에 있는 original 배열을 가져와 이를 반환한다.
+
 ```java
 public GameResult resetStage(){
         this.board.reset();
@@ -1378,7 +1391,7 @@ public GameResult resetStage(){
 
 ## 5. Stages
 
-Stage들을 저장하고 있는 클래스
+Stage들을 저장하고 있는 클래스.
 
 ```java
 public class Stages {
@@ -1406,7 +1419,7 @@ public class Stages {
 
 ## 6. StageInformation
 
-가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스
+가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스.
 
 ```java
 public class Stages {
@@ -1434,7 +1447,7 @@ public class Stages {
 
 ## 7. StageInformationList
 
-StageInformation 클래스들을 저장하고 있는 클래스
+StageInformation 클래스들을 저장하고 있는 클래스.
 
 ```java
 public class Stages {
@@ -1463,18 +1476,19 @@ public class Stages {
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:---|
-|1|class|&nbsp;Board                |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
-|2|class|&nbsp;GameMachine          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
-|3|class|&nbsp;GameManager          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+|8|class|&nbsp;Board                |&nbsp; 각 Stage의 배열의 상태와 해당 배열을 심볼로 전환해주는 클래스|
+|9|class|&nbsp;GameMachine          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+|10|class|&nbsp;GameManager          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
 
 <br/><br/><br/><br/><br/>
 
-## 1. Board
+## 8. Board
 
-초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
+해당 Stage 배열의 상태와 해당 배열을 심볼로 전환해주는 클래스. Stage의 상태와 관련된 역할과 책임을 가진다.
 
-### 1-1. GameResult push(Command command)
+### 8-1. GameResult push(Command command)
 
+배열을 변환하는 메서드. 현재 캐릭터의 위치를 기준으로 미는 방향의 한 칸, 두 칸 앞을 체크해서 배열을 변환할 지 결정한다. 모든 배열은 사이드 이펙트를 제거하기 위해 복사해서 새로 만든 후 이를 갈아끼워 준다.
 <br/><br/>
 
 ```java
@@ -1502,60 +1516,61 @@ GameResult push(Command command){
 
 <br/><br/><br/>
 
-### 1-1. GameResult push(Command command)
+### 8-2. GameResult push(Command command)
 
+push의 도우미 메서드로 캐릭터가 이동 가능할 때는 move를, move를 할 수 없지만 다음 칸에서 공을 밀 수 있을 때는 pushBall 메서드를 실행한다.
 <br/><br/>
 
 ```java
-public int[][] move( Pair position, int[][] board, Pair nextPosition){
-        board[position.getX()][position.getY()] -= 4;
-        board[nextPosition.getX()][nextPosition.getY()] += 4;
+private int[][]move(Pair position,int[][]board,Pair nextPosition){
+        board[position.getX()][position.getY()]-=4;
+        board[nextPosition.getX()][nextPosition.getY()]+=4;
         return board;
         }
 
-public int[][] pushBall(Pair position, int[][] board, Pair nextPosition, Command command){
-        board[position.getX()][position.getY()] -= 4;
-        board[nextPosition.getX()][nextPosition.getY()] += 4;
-        board[nextPosition.getX()][nextPosition.getY()] -= 2;
-        board[nextPosition.getX() + command.getNextPosition().get(0)][nextPosition.getY() + command.getNextPosition().get(1)] += 2;
+private int[][]pushBall(Pair position,int[][]board,Pair nextPosition,Command command){
+        board[position.getX()][position.getY()]-=4;
+        board[nextPosition.getX()][nextPosition.getY()]+=4;
+        board[nextPosition.getX()][nextPosition.getY()]-=2;
+        board[nextPosition.getX()+command.getNextPosition().get(0)][nextPosition.getY()+command.getNextPosition().get(1)]+=2;
         return board;
         }
 ```
 
 <br/><br/><br/>
 
-### 1-1. GameResult push(Command command)
+### 8-3. boolean isBall, moveable, isBlank, isHall, isBallOnTheHole(int x, int y)
 
+배열을 update하기 위해 한 칸 앞, 두 칸 앞을 체크하는 메서드.
 <br/><br/>
 
 ```java
-    public boolean isBall(int x, int y) {
-        return this.board[x][y] == 2;
+private boolean isBall(int x,int y){
+        return this.board[x][y]==2;
         }
 
-public boolean moveable(Pair pair) {
-        return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1 ;
+private boolean moveable(Pair pair){
+        return this.board[pair.getX()][pair.getY()]==0||this.board[pair.getX()][pair.getY()]==1;
         }
 
-public boolean isBlank(int x, int y) {
-        return this.board[x][y] == 0;
+private boolean isBlank(int x,int y){
+        return this.board[x][y]==0;
         }
 
-public boolean isHall(int x, int y) {
-        return this.board[x][y] == 1;
+private boolean isHall(int x,int y){
+        return this.board[x][y]==1;
         }
 
-public boolean isBallOnTheHole(int x, int y) {
-        return this.board[x][y] == 3;
+private boolean isBallOnTheHole(int x,int y){
+        return this.board[x][y]==3;
         }
+
+private boolean isPlayer(int x,int y){
+        return this.board[x][y]==4||this.board[x][y]==5;
+        }    
 ```
 
 <br/><br/><br/>
-
-
-
-
-
 
 ### 1-1. GameResult push(Command command)
 
@@ -1564,41 +1579,38 @@ public boolean isBallOnTheHole(int x, int y) {
 ```java
     }
 
-protected Pair findPlayerPosition() {
-        for (int row = 0; row < this.board.length; row++) {
-        for (int col = 0; col < this.board[0].length; col++) {
-        if (isPlayer(row, col)) {
-        return Pairs.of(row, col);
+protected Pair findPlayerPosition(){
+        for(int row=0;row< this.board.length;row++){
+        for(int col=0;col< this.board[0].length;col++){
+        if(isPlayer(row,col)){
+        return Pairs.of(row,col);
         }
         }
         }
         return null;
         }
 
-private boolean isPlayer(int x, int y) {
-        return this.board[x][y] == 4 || this.board[x][y] == 5;
+private boolean isPlayer(int x,int y){
+        return this.board[x][y]==4||this.board[x][y]==5;
         }
 
-protected boolean isAnswer() {
+protected boolean isAnswer(){
         return answer.isAnswer(this.board);
         }
 
-public void reset() {
-        int[][] reset = this.answer.getOriginal();
+public void reset(){
+        int[][]reset=this.answer.getOriginal();
         update(reset);
         }
 ```
 
 <br/><br/><br/>
 
-
-
 ## 2. GameMachine
 
 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스
 
 ### 1-1. GameResult push(Command command)
-
 
 <br/><br/>
 
@@ -1607,14 +1619,13 @@ public void reset() {
         return stages.getStage(value);
         }
 
-public List<GameResult> play(int stageNumber, List<Command> commands) {
-        Stage stage = stages.getStage(stageNumber);
+public List<GameResult> play(int stageNumber,List<Command> commands){
+        Stage stage=stages.getStage(stageNumber);
         return stage.execute(commands);
         }
 
 
 ```
-
 
 <br/><br/><br/><br/>
 
@@ -1624,7 +1635,6 @@ public List<GameResult> play(int stageNumber, List<Command> commands) {
 
 ### 1-1. GameResult push(Command command)
 
-
 <br/><br/>
 
 ```java
@@ -1632,17 +1642,13 @@ public List<GameResult> play(int stageNumber, List<Command> commands) {
         return stages.getStage(value);
         }
 
-public List<GameResult> play(int stageNumber, List<Command> commands) {
-        Stage stage = stages.getStage(stageNumber);
+public List<GameResult> play(int stageNumber,List<Command> commands){
+        Stage stage=stages.getStage(stageNumber);
         return stage.execute(commands);
         }
 
 
 ```
-
-
-
-
 
 </div>
 </details>
