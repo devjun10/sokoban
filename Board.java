@@ -4,7 +4,9 @@ public class Board {
     private final int BOARD_START = 0;
     private final int BOARD_HEIGHT = 7;
     private final int BOARD_WIDTH = 11;
+
     private String[][] board;
+
     private Answer answer = new Answer(null);
 
     private Board() {
@@ -29,6 +31,10 @@ public class Board {
     static Board of() {
         return new Board();
     };
+
+    void push(Pair pair){
+
+    }
 
     String[][] getBoard() {
         String[][] copyBoard = new String[BOARD_HEIGHT][BOARD_WIDTH];

@@ -16,10 +16,4 @@ public class Numbers {
     static Number getValue(int value){
         return numbers.get(value);
     }
-
-
-    public static void main(String[] args) throws Exception {
-        String word ="asdf asdf sdafas asd fas dfas dfa sdfsa dfs";
-    }
-
 }

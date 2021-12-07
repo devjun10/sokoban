@@ -1,3 +1,3 @@
 public class Disk {
-    Init init;
+    private Init init;
 }
