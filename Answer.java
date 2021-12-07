@@ -30,20 +30,13 @@ public class Answer {
         int[][] map = deleteCharacter(array);
         int[][] answer = this.answer;
         for (int row = 0; row < answer.length; row++) {
-            if (checkColumn(row, map[row])) {
-                return false;
+            for(int col=0; col<answer[0].length; col++){
+                if(map[row][col]!=answer[row][col]){
+                    return false;
+                }
             }
         }
         return true;
-    }
-
-    public boolean checkColumn(int row, int[] array) {
-        for (int col = 0; col < array.length; col++) {
-            if (array[col] != this.answer[row][col]) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public int[][] getAnswer() {
@@ -54,8 +47,8 @@ public class Answer {
         return temp;
     }
 
-    private int[][] deleteCharacter(int array[][]) {
-        int[][] temp = new int[answer.length][answer[0].length];
+    private int[][] deleteCharacter(int[][] array) {
+        int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
                 temp[row][col] = changeCharacter(array[row][col]);
@@ -70,4 +63,6 @@ public class Answer {
         }
         return value;
     }
+
+
 }

@@ -6,17 +6,14 @@ public class Stage {
     private Board board;
     private StageInformation stageInformation;
 
-    Stage() {
-    }
-
-    ;
+    Stage() {};
 
     Stage(Board board, StageInformation stageInformation) {
         this.board = board;
         this.stageInformation = stageInformation;
     }
 
-    public String[][] board() {
+    public String[][] getBoard() {
         return board.getBoard();
     }
 
@@ -33,5 +30,9 @@ public class Stage {
         return "Stage{" +
                 "id=" + stageInformation.getId() + ", stageInformation=" + stageInformation +
                 '}';
+    }
+
+    public boolean isAnswer() {
+        return this.board.isAnswer();
     }
 }

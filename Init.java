@@ -15,14 +15,13 @@ public class Init {
         List<String[][]> maps = getMaps();
         for (int i = 0; i < 4; i++) {
             Board board = new Board(changeStringArrayToIntegerArray(maps.get(i)));
-//            for(int p=0; p<board.getBoard().length; p++){
+//            for(int p=0; p<getBoard.getBoard().length; p++){
 //                System.out.println();
-//                for(int j=0; j<board.getBoard()[0].length; j++){
-//                    System.out.print(board.getBoard()[p][j]);
+//                for(int j=0; j<getBoard.getBoard()[0].length; j++){
+//                    System.out.print(getBoard.getBoard()[p][j]);
 //                }
 //            }
             StageInformation info = information.get(i);
-//            Stage stage = new Stage(i+1, info, board);
             Stages.putStage(i + 1, info, board);
         }
     }

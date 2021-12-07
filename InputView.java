@@ -45,7 +45,6 @@ public class InputView {
         String[] temp = direction.split("");
         for(int number= 0; number<temp.length; number++){
             if (!commands.contains(temp[number])) {
-                words.add(String.valueOf(Command.INVALID_COMMAND));
                 continue;
             }
             words.add(temp[number]);

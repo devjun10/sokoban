@@ -1,4 +1,5 @@
 public class Disk {
+
     private Init init = Init.of();
 
     private Disk() {};

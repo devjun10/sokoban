@@ -1,6 +1,5 @@
 public class Board {
 
-    private int id;
 
     private int[][] board;
 
@@ -8,14 +7,9 @@ public class Board {
 
     private Board(){};
 
-    public Board(int id, int[][] board, Answer answer) {
-        this.id = id;
-        this.board = board;
-        this.answer = answer;
-    }
-
     public Board(int[][] board) {
         this.board = board;
+        this.answer = new Answer(board);
     }
 
     static Board of() {
@@ -30,11 +24,8 @@ public class Board {
         return temp;
     }
 
-    public int[][] getAnswer() {
-        return answer.getAnswer();
-    }
-
     GameResult push(Command command) {
+        GameResult gameResult = new GameResult();
         Pair pair = findPlayerPosition();
 
         int moveBlockX = pair.getX() + command.getNextPosition().get(0);
@@ -42,17 +33,36 @@ public class Board {
         int[][] newBoard = copyBoard();
 
         if (moveable(Pairs.of(moveBlockX, moveBlockY))) {
-            newBoard[pair.getX()][pair.getY()] -= 4;
-            newBoard[moveBlockX][moveBlockY] += 4;
-            update(newBoard);
+            int[][] updatedBoard = move(pair, newBoard, Pairs.of(moveBlockX, moveBlockY));
+            update(updatedBoard);
+            gameResult.addBoard(this.getBoard());
         } else if (pushable(Pairs.of(moveBlockX, moveBlockY), command)) {
-            newBoard[pair.getX()][pair.getY()] -= 4;
-            newBoard[moveBlockX][moveBlockY] += 4;
-            newBoard[moveBlockX][moveBlockY] -= 2;
-            newBoard[moveBlockX + command.getNextPosition().get(0)][moveBlockY + command.getNextPosition().get(1)] += 2;
-            update(newBoard);
+            int[][] updatedBoard = pushBall(pair, newBoard, Pairs.of(moveBlockX, moveBlockY), command);
+            update(updatedBoard);
+            gameResult.addBoard(this.getBoard());
         }
-        return new GameResult(this.getBoard());
+        checkGameResult(gameResult);
+        return gameResult;
+    }
+
+    public int[][] move( Pair position, int[][] board, Pair nextPosition){
+        board[position.getX()][position.getY()] -= 4;
+        board[nextPosition.getX()][nextPosition.getY()] += 4;
+        return board;
+    }
+
+    public int[][] pushBall(Pair position, int[][] board, Pair nextPosition, Command command){
+        board[position.getX()][position.getY()] -= 4;
+        board[nextPosition.getX()][nextPosition.getY()] += 4;
+        board[nextPosition.getX()][nextPosition.getY()] -= 2;
+        board[nextPosition.getX() + command.getNextPosition().get(0)][nextPosition.getY() + command.getNextPosition().get(1)] += 2;
+        return board;
+    }
+
+    public void checkGameResult(GameResult result){
+        if(result.getBoard() ==null){
+            result.addBoard(getBoard());
+        }
     }
 
     public boolean pushable(Pair pair, Command command) {
@@ -139,5 +149,9 @@ public class Board {
 
     private boolean validateRange(Pair pair) {
         return pair.getX() >= 0 && pair.getX() < this.board.length && pair.getY() >= 0 && pair.getY() < this.board[0].length;
+    }
+
+    protected boolean isAnswer() {
+        return answer.isAnswer(this.board);
     }
 }

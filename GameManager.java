@@ -3,10 +3,14 @@ import java.util.List;
 
 public class GameManager {
 
-    private final String greet = "소코반의 세계에 오신 것을 환영합니다!\n^오^\n";
 
     public void sayHello() {
-        System.out.println(this.greet);
+        System.out.println(Message.GREET);
+    }
+
+    public void sayGoodBye() {
+        System.out.println(Message.CLEAR_CELEBRATION);
+        System.out.println(Message.CELEBRATION);
     }
 
     public List<Command> getCommand(List<String> direction) {
@@ -25,5 +29,12 @@ public class GameManager {
             System.out.println(command.getDescription());
             System.exit(1);
         }
+    }
+
+    public List<GameResult> manageResult(List<GameResult> results) {
+        List<GameResult> addResult = new ArrayList<>();
+
+
+        return null;
     }
 }

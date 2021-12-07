@@ -39,10 +39,10 @@ public class StageInformation {
 
     @Override
     public String toString() {
-        return "StageInformation{" +
+        return "StageInformation=[" +
                 "id=" + id +
                 ", height=" + height +
                 ", width=" + width +
-                '}';
+                ']';
     }
 }
