@@ -51,4 +51,5 @@ public class SaveData {
     public void addAll(List<GameResult> executeResult) {
 
     }
+
 }
