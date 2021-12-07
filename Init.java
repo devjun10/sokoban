@@ -8,11 +8,10 @@ import java.util.List;
 public class Init {
 
     private static final StringBuilder stringBuilder = new StringBuilder();
-    private static final StageInfo stageInfo = StageInfo.of();
-    private static final Boards boards = Boards.of();
+    private static final StageInformationList STAGE_INFORMATION_LIST = StageInformationList.of();
 
     static {
-        List<StageInformation> information = stageInfo.getStageInformation();
+        List<StageInformation> information = STAGE_INFORMATION_LIST.getStageInformation();
         List<String[][]> maps = getMaps();
         for (int i = 0; i < 4; i++) {
             Board board = new Board(changeStringArrayToIntegerArray(maps.get(i)));
@@ -23,6 +22,7 @@ public class Init {
 //                }
 //            }
             StageInformation info = information.get(i);
+//            Stage stage = new Stage(i+1, info, board);
             Stages.putStage(i + 1, info, board);
         }
     }
@@ -41,14 +41,6 @@ public class Init {
 
     public static Init of() {
         return new Init();
-    }
-
-    List<StageInformation> getStageInformation() {
-        return stageInfo.getStageInformation();
-    }
-
-    List<Board> getBoards() {
-        return List.of();
     }
 
     public static List<String[][]> getMaps() {
@@ -71,7 +63,7 @@ public class Init {
         String[][] result = new String[rows][];
 
         for (int i = 0; i < rows; i++) {
-            String[] temp = eachStages[i].split(",");
+            String[] temp = splitByComma(eachStages[i]);
             int tempCols = temp.length;
             result[i] = new String[tempCols];
             for (int j = 0; j < tempCols; j++) {
@@ -79,6 +71,10 @@ public class Init {
             }
         }
         return result;
+    }
+
+    private static String[] splitByComma(String word) {
+        return word.split(",");
     }
 
     static String[] joiningTextFileWord() {
@@ -101,23 +97,6 @@ public class Init {
     private static String[] splitByStage(String word) {
         return word.split("==========");
     }
-
-    private static String[] splitByComma(String word) {
-        return word.split(",");
-    }
-
-
-    public static String changeSymbol(String word) {
-        word = word.replaceAll("9", "#");
-        word = word.replaceAll("0", " ");
-        word = word.replaceAll("1", "O");
-        word = word.replaceAll("2", "o");
-        word = word.replaceAll("3", "0");
-        word = word.replaceAll("4", "P");
-        word = word.replaceAll("5", "P");
-        return word;
-    }
-
 }
 
 

@@ -4,16 +4,12 @@ import java.util.stream.IntStream;
 
 public class Numbers {
 
-//    private static List<Number> numbers = null;
-//
-//    static {
-//        numbers = IntStream.rangeClosed(0, 15)
-//                .mapToObj(Number::new)
-//                .sorted()
-//                .collect(Collectors.toUnmodifiableList());
-//    }
-//
-//    static Number getValue(int value){
-//        return numbers.get(value);
-//    }
+    private static final List<Number> numbers = IntStream.rangeClosed(0, 15)
+            .mapToObj(Number::new)
+            .sorted()
+            .collect(Collectors.toUnmodifiableList());
+
+    static Number getValue(int value) {
+        return numbers.get(value);
+    }
 }

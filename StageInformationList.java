@@ -1,14 +1,13 @@
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class StageInfo {
+public class StageInformationList {
 
     private static List<StageInformation> stages;
 
-    private StageInfo() {
-    }
+    private StageInformationList() {}
 
-    static StageInfo of() {
+    static StageInformationList of() {
         List<StageInformation> lst = List.of(
                 new StageInformation(1, 6, 6),
                 new StageInformation(2, 5, 6),
@@ -16,7 +15,7 @@ public class StageInfo {
                 new StageInformation(4, 6, 7)
         );
         stages = lst;
-        return new StageInfo();
+        return new StageInformationList();
     }
 
     StageInformation getInformation(int inputId) {

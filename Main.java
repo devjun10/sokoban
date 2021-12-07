@@ -8,19 +8,18 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Numbers numbers = new Numbers();
         GameMachine gameMachine = new GameMachine();
-        outputView.initBoard(gameMachine.getBoard().getBoard());
         GameManager manager = new GameManager();
 
-        String[][] array = gameMachine.getBoard().getBoard();
-        for(int row=0; row<array.length; row++){
+        manager.sayHello();
+
+        Stage stage = Stages.of().getStage(1);
+
+        String[][] array = stage.board();
+        for (int row = 0; row < array.length; row++) {
             System.out.println();
-            for(int col=0; col<array[0].length; col++){
+            for (int col = 0; col < array[0].length; col++) {
                 System.out.print(array[row][col]);
             }
         }
-//        while (true) {
-//            List<String> inputValues = inputView.inputCommand();
-//            List<Command> commands = manager.getCommand(inputValues);
-//        }
     }
 }

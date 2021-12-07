@@ -1,13 +1,23 @@
 public class Stage {
 
-    private int id;
     private Board board = Board.of();
     private StageInformation stageInformation;
 
+    Stage() {};
 
-    public Stage(int id, Board board, StageInformation stageInformation) {
-        this.id = id;
+    public Stage(Board board, StageInformation stageInformation) {
         this.board = board;
         this.stageInformation = stageInformation;
+    }
+
+    public String[][] board() {
+        return board.getBoard();
+    }
+
+    @Override
+    public String toString() {
+        return "Stage{" +
+                "id=" + stageInformation.getId() + ", stageInformation=" + stageInformation +
+                '}';
     }
 }
