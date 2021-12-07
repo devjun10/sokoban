@@ -1,8 +1,10 @@
 
 public class GameMachine {
 
-    private Stages stages;
+    private Disk disk = Disk.of();
+    private Stages stages = Stages.of();
     private Board board = Board.of();
+
 
     GameResult getBoard() {
         return new GameResult(board.getBoard());

@@ -3,11 +3,16 @@ import java.util.Map;
 
 public class Stages {
 
-    private static final Map<Number, Stage> stages = new HashMap<>();
+    private static final Map<Integer, Stage> stages = new HashMap<>();
 
     Stages() {
-//        for (int number = 1; number <= 15; number++) {
-//            stages.put(Numbers.getValue(number), new Stage());
-//        }
+    }
+
+    public static void putStage(int id, StageInformation information, Board board) {
+        stages.put(id, new Stage(id, board, information));
+    }
+
+    public static Stages of() {
+        return new Stages();
     }
 }

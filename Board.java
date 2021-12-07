@@ -12,6 +12,16 @@ public class Board {
         initBoard();
     }
 
+    public Board(int id, int[][] board, Answer answer) {
+        this.id = id;
+        this.board = board;
+        this.answer = answer;
+    }
+
+    public Board(int[][] board) {
+        this.board = board;
+    }
+
     void initBoard() {
         this.board = new int[6][6];
         this.board[0] = new int[]{9, 9, 9, 9, 9, 9};
@@ -133,9 +143,9 @@ public class Board {
     }
 
     String[][] getBoard() {
-        String[][] copyBoard = new String[this.board[0].length][this.board.length];
-        for (int row = BOARD_HEIGHT; row < this.board.length; row++) {
-            for (int col = BOARD_WIDTH; col < this.board[0].length; col++) {
+        String[][] copyBoard = new String[this.board.length][this.board[0].length];
+        for (int row = 0; row < this.board.length; row++) {
+            for (int col = 0; col < this.board[0].length; col++) {
                 copyBoard[row][col] = changeIntSymbol(this.board[row][col]);
             }
         }

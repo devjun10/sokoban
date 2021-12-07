@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Init {
@@ -14,11 +13,34 @@ public class Init {
 
     static {
         List<StageInformation> information = stageInfo.getStageInformation();
-        List<Board> boards = null;
-
+        List<String[][]> maps = getMaps();
         for (int i = 0; i < 4; i++) {
-
+            Board board = new Board(changeStringArrayToIntegerArray(maps.get(i)));
+//            for(int p=0; p<board.getBoard().length; p++){
+//                System.out.println();
+//                for(int j=0; j<board.getBoard()[0].length; j++){
+//                    System.out.print(board.getBoard()[p][j]);
+//                }
+//            }
+            StageInformation info = information.get(i);
+            Stages.putStage(i + 1, info, board);
         }
+    }
+
+    private static int[][] changeStringArrayToIntegerArray(String[][] array) {
+        int[][] temp = new int[array.length][array[0].length];
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
+                temp[row][col] = Integer.parseInt(array[row][col]);
+            }
+        }
+        return temp;
+    }
+
+    private Init() {};
+
+    public static Init of() {
+        return new Init();
     }
 
     List<StageInformation> getStageInformation() {
@@ -29,17 +51,13 @@ public class Init {
         return List.of();
     }
 
-    static void initBoard() {
-        List<Board> boards = new ArrayList<>();
-    }
-
-    public static List<String[][]> getMaps(){
+    public static List<String[][]> getMaps() {
         String[][] result = getStages();
         List<String[][]> answer = new ArrayList<>();
         for (int i = 0; i < result.length; i++) {
             String[] temp = result[i];
             String[][] array = new String[temp.length][temp[0].length()];
-            for(int j=0; j<temp.length; j++){
+            for (int j = 0; j < temp.length; j++) {
                 array[j] = temp[j].split("");
             }
             answer.add(array);
@@ -89,7 +107,6 @@ public class Init {
     }
 
 
-
     public static String changeSymbol(String word) {
         word = word.replaceAll("9", "#");
         word = word.replaceAll("0", " ");
@@ -101,40 +118,6 @@ public class Init {
         return word;
     }
 
-    public static void main(String[] args) throws Exception {
-        String[] eachStages = joiningTextFileWord();// 스테이지 별로
-        int rows = eachStages.length;
-        String[][] result = new String[rows][];
-
-        for (int i = 0; i < rows; i++) {
-            String[] temp = eachStages[i].split(",");
-            int tempCols = temp.length;
-            result[i] = new String[tempCols];
-            for (int j = 0; j < tempCols; j++) {
-                result[i][j] = temp[j];
-            }
-        }
-
-        List<String[][]> answer = new ArrayList<>();
-        for (int i = 0; i < result.length; i++) {
-            String[] temp = result[i];
-            String[][] array = new String[temp.length][temp[0].length()];
-            for(int j=0; j<temp.length; j++){
-                array[j] = temp[j].split("");
-            }
-            answer.add(array);
-        }
-        System.out.println("==============");
-        String[][] test = getMaps().get(0);
-        for(int row=0; row<test.length; row++){
-            System.out.println();
-            for(int col=0 ; col<test[0].length; col++){
-                System.out.print(test[row][col]);
-            }
-        }
-
-
-    }
 }
 
 
