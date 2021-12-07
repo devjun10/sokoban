@@ -79,8 +79,8 @@ public class Board {
         return temp;
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public int[][] getAnswer() {
+        return answer.getAnswer();
     }
 
     void init() {

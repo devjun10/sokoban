@@ -1,8 +1,10 @@
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Init {
@@ -32,10 +34,10 @@ public class Init {
         List<Board> boards = new ArrayList<>();
     }
 
-    static String[] joiningTextFileWord() {
+    static String joiningTextFileWord() {
         try {
             stringBuilder.setLength(0);
-            File file = new File("test.txt");
+            File file = new File("map.txt");
             FileReader filereader = new FileReader(file);
             BufferedReader bufReader = new BufferedReader(filereader);
             String line = "";
@@ -46,8 +48,7 @@ public class Init {
         } catch (IOException e) {
             System.out.println(e);
         }
-        System.out.println(stringBuilder.toString());
-        return splitByStage(stringBuilder.toString());
+        return stringBuilder.toString();
     }
 
     private static String[] splitByStage(String word) {
@@ -58,18 +59,14 @@ public class Init {
         return word.split(",");
     }
 
-    public static List<String[][]> getWordAsList(String word) {
+    public static List<String[][]> getWordArray(String word) {
         List<String[][]> temp = new ArrayList<>();
         List<StageInformation> information = StageInfo.getStages();
         //999999,900409,929999,909000,919000,999000
         String[] stages = splitByComma(word);// 각 스테이지 별로 나뉘어 져 있음
-
-        for (int count = 0; count < stages.length; count++) {
-            StageInformation info = information.get(count);
-            String[][] array = new String[info.getHeight()][info.getWidth()];
-            for (int row = 0; row < info.getHeight(); row++) {
-                array[row] = stages[count].split(",");
-            }
+        for (int i = 0; i < stages.length; i++) {
+            String each = stages[i];
+//            System.out.println(each);
 
         }
 
@@ -88,19 +85,11 @@ public class Init {
     }
 
     public static void main(String[] args) throws Exception {
-        String[] word = joiningTextFileWord();
-        for (int i = 0; i < word.length; i++) {
-            System.out.println(word[i]);
-        }
-        String temp = word[0];
-//        String[][] array = getWordAsList(temp, 6, 6);
-//        for (int row = 0; row < 6; row++) {
-//            System.out.println();
-//            for (int col = 0; col < 6; col++) {
-//                System.out.print(array[row][col]);
-//            }
-//        }
-
+        String maps = joiningTextFileWord();
+        String[] eachStages = splitByStage(maps);// 스테이지 별로
+        List<StageInformation> information = StageInfo.getStages();
+        List<String> lst = Arrays.asList(eachStages);
+        lst.forEach(System.out::println);
 
     }
 }

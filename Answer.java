@@ -9,8 +9,34 @@ public class Answer {
         this.answer = calculateAnswer(array);
     }
 
+    public static void main(String[] args) throws Exception {
+        Board b = Board.of();
+        int[][] bb = b.copyBoard();
+        Answer answers = new Answer(bb);
+
+        int[][] answer = b.getAnswer();
+        System.out.println("====================");
+        for (int row = 0; row < answer.length; row++) {
+            System.out.println();
+            for (int col = 0; col < answer[0].length; col++) {
+                System.out.print(answer[row][col]);
+            }
+        }
+
+        System.out.println(b);
+        System.out.println();
+        System.out.println("====================");
+        answers.isAnswer(bb);
+        System.out.println(answers.isAnswer(bb));
+        System.out.println(answers.isAnswer(answer));
+
+
+
+    }
+
+
     private int[][] calculateAnswer(int[][] array) {
-        int[][] temp = new int[answer.length][answer[0].length];
+        int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
                 temp[row][col] = changeNumber(array[row][col]);
@@ -37,13 +63,14 @@ public class Answer {
         return true;
     }
 
+
     public boolean checkColumn(int row, int[] array) {
         for (int col = 0; col < array.length; col++) {
             if (array[col] != this.answer[row][col]) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public int[][] getAnswer() {
