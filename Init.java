@@ -35,7 +35,7 @@ public class Init {
     static String[] joiningTextFileWord() {
         try {
             stringBuilder.setLength(0);
-            File file = new File("map.txt");
+            File file = new File("test.txt");
             FileReader filereader = new FileReader(file);
             BufferedReader bufReader = new BufferedReader(filereader);
             String line = "";
@@ -57,7 +57,6 @@ public class Init {
     private static String[] splitByComma(String word) {
         return word.split(",");
     }
-
 
     public static List<String[][]> getWordAsList(String word) {
         List<String[][]> temp = new ArrayList<>();

@@ -5,6 +5,7 @@ public class Board {
     private int BOARD_HEIGHT;
 
     private int[][] board;
+
     private Answer answer;
 
     private Board() {
@@ -51,14 +52,12 @@ public class Board {
         //3
         Command commandSecond3 = Command.getDirection("s");
         Pair movedPlayer3 = board.findPlayerPosition();
-        System.out.println("=============");
-        System.out.println(movedPlayer3+", ");
-        System.out.println("=============");
+        System.out.println(movedPlayer3 + ", ");
         board.push(movedPlayer3, commandSecond3);
 
         Command commandSecond4 = Command.getDirection("s");
         Pair movedPlayer4 = board.findPlayerPosition();
-        System.out.println(movedPlayer3+", ");
+        System.out.println(movedPlayer3 + ", ");
         board.push(movedPlayer4, commandSecond4);
         for (int i = 0; i < 6; i++) {
             System.out.println();
@@ -121,11 +120,11 @@ public class Board {
         return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1;
     }
 
-    public boolean isBlank(int x, int y){
+    public boolean isBlank(int x, int y) {
         return this.board[x][y] == 0;
     }
 
-    public boolean isHall(int x, int y){
+    public boolean isHall(int x, int y) {
         return this.board[x][y] == 1;
     }
 
