@@ -74,4 +74,7 @@ public class Answer {
     }
 
 
+    public boolean checkAnswer(String[][] arry) {
+        return false;
+    }
 }

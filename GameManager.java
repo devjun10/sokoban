@@ -12,6 +12,10 @@ public class GameManager {
         System.out.println(Message.CELEBRATION);
     }
 
+    public void sayTurnOff() {
+        System.out.println(Message.BYE);
+    }
+
     public void sayTurnCount(int value) {
         System.out.println(Message.TURN_COUNT + "" + value);
     }
@@ -31,7 +35,6 @@ public class GameManager {
             if(command.equals(Command.R)){
                 return List.of(Command.R);
             }
-            validateQuit(command);
             commands.add(command);
         }
         return commands;
@@ -42,7 +45,7 @@ public class GameManager {
     }
 
     public int plusTurn(int value) {
-        return value;
+        return value+1;
     }
 
     public int turnInit() {
@@ -55,5 +58,9 @@ public class GameManager {
             System.out.println(command.getDescription());
             System.exit(1);
         }
+    }
+
+    public void turnOffTheGame() {
+        System.exit(1);
     }
 }

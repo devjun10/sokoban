@@ -23,6 +23,14 @@ public class Stage {
             if(command.equals(Command.R)){
                 return List.of(resetStage());
             }
+            if(command.equals(Command.Q)){
+                results.add(new GameResult());
+                return results;
+            }
+            if(command.equals(Command.R)){
+                results.add(new GameResult(this.board.getBoard(), Command.R.getCommand()));
+                return results;
+            }
             results.add(this.board.push(command));
         }
         return results;
@@ -42,5 +50,10 @@ public class Stage {
 
     public boolean isNotAnswer() {
         return !this.board.isAnswer();
+    }
+
+
+    public boolean checkAnswer(String[][] board) {
+        return this.board.checkAnswer(board);
     }
 }

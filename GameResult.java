@@ -4,6 +4,7 @@ public class GameResult {
     private String message;
 
     public GameResult (){};
+
     public GameResult(String[][] board) {
         this.board = board;
     }
@@ -19,6 +20,10 @@ public class GameResult {
 
     public String[][] getBoard() {
         return board;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public void addBoard(String[][] board) {

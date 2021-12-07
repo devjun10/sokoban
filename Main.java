@@ -16,23 +16,42 @@ public class Main {
         while (stageNumber < 5) {
             Stage stage = gameMachine.getStage(stageNumber);
             outputView.initBoard(stage.getBoard());
-
+            boolean flag = false;
+            Loop1:
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
                 if (commands.get(0).equals(Command.R)) {
                     stage.resetStage();
                     turn = 0;
                     manager.sayTurnReset();
+                    continue;
                 }
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
-                outputView.printResult(result);
-                turn = manager.plusTurn(turn+result.size());
-                manager.sayTurnCount(turn);
+                for (GameResult gameResult : result) {
+                    if (gameResult.getBoard() == null) {
+                        manager.sayTurnCount(turn);
+                        manager.sayTurnOff();
+                        manager.turnOffTheGame();
+                    }
+
+                    if(!flag)
+                        turn = manager.plusTurn(turn);
+                    if (stage.checkAnswer(gameResult.getBoard())) {
+                        if (!flag) {
+                            manager.sayTurnClear(stageNumber);
+                            manager.sayTurnCount(turn);
+                        }
+                        flag = true;
+                    }
+                    if (!flag) {
+                        manager.sayTurnCount(turn);
+                        outputView.printBoard(gameResult);
+                    }
+                }
             }
+
             turn = manager.turnInit();
-            if (turn == 0) {
-                manager.sayTurnClear(stageNumber);
-            }
+//            manager.sayTurnClear(stageNumber);
             stageNumber = manager.stageUp(stageNumber);
         }
         manager.sayGoodBye();

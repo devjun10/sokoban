@@ -2,6 +2,7 @@ public enum Message {
 
     STAGE_INFO("Stage "),
     BLANK("\n"),
+    LINE("========================================================="),
     CLEAR("클리어!"),
     CLEAR_CELEBRATION("전체 게임을 클리어하셨습니다!"),
     TURN_COUNT("턴수:"),
@@ -9,7 +10,8 @@ public enum Message {
     DOT("..."),
     GREET("소코반의 세계에 오신 것을 환영합니다!\n^오^\n"),
     TURN_RESET("해당 턴을 초기화 합니다.\n"),
-    SOKOBAN("SOKOBAN> ");
+    SOKOBAN("SOKOBAN> "),
+    BYE("Bye~ ");
 
     private final String message;
 
