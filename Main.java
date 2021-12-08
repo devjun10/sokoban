@@ -13,14 +13,20 @@ public class Main {
         int stageNumber = 1;
         int turn = 0;
 
-        String choice = inputView.inputChoice();
-        if (Choice.YES.getDescription().equals(choice)) {
+        String inputChoice = inputView.inputChoice();
+        if (Choice.YES.cotent().equals(inputChoice)) {
 //            stageNumber = inputView.inputChoice();
         }
         while (stageNumber < 5) {
+            if (stageNumber > 1) {
+                String saveChoice = inputView.inputChoice();
+                if (Choice.YES.cotent().equals(saveChoice)) {
+                    gameMachine.saveStage(stageNumber);
+                }
+            }
+            StageProgress currentState = StageProgress.NOT_CLEAR;
             Stage stage = gameMachine.getStage(stageNumber);
-            outputView.initBoard(stage.getBoard());
-            boolean turnCount = false;
+            outputView.printInitStage(stage.getBoard());
 
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
@@ -31,24 +37,24 @@ public class Main {
                         stage.resetStage();
                         turn = 0;
                         manager.sayTurnReset();
-                        outputView.initBoard(stage.getBoard());
+                        outputView.printInitStage(stage.getBoard());
                         break;
                     }
+
                     if (gameResult.getMessage().equals(Command.Q.getCommand())) {
                         manager.sayTurnCount(turn);
                         manager.sayTurnOff();
                         manager.turnOffTheGame();
                     }
-//                    if (!turnCount)
-//                        turn = manager.plusTurn(turn);
+
                     if (stage.checkAnswer(gameResult.getBoard())) {
-                        if (!turnCount) {
+                        if (currentState.equals(StageProgress.NOT_CLEAR)) {
                             manager.sayTurnClear(stageNumber);
                             manager.sayTurnCount(turn);
                         }
-                        turnCount = true;
+                        currentState = StageProgress.CLEAR;
                     }
-                    if (!turnCount) {
+                    if (currentState.equals(StageProgress.NOT_CLEAR)) {
                         turn = manager.plusTurn(turn);
                         manager.sayTurnCount(turn);
                         outputView.printBoard(gameResult);

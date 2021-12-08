@@ -11,13 +11,13 @@ public enum Choice {
         this.description = description;
     }
 
-    public String getDescription() {
+    public String cotent() {
         return description;
     }
 
     public static List<String> getChoices() {
         return Stream.of(values())
-                .map(Choice::getDescription)
+                .map(Choice::cotent)
                 .collect(Collectors.toUnmodifiableList());
     }
 

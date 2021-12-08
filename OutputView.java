@@ -4,7 +4,7 @@ public class OutputView {
 
     private final StringBuilder stringBuilder = new StringBuilder();
 
-    public void initBoard(String[][] board) {
+    public void printInitStage(String[][] board) {
         stringBuilder.setLength(0);
 
         for (int row = 0; row < board.length; row++) {

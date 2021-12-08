@@ -19,4 +19,8 @@ public class GameMachine {
         Stage stage = stages.getStage(stageNumber);
         return stage.execute(commands);
     }
+
+    public void saveStage(int stageNumber) {
+
+    }
 }
