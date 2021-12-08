@@ -15,32 +15,25 @@ public class Main {
 
         Stage stage;
 
-        String inputChoice = inputView.inputChoice();
-
         while (stageNumber < 5) {
+            manager.askLoadSavedData();
+            String inputChoice = inputView.inputChoice();
             if (Choice.YES.cotent().equals(inputChoice)) {
-                stageNumber = inputView.inputStageNumber();
-                System.out.println("===============================");
+                manager.askStageNumber();
+                stageNumber = inputView.inputIntValue();
                 stage = gameMachine.loadSlotData(stageNumber);
-                System.out.println(stage);
-                System.out.println("===============================");
-            }else {
+            } else {
                 stage = gameMachine.getStage(stageNumber);
                 stageNumber = stage.getStageNumber();
             }
 
-            if (stageNumber > 1) {
-                String saveChoice = inputView.inputChoice();
-                if (Choice.YES.cotent().equals(saveChoice)) {
-                    gameMachine.saveStage(stageNumber);
-                }
+            manager.askSaveData();
+            Choice choice = Choice.findChoice(inputView.inputChoice());
+            if (choice.cotent().equals(Choice.YES.cotent())) {
+                gameMachine.saveStage(stageNumber);
             }
             StageProgress currentState = StageProgress.NOT_CLEAR;
-            System.out.println("===========================");
-            System.out.println("This");
             outputView.printInitStage(stage.getBoard());
-            System.out.println("===========================");
-
 
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());

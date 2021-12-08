@@ -24,7 +24,6 @@ public class InputView {
 
     public String inputChoice() {
         String value;
-        System.out.print(Message.ASK_LOAD_STAGE_DATA);
 
         while (true) {
             try {
@@ -46,10 +45,8 @@ public class InputView {
         }
     }
 
-    public int inputStageNumber() {
+    public int inputIntValue() {
         int value;
-        System.out.print(Message.ASK_STAGE_NUMBER);
-
         while (true) {
             try {
                 value = Integer.parseInt(input.br.readLine().toLowerCase());

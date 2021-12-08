@@ -28,6 +28,10 @@ public class GameManager {
         System.out.println(Message.TURN_RESET);
     }
 
+    public void askLoadSavedData() {
+        System.out.print(Message.ASK_LOAD_STAGE_DATA);
+    }
+
     public List<Command> getCommand(List<String> direction) {
         List<Command> commands = new ArrayList<>();
         for (int i = 0; i < direction.size(); i++) {
@@ -49,15 +53,16 @@ public class GameManager {
         return 0;
     }
 
-    private void validateQuit(Command command) {
-        if (command.getCommand().equals("q")) {
-            System.out.println();
-            System.out.println(command.getDescription());
-            System.exit(1);
-        }
-    }
-
     public void turnOffTheGame() {
         System.exit(1);
+    }
+
+    public void askSaveData() {
+        System.out.println(Message.SAVE_DATA);
+    }
+
+    public void askStageNumber() {
+        System.out.println(Message.ASK_STAGE_NUMBER);
+
     }
 }
