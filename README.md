@@ -444,7 +444,6 @@ S>  3L
 <br/><br/><br/><br/><br/>
 
 
-<br/><br/><br/><br/><br/>
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:------------------------------------------|
@@ -458,28 +457,9 @@ S>  3L
 |8|class|&nbsp;StageInformation  |&nbsp; 해당 Board의 크기, 번호 등 정보를 저장하고 있는 클래스            |
 |9|class|&nbsp;Answer            |&nbsp; 정답과 원본 배열의 값을 저장하고 있는 클래스                     |
 
-<br/><br/><br/>
 
 
-<details>
-<summary>📚	 각 단계별 프로젝트 개요 </summary>
-<div markdown="1"></div>
 
-
-## 1단계
-사용자의 입력을 받고 . 문제가 1단계 부터 4단계 까지 있는 만큼 요구사항만 충족하고 다음 문제로 넘어갔습니다. 
-
-<br/><br/><br/>
-
-## 2단계
-
-
-<br/><br/><br/>
-
-## 3단계 
-
-
-</details>
 <br/><br/><br/><br/>
 
 
