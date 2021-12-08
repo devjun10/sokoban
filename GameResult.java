@@ -29,4 +29,8 @@ public class GameResult {
     public void addBoard(String[][] board) {
         this.board = board;
     }
+
+    public void addMesage(String message) {
+        this.message = message;
+    }
 }

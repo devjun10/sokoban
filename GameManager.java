@@ -32,9 +32,6 @@ public class GameManager {
         List<Command> commands = new ArrayList<>();
         for (int i = 0; i < direction.size(); i++) {
             Command command = Command.getDirection(direction.get(i));
-//            if(command.equals(Command.R)){
-//                return List.of(Command.R);
-//            }
             commands.add(command);
         }
         return commands;

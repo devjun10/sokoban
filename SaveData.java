@@ -6,10 +6,7 @@ public class SaveData {
     private static List<int[][]> compileData = new ArrayList<>();
     private List<int[][]> rollbackData = new ArrayList<>();
 
-    private SaveData() {
-    }
-
-    ;
+    private SaveData() {};
 
     public static SaveData of() {
         return new SaveData();

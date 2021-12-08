@@ -12,41 +12,42 @@ public class Main {
         manager.sayHello();
         int stageNumber = 1;
         int turn = 0;
-
+        if(false){
+//            stageNumber = inputView
+        }
         while (stageNumber < 5) {
             Stage stage = gameMachine.getStage(stageNumber);
             outputView.initBoard(stage.getBoard());
-            boolean flag = false;
+            boolean turnCount = false;
 
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
 
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
                 for (GameResult gameResult : result) {
-                    if (gameResult.getBoard()==null && gameResult.getMessage().equals(Command.R.getCommand())) {
+                    if (gameResult.getMessage().equals(Command.R.getCommand())) {
                         stage.resetStage();
                         turn = 0;
                         manager.sayTurnReset();
                         outputView.initBoard(stage.getBoard());
                         break;
                     }
-
-                    if (gameResult.getBoard() == null) {
+                    if (gameResult.getMessage().equals(Command.Q.getCommand())) {
                         manager.sayTurnCount(turn);
                         manager.sayTurnOff();
                         manager.turnOffTheGame();
                     }
-
-                    if(!flag)
-                        turn = manager.plusTurn(turn);
+//                    if (!turnCount)
+//                        turn = manager.plusTurn(turn);
                     if (stage.checkAnswer(gameResult.getBoard())) {
-                        if (!flag) {
+                        if (!turnCount) {
                             manager.sayTurnClear(stageNumber);
                             manager.sayTurnCount(turn);
                         }
-                        flag = true;
+                        turnCount = true;
                     }
-                    if (!flag) {
+                    if (!turnCount) {
+                        turn = manager.plusTurn(turn);
                         manager.sayTurnCount(turn);
                         outputView.printBoard(gameResult);
                     }
@@ -54,7 +55,6 @@ public class Main {
             }
 
             turn = manager.turnInit();
-//            manager.sayTurnClear(stageNumber);
             stageNumber = manager.stageUp(stageNumber);
         }
         manager.sayGoodBye();

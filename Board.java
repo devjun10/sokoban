@@ -132,12 +132,12 @@ public class Board {
     }
 
     private static int changeStringSymbol(String value) {
-        if(value.equals("P")) return 0;
-        if(value.equals(" ")) return 0;
-        if(value.equals("O")) return 1;
-        if(value.equals("o")) return 2;
-        if(value.equals("0")) return 3;
-        if(value.equals("#")) return 9;
+        if (value.equals("P")) return 0;
+        if (value.equals(" ")) return 0;
+        if (value.equals("O")) return 1;
+        if (value.equals("o")) return 2;
+        if (value.equals("0")) return 3;
+        if (value.equals("#")) return 9;
         return 0;
     }
 
@@ -161,17 +161,8 @@ public class Board {
         return answer.isAnswer(this.board);
     }
 
-    protected boolean checkAnswer(String [][] arry) {
-        int [][] temp = changeStringArrayToIntArray(arry);
-//        System.out.println("=============================");
-//        for(int row=0; row<arry.length;row++){
-//            System.out.println();
-//            for(int col=0; col<arry[0].length; col++){
-//                System.out.print(temp[row][col]);
-//            }
-//        }
-//        System.out.println();
-//        System.out.println("=============================");
+    protected boolean checkAnswer(String[][] arry) {
+        int[][] temp = changeStringArrayToIntArray(arry);
         return answer.isAnswer(temp);
     }
 
@@ -180,15 +171,13 @@ public class Board {
         update(reset);
     }
 
-    private int[][] changeStringArrayToIntArray(String[][] array){
-        int [][] temp = new int[array.length][array[0].length];
-        for(int row=0; row<array.length; row++){
-            for(int col=0; col<array[0].length; col++){
+    private int[][] changeStringArrayToIntArray(String[][] array) {
+        int[][] temp = new int[array.length][array[0].length];
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
                 temp[row][col] = changeStringSymbol(array[row][col]);
             }
         }
         return temp;
     }
-
-
 }

@@ -25,15 +25,16 @@ public class Stage {
         for (Command command : commandList) {
             if (command.equals(Command.Q)) {
                 // 이 직전 까지를 모두 더해야함
-                results.add(new GameResult());
+                results.add(new GameResult(Command.Q.getCommand()));
                 return results;
             }
             if (command.equals(Command.R)) {
                 results.add(new GameResult(Command.R.getCommand()));
-                saveData.resetData();
+//                saveData.resetData();
                 continue;
             }
             GameResult result = this.board.push(command);
+            result.addMesage(command.getCommand());
             results.add(result);
             executeResult.add(result);
         }
