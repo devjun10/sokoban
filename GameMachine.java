@@ -11,7 +11,7 @@ public class GameMachine {
         return new GameResult(board.getBoard());
     }
 
-    Stage getStage(int value){
+    Stage getStage(int value) {
         return stages.getStage(value);
     }
 

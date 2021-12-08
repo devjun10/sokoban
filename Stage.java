@@ -21,7 +21,6 @@ public class Stage {
 
     public List<GameResult> execute(List<Command> commandList) {
         List<GameResult> results = new ArrayList<>();
-        List<GameResult> executeResult = new ArrayList<>();
         for (Command command : commandList) {
             if (command.equals(Command.Q)) {
                 // 이 직전 까지를 모두 더해야함
@@ -30,15 +29,18 @@ public class Stage {
             }
             if (command.equals(Command.R)) {
                 results.add(new GameResult(Command.R.getCommand()));
-//                saveData.resetData();
+                continue;
+            }
+
+            if (command.equals(Command.SS)) {
+                results.add(new GameResult(Command.SS.getCommand()));
                 continue;
             }
             GameResult result = this.board.push(command);
-            result.addMesage(command.getCommand());
+            if(result.getMessage()==null)
+                result.addMesage(command.getCommand());
             results.add(result);
-            executeResult.add(result);
         }
-        saveData.addAll(executeResult);
         return results;
     }
 

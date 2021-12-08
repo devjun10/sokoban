@@ -44,13 +44,6 @@ public class Slot {
         }
     }
 
-
-    public static void main(String[] args) throws Exception {
-        Slot slot = new Slot();
-        String[][] arra = new String[6][6];
-
-    }
-
     public StageData loadStageData(int stageNumber) {
         return this.saveData.stream()
                 .filter(stage -> stage.getStage() == stageNumber)
@@ -63,7 +56,6 @@ public class Slot {
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
-//                System.out.println(array[row][col]);
                 temp[row][col] = changeStringSymbol(array[row][col]);
             }
         }
@@ -71,20 +63,12 @@ public class Slot {
     }
 
     private static int changeStringSymbol(String value) {
-        if (value.equals("P")) return 0;
+        if (value.equals("P")) return 4;
         if (value.equals(" ")) return 0;
         if (value.equals("O")) return 1;
         if (value.equals("o")) return 2;
         if (value.equals("0")) return 3;
         if (value.equals("#")) return 9;
         return 0;
-    }
-
-    int[][] copyBoard(int[][] array) {
-        int[][] temp = new int[array.length][array[0].length];
-        for (int row = 0; row < array.length; row++) {
-            temp[row] = array[row].clone();
-        }
-        return temp;
     }
 }

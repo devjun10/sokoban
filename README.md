@@ -1716,7 +1716,7 @@ stageNumber을 통해 해당 스테이지를 찾고 명령을 전달한다.
 public List<Command> getCommand(List<String> direction){
         List<Command> commands=new ArrayList<>();
         for(int i=0;i<direction.size();i++){
-        Command command=Command.getDirection(direction.get(i));
+        Command command=getCommands(direction.get(i));
         if(command.equals(Command.R)){
         return List.of(Command.R);
         }

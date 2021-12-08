@@ -13,7 +13,7 @@ public class Main {
         int stageNumber = 1;
         int turn = 0;
 
-        Stage stage = gameMachine.getStage(stageNumber);
+        Stage stage;
 
         String inputChoice = inputView.inputChoice();
         if (Choice.YES.cotent().equals(inputChoice)) {
@@ -21,9 +21,11 @@ public class Main {
             stage = gameMachine.load(stageNumber);
         }
         while (stageNumber < 5) {
+            stage = gameMachine.getStage(stageNumber);
             if (stageNumber > 1) {
                 String saveChoice = inputView.inputChoice();
                 if (Choice.YES.cotent().equals(saveChoice)) {
+//                    manager.askSave();
                     gameMachine.saveStage(stageNumber);
                 }
             }
@@ -48,6 +50,12 @@ public class Main {
                         manager.sayTurnCount(turn);
                         manager.sayTurnOff();
                         manager.turnOffTheGame();
+                    }
+
+                    if (gameResult.getMessage().equals(Command.SS.getCommand())) {
+                        System.out.println("저장완료");
+                        gameMachine.saveStage(stageNumber);
+                        continue;
                     }
 
                     if (stage.checkAnswer(gameResult.getBoard())) {

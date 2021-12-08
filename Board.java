@@ -1,14 +1,10 @@
 public class Board {
 
-
     private int[][] board;
 
     private Answer answer;
 
-    private Board() {
-    }
-
-    ;
+    private Board() {};
 
     public Board(int[][] board) {
         this.board = board;
@@ -146,7 +142,7 @@ public class Board {
         this.board = updatedBoard;
     }
 
-    private Pair findPlayerPosition() {
+    protected Pair findPlayerPosition() {
         for (int row = 0; row < this.board.length; row++) {
             for (int col = 0; col < this.board[0].length; col++) {
                 if (isPlayer(row, col)) {
