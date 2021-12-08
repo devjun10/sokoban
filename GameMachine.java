@@ -17,6 +17,7 @@ public class GameMachine {
 
     public List<GameResult> play(int stageNumber, List<Command> commands) {
         Stage stage = stages.getStage(stageNumber);
+
         return stage.execute(commands);
     }
 
@@ -35,5 +36,9 @@ public class GameMachine {
     public void clearStage(int stageNumber) {
         Stage stage = stages.getStage(stageNumber);
         stage.resetStage();
+    }
+
+    public List<StageData> getSlotData() {
+        return disk.getSlotData();
     }
 }

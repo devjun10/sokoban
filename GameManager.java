@@ -45,28 +45,28 @@ public class GameManager {
         return commands;
     }
 
-    public int stageUp(int value) {
+    int stageUp(int value) {
         return value += 1;
     }
 
-    public int plusTurn(int value) {
+    int plusTurn(int value) {
         return value + 1;
     }
 
-    public int turnInit() {
+    int turnInit() {
         return 0;
     }
 
-    public void turnOffTheGame() {
+    void turnOffTheGame() {
         System.exit(1);
     }
 
-    public void askSaveData() {
-        System.out.println(Message.SAVE_DATA);
-    }
-
-    public void askStageNumber() {
+    void askStageNumber() {
         System.out.println(Message.ASK_STAGE_NUMBER);
-
     }
+
+    List<StageData> getSlotData(GameMachine machine){
+        return machine.getSlotData();
+    }
+
 }

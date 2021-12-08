@@ -13,20 +13,9 @@ public class Main {
         int stageNumber = 1;
         int turn = 0;
 
-        Stage stage;
-
         while (stageNumber < 5) {
             manager.askLoadSavedData();
-            String inputChoice = inputView.inputChoice();
-            if (Choice.YES.cotent().equals(inputChoice)) {
-                manager.askStageNumber();
-                stageNumber = inputView.inputIntValue();
-                stage = gameMachine.loadSlotData(stageNumber);
-            } else {
-                stage = gameMachine.getStage(stageNumber);
-                stageNumber = stage.getStageNumber();
-            }
-
+            Stage stage = gameMachine.getStage(stageNumber);
             StageProgress currentStageProgress = StageProgress.NOT_CLEAR;
             outputView.printInitStage(stage.getBoard());
 
@@ -35,6 +24,11 @@ public class Main {
 
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
                 for (GameResult gameResult : result) {
+
+                    if(gameResult.getMessage().equals(Command.L.getCommand())){
+                        gameMachine.getSlotData().forEach(System.out::println);
+
+                    }
                     if (gameResult.getMessage().equals(Command.R.getCommand())) {
                         stage.resetStage();
                         turn = 0;

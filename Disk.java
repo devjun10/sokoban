@@ -18,4 +18,8 @@ public class Disk {
     public int[][] loadSlotData(int stageNumber) {
         return slot.loadSaveData(stageNumber);
     }
+
+    public List<StageData> getSlotData() {
+        return slot.getSlotData();
+    }
 }
