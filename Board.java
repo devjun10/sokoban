@@ -6,7 +6,7 @@ public class Board {
 
     private Board() {};
 
-    public Board(int[][] board) {
+    Board(int[][] board) {
         this.board = board;
         this.answer = new Answer(board);
     }

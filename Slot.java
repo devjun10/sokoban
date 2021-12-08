@@ -23,7 +23,6 @@ public class Slot {
             temp.add(new StageData(i, "Stage"+i));
         }
         this.checkData = Collections.unmodifiableList(temp);
-
     }
 
     public static Slot of() {

@@ -115,7 +115,6 @@ Stage 2
 <br/><br/>
 </details>
 
-[comment]: <> (2단계)
 
 <details>
 <summary>	📕	 Step 02.</summary>
@@ -1774,7 +1773,7 @@ public int stageUp(int value){
 }
 ```
 
-<br/><br/><br/>
+<br/><br/>
 
 ### 9-4. int plusTurn(int value)
 
@@ -1786,6 +1785,7 @@ public int plusTurn(int value){
         return value;
 }
 ```
+
 <br/><br/>
 ### 9-5. int turnInit()
 
@@ -1813,10 +1813,7 @@ public int turnInit(){
 
 4단계 부터는 조금 자유롭게 구현을 했지만 추가 구현이 많아지고 시간이 촉박해지면서 분기문이 점점 늘어났습니다. 
 
-<br/>
-
-
-<br/>
+<br/><br/>
 
 
 ## 추가/변경된 주요 클래스
@@ -1825,6 +1822,7 @@ public int turnInit(){
 |1|class|&nbsp;Init           |&nbsp; 데이터의 초기화를 담당하는 클래스                           |
 |2|class|&nbsp;StageData      |&nbsp; 명령어를 통해 불러올 수 있는 스테이지의 목록을 보여주기 위한 클래스  |
 |3|class|&nbsp;AES256Cipher   |&nbsp; 암호화/복호화를 위한 클래스                               |
+|4|class|&nbsp;Slot            |&nbsp; 캐릭터의 스테이지 상태를 저장한 클래스                       |
 
 ## 1. Init 클래스
 
@@ -1857,7 +1855,6 @@ List<String[][]> getMaps() {
 <br/><br/><br/>
 ### 1-2. String[][] getStages()
 
-
 <br/><br/>
 
 ```java
@@ -1881,7 +1878,7 @@ String[][] getStages() {
 <br/><br/><br/>
 
 
-## String[] splitByComma(String word)
+## 1-3. String[] splitByComma(String word)
 
 ```java
 private String[] splitByComma(String word) {
@@ -1892,8 +1889,9 @@ private String[] splitByComma(String word) {
 <br/><br/><br/>
 
 
+## 1-4. String[] joiningTextFileWord()
+텍스트 파일을 읽어들인 후 Stage("=======)를 기준으로 문자 배열을 만드는 메서드. 이를 통해 스테이지를 구분한다.
 
-## String[] joiningTextFileWord()
 
 ```java
 String[] joiningTextFileWord() {
@@ -1917,7 +1915,42 @@ String[] joiningTextFileWord() {
 <br/><br/><br/>
 
 
-## 2. Init 클래스
+## 2. StageData 클래스
+
+<br/><br/>
+```java
+public class StageData {
+
+    private int stageId;
+    private String name;
+
+    public StageData(int stageId, String name) {
+        this.stageId = stageId;
+        this.name = name;
+    }
+
+    public int getStageId() {
+        return stageId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void editName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return stageId + ": " + name;
+    }
+}
+
+```
+
+<br/><br/><br/>
+
 
 
 
@@ -2265,4 +2298,8 @@ Bye~
 
 # 기타
 
-시험을 치면서 설계의 중요성을 다시 한 번 느꼈습니다. Main 한 곳에서 클래스를 이으려다 보니 많은 분기문이 생기게 되었고 
+시험을 치면서 설계의 중요성을 다시 한 번 느꼈습니다. 설계가 좋지 않으니 뒤로 갈수록 하나를 고치면 다른 버그가 발생했기 때문입니다. 가장 큰 원인은 Main클래스 한 곳에서 클래스들의 로직이 이어지니 많은 분기문이 생기게 된 것이며, 이 분기문을
+위한 분기문이 또 생기게 된 것이 두 번째 큰 이유인것 같습니다. 실력 부족의 관계로 당장의 급급한 부분을 메우다 보니 이렇게 된 것 같아 많이 아쉽습니다. 그래도 짧은 시간동안 과제 전형을 경험하며 Gist, 복호화/암호화, 파일 읽어들이고 쓰기 등과 같은 평소
+잘 사용하지 않았던 부분을 공부할 수 있어 나름 즐거웠습니다.  
+
+

@@ -34,7 +34,6 @@ public class Stage {
                 results.add(new GameResult(Command.R.getCommand()));
                 continue;
             }
-
             if (command.equals(Command.C)) {
                 results.add(new GameResult(Command.C.getCommand()));
                 continue;
