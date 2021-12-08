@@ -426,7 +426,7 @@ S>  3L
 # 프로젝트 개요
 
 문제를 풀 때 턴제 RPG이며 절차 지향적 게임이기 때문에 순서와 흐름이 필요할 것이며 조건 분기가 많이 등장하리라 생각됐습니다. 따라서 `각 객체의 역할은 명확하게 분배`하고 `분기문을 지양`
-하되 `크게 구애받지 말자`고 생각했습니다. 큰 흐름은 아래와 같은 순서로 진행됩니다. 
+하되 `크게 구애받지 말자`고 생각했습니다. 큰 흐름은 아래와 같은 순서로 진행됩니다. 클래스들의 역할은 나누고 Main 클래스 위에서 이를 절차적으로 이어주었습니다.
 
 <br/>
 
@@ -443,10 +443,7 @@ S>  3L
 
 <br/><br/><br/><br/><br/>
 
-아래와 같이 클래스들의 역할은 나누고 Main 클래스 위에서 이를 절차적으로 이어주었습니다. <br/>
-*메인 클래스 위에서 흐름을 제어하다 보니 분기문이 많이 생겼습니다. * 아래와 같이 구조가 이쁘지 않습니다 ㅠㅠ
 
-![Main_클래스](https://user-images.githubusercontent.com/92818747/145164780-88f5e8a7-0c5b-4d4c-bb5d-68f1b1592342.png)
 <br/><br/><br/><br/><br/>
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
@@ -1834,7 +1831,7 @@ public int turnInit(){
 
 
 <br/><br/>
-
+List<String[][]>의 형태로 2차원 배열들을 저장한다. 이는 각 Stage의 맵들을 나타내는데, 이를 통해 각 클래스의 맵을 초기화한다. 
 ```java
 List<String[][]> getMaps() {
         String[][] result = getStages();
@@ -1854,7 +1851,7 @@ List<String[][]> getMaps() {
 
 <br/><br/><br/>
 ### 1-2. String[][] getStages()
-
+이차원 배열의 형태로 각 스테이지를 반환한다. 이를 통해 1차원 배열로 있는 맵들을 2차원 배열에 저장하게 된다. 
 <br/><br/>
 
 ```java
@@ -1879,7 +1876,8 @@ String[][] getStages() {
 
 
 ## 1-3. String[] splitByComma(String word)
-
+", "를 기준으로 문자를 나눈다.  
+<br/>
 ```java
 private String[] splitByComma(String word) {
         return word.split(",");
@@ -1890,7 +1888,7 @@ private String[] splitByComma(String word) {
 
 
 ## 1-4. String[] joiningTextFileWord()
-텍스트 파일을 읽어들인 후 Stage("=======)를 기준으로 문자 배열을 만드는 메서드. 이를 통해 스테이지를 구분한다.
+텍스트 파일을 읽어들인 후 Stage("=======)를 기준으로 문자 배열을 만드는 메서드. 이를 통해 Stage를 구분한다.
 
 
 ```java
@@ -1916,6 +1914,7 @@ String[] joiningTextFileWord() {
 
 
 ## 2. StageData 클래스
+현재 슬롯의 상태를 보여주기 위한 클래스. 가변 객체로 설정한 이유는 불변 클래스와의 비교를 통해 슬롯의 부족한 부분을 화면에 보여주기 위해서다. *맵을 4단계 까지밖에 구현하지 않아 5 이상은 보이지 않는다. 
 
 <br/><br/>
 ```java
@@ -2024,6 +2023,141 @@ public static String AES_Decode(String str) {
         return new String(c.doFinal(byteStr), "UTF-8");
         }
 ```
+<br/><br/><br/>
+
+복호화를 위한 스태틱 메서드. 이를 통해 문자열을 복호화시킬 수 있다.
+<br/><br/>
+
+```java
+public static String AES_Decode(String str) {
+        throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException,
+        InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        byte[] keyData = secretKey.getBytes();
+        SecretKey secureKey = new SecretKeySpec(keyData, "AES");
+        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        c.init(Cipher.DECRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes("UTF-8")));
+
+        byte[] byteStr = Base64.getDecoder().decode(str.getBytes());
+
+        return new String(c.doFinal(byteStr), "UTF-8");
+        }
+```
+<br/><br/><br/>
+
+## 4. Slot 클래스
+Slot 클래스가 생성될 때 내부 데이터를 초기화 한다. 아래는 불변 클래스로 해당 배열과의 비교를 통해 빈 슬롯인지, 아닌지를 출력한다.
+<br/>
+
+```java
+private Slot() {
+        for (int i = 1; i < 5; i++) {
+            saveData.add(new StageData(i, "Empty"));
+        }
+        List<StageData> temp = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            temp.add(new StageData(i, "Stage"+i));
+        }
+        this.checkData = Collections.unmodifiableList(temp);
+}
+```
+
+
+### 4-1. void saveData(int stageNumber, String[][] array)
+데이터를 저장하는 메서드로 ,와 "\n"를 통해 맵을 구분해서 저장한다. 
+<br/>
+
+```java
+public void saveData(int stageNumber, String[][] array) {
+        stringBuilder.setLength(0);
+        String name = save + stageNumber + txt;
+        File file = new File(name);
+        int[][] intArray = changeStringArrayToIntArray(array);
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
+                stringBuilder.append(intArray[row][col]).append("");
+            }
+        stringBuilder.append(",").append("\n");
+        }
+        stringBuilder.append(line);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(stringBuilder.toString());
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            }
+}
+```
+<br/><br/><br/>
+
+### 4-2. List<StageData> getSlotData()
+빈 슬롯이 아닌 데이터의 이름을 변환하는 메서드. 이를 통해 사용자에게 슬롯의 상태를 출력해줄 수 있다. 
+<br/>
+
+```java
+List<StageData> getSlotData() {
+        for (int i = 0; i < this.saveData.size(); i++) {
+            if (loadStageData(i+1 ).length > minNumber) {
+                saveData.get(i).editName(checkData.get(i).getName());
+            }
+        }
+        return new ArrayList<>(saveData.stream()
+            .collect(Collectors.toUnmodifiableList()));
+}
+```
+<br/><br/><br/>
+### 4-3. String[] joiningTextFileWord(int stageNumber)
+해당 stageNumber의 맵을 콤마(,)를 기준으로 나누는 메서드
+<br/>
+
+```java
+String[] joiningTextFileWord(int stageNumber) {
+        String fileName = save + stageNumber + txt;
+        try {
+            stringBuilder.setLength(0);
+            File file = new File(fileName);
+            FileReader filereader = new FileReader(file);
+            BufferedReader bufReader = new BufferedReader(filereader);
+            String line = "";
+            while ((line = bufReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            bufReader.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+            return splitByComma(replaceBar(stringBuilder.toString()));
+}
+```
+<br/><br/><br/>
+
+<br/><br/><br/>
+### 4-4. int[][] changeStringArrayToIntArray(String[][] array), int[][] changeStringArrayToIntArrayOriginal(String[][] array)
+String[][] 을 2차원 int[][]로 바꿔주는 메서드. int[][]형태로 보낸 후 이를 업데이트 한다.
+<br/>
+
+```java
+private int[][] changeStringArrayToIntArray(String[][] array) {
+        int[][] temp = new int[array.length][array[0].length];
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
+                temp[row][col] = changeStringSymbol(array[row][col]);
+            }
+        }
+        return temp;
+}
+
+private int[][] changeStringArrayToIntArrayOriginal(String[][] array) {
+        int[][] temp = new int[array.length][array[0].length];
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
+                temp[row][col] = Integer.parseInt(array[row][col]);
+            }
+        }
+        return temp;
+}
+```
+<br/><br/><br/>
 
 </div>
 
@@ -2299,7 +2433,7 @@ Bye~
 # 기타
 
 시험을 치면서 설계의 중요성을 다시 한 번 느꼈습니다. 설계가 좋지 않으니 뒤로 갈수록 하나를 고치면 다른 버그가 발생했기 때문입니다. 가장 큰 원인은 Main클래스 한 곳에서 클래스들의 로직이 이어지니 많은 분기문이 생기게 된 것이며, 이 분기문을
-위한 분기문이 또 생기게 된 것이 두 번째 큰 이유인것 같습니다. 실력 부족의 관계로 당장의 급급한 부분을 메우다 보니 이렇게 된 것 같아 많이 아쉽습니다. 그래도 짧은 시간동안 과제 전형을 경험하며 Gist, 복호화/암호화, 파일 읽어들이고 쓰기 등과 같은 평소
-잘 사용하지 않았던 부분을 공부할 수 있어 나름 즐거웠습니다.  
+위한 분기문이 또 생기게 된 것이 두 번째 큰 이유인것 같습니다. 실력 부족의 관계로 당장의 급급한 부분을 메우다 보니 많이 아쉽습니다. 그래도 짧은 시간동안 과제 전형을 경험하며 Gist, 복호화/암호화, 파일 읽어들이고 쓰기 등과 같은 평소
+잘 사용하지 않았던 부분을 공부할 수 있어 꽤 즐거웠습니다.   😃
 
 
