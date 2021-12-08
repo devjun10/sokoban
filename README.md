@@ -1377,58 +1377,58 @@ public class Disk {
 
 ## 3. Init
 
-각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스. 
+각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스. 사용자는 데이터를 사용하는 것에만 집중할 수 있도록 하기 위해 애플리케이션이 실행되는 시점에 데이터를 초기화한다.
 
 <br/><br/><br/>
 
 ## 4. Stage
 
-Board와 Stageinformation을 담고 있는 클래스.
+Board와 Stageinformation을 담고 있는 클래스. 이전에는 Board에서 모든 정보를 관리했지만 각 Stage가 나누어져 있기 때문에 각각의 Stage는 자신에 대한 정보를 담고 있다. 따라서 가로
+크기, 세로 크기, 맵 등과 같은 자신과 연관된 정보를 가지고 있다.
 <br/>
 
 ### 4-1. List<GameResult> execute(List<Command> commandList)
 
-실행후 결과를 반환하는 메서드.
+플레이 한 게임의 실행 결과를 반환하는 메서드. 리스트를 순회하며 사용자로 부터 입력받은 명령어를 실행하고 그 결과(Board의 상태)를 반환한다. 
 
 ```java
 public List<GameResult> execute(List<Command> commandList){
         List<GameResult> results=new ArrayList<>();
         for(Command command:commandList){
-        if(command.equals(Command.R)){
-        return List.of(resetStage());
-        }
-        results.add(this.board.push(command));
+            if(command.equals(Command.R)){
+                return List.of(resetStage());
+            }
+            results.add(this.board.push(command));
         }
         return results;
-        }
+}
 ```
 
 <br/>
 
 ### 4-2. GameResult resetStage()
 
-리셋 명령어를 처리하기 위한 메서드. Answer 내에 있는 original 배열을 가져와 이를 반환한다.
+리셋 명령어를 처리하기 위한 메서드. Answer 내에 있는 original 배열을 가져와 이를 반환한다. 
 
 ```java
 public GameResult resetStage(){
         this.board.reset();
         return new GameResult(this.board.getBoard());
-        }
+}
 ```
 
 <br/><br/><br/>
 
 ## 5. Stages
 
-Stage들을 저장하고 있는 클래스.
+Stage들을 저장하고 있는 클래스. Stage 클래스는 매 번 새로 생성될 필요가 없기 때문에 애플리케이션이 시작되는 시점에 한 번만 초기화를 한다.
 
 ```java
 public class Stages {
 
     private static final Map<Integer, Stage> stages = new HashMap<>();
 
-    private Stages() {
-    }
+    private Stages() {}
 
     public static void putStage(int id, StageInformation information, Board board) {
         stages.put(id, new Stage(board, information));
@@ -1448,76 +1448,70 @@ public class Stages {
 
 ## 6. StageInformation
 
-가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스.
+가로, 세로크기, id와 같은 Stage의 기본 정보를 담고 있는 클래스. 값 객체를 사용해 상태를 표현하기 위해 한 단계 포장(Wrapping) 했다. 
 
 ```java
-public class Stages {
+public class StageInformation {
 
-    private static final Map<Integer, Stage> stages = new HashMap<>();
+  private final int id;
+  private final int height;
+  private final int width;
 
-    private Stages() {
-    }
+  public StageInformation(int id, int height, int width) {
+    this.id = id;
+    this.height = height;
+    this.width = width;
+  }
 
-    public static void putStage(int id, StageInformation information, Board board) {
-        stages.put(id, new Stage(board, information));
-    }
-
-    public static Stages of() {
-        return new Stages();
-    }
-
-    public Stage getStage(int value) {
-        return stages.get(value);
-    }
-}
 ```
 
 <br/><br/><br/>
 
 ## 7. StageInformationList
 
-StageInformation 클래스들을 저장하고 있는 클래스.
+StageInformation 클래스들을 저장하고 있는 클래스. 내부에 새로운 객체를 담아서 저장하는데, 이는 클래스가 생성될 때마다 초기화될 필요가 없으며, 스테이지 수가 많지 않기 때문에 이를 직접 생성해서
+관리해도 나쁘지 않다고 판단했기 때문이다.
 
 ```java
-public class Stages {
+public class StageInformationList {
 
-    private static final Map<Integer, Stage> stages = new HashMap<>();
+    private static List<StageInformation> stages;
 
-    private Stages() {
+    private StageInformationList() {}
+
+    static StageInformationList of() {
+        List<StageInformation> lst = List.of(
+                new StageInformation(1, 6, 6),
+                new StageInformation(2, 5, 6),
+                new StageInformation(3, 6, 6),
+                new StageInformation(4, 6, 7)
+        );
+        stages = lst;
+        return new StageInformationList();
     }
+    ......
 
-    public static void putStage(int id, StageInformation information, Board board) {
-        stages.put(id, new Stage(board, information));
-    }
-
-    public static Stages of() {
-        return new Stages();
-    }
-
-    public Stage getStage(int value) {
-        return stages.get(value);
-    }
-}
 ```
 
-주요 변경 클래스
+<br/><br/>
+## 주요 변경 클래스
 <br/>
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:---|
-|8|class|&nbsp;Board                |&nbsp; 각 Stage의 배열의 상태와 해당 배열을 심볼로 전환해주는 클래스|
-|9|class|&nbsp;GameMachine          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
-|10|class|&nbsp;GameManager          |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+|8|class|&nbsp;Board                |&nbsp; 각 Stage의 배열의 상태를 관리하며 정답 클래스를 알고 있다            |
+|9|class|&nbsp;GameMachine          |&nbsp; Sokoban게임의 중심에서 모든 정보를 관리하며 이를 조합해주는 클래스     |
+|10|class|&nbsp;GameManager          |&nbsp; 게임에 관련된 부가 정보를 처리하는 클래스                         |
 
 <br/><br/><br/><br/><br/>
 
 ## 8. Board
 
-해당 Stage 배열의 상태와 해당 배열을 심볼로 전환해주는 클래스. Stage의 상태와 관련된 역할과 책임을 가진다.
+각 Stage의 배열의 상태를 관리하며 정답 클래스로 Stage의 상태와 관련된 역할과 책임을 가진다. 따라서 배열의 이동, 상태 변화 등과 같은 모든 
 
 ### 8-1. GameResult push(Command command)
 
-배열을 변환하는 메서드. 현재 캐릭터의 위치를 기준으로 미는 방향의 한 칸, 두 칸 앞을 체크해서 배열을 변환할 지 결정한다. 모든 배열은 사이드 이펙트를 제거하기 위해 복사해서 새로 만든 후 이를 갈아끼워 준다.
+배열을 변환하는 메서드. 현재 캐릭터의 위치를 기준으로 미는 방향의 한 칸, 두 칸 앞을 체크해서 배열을 변환할 지 결정한다. 모든 배열은 사이드 이펙트를 제거하기 위해 방어적 복사를 통해 값을 반환한다.
 <br/><br/>
 
 ```java
@@ -1530,24 +1524,25 @@ GameResult push(Command command){
         int[][]newBoard=copyBoard();
 
         if(moveable(Pairs.of(moveBlockX,moveBlockY))){
-        int[][]updatedBoard=move(pair,newBoard,Pairs.of(moveBlockX,moveBlockY));
-        update(updatedBoard);
-        gameResult.addBoard(this.getBoard());
-        }else if(pushable(Pairs.of(moveBlockX,moveBlockY),command)){
-        int[][]updatedBoard=pushBall(pair,newBoard,Pairs.of(moveBlockX,moveBlockY),command);
-        update(updatedBoard);
-        gameResult.addBoard(this.getBoard());
+            int[][]updatedBoard=move(pair,newBoard,Pairs.of(moveBlockX,moveBlockY));
+            update(updatedBoard);
+            gameResult.addBoard(this.getBoard());
+        }else if(
+            pushable(Pairs.of(moveBlockX,moveBlockY),command)){
+            int[][]updatedBoard=pushBall(pair,newBoard,Pairs.of(moveBlockX,moveBlockY),command);
+            update(updatedBoard);
+            gameResult.addBoard(this.getBoard());
         }
         checkGameResult(gameResult);
         return gameResult;
-        }
+}
 ```
 
 <br/><br/><br/>
 
 ### 8-2. GameResult push(Command command)
 
-push의 도우미 메서드로 캐릭터가 이동 가능할 때는 move를, move를 할 수 없지만 다음 칸에서 공을 밀 수 있을 때는 pushBall 메서드를 실행한다.
+push를 두 가지로 나눈 메서드로 캐릭터가 이동 가능할 때는 move를, move를 할 수 없지만 다음 칸에서 공을 밀 수 있을 때는 pushBall 메서드를 실행한다. 
 <br/><br/>
 
 ```java
@@ -1555,7 +1550,7 @@ private int[][]move(Pair position,int[][]board,Pair nextPosition){
         board[position.getX()][position.getY()]-=4;
         board[nextPosition.getX()][nextPosition.getY()]+=4;
         return board;
-        }
+}
 
 private int[][]pushBall(Pair position,int[][]board,Pair nextPosition,Command command){
         board[position.getX()][position.getY()]-=4;
@@ -1563,101 +1558,93 @@ private int[][]pushBall(Pair position,int[][]board,Pair nextPosition,Command com
         board[nextPosition.getX()][nextPosition.getY()]-=2;
         board[nextPosition.getX()+command.getNextPosition().get(0)][nextPosition.getY()+command.getNextPosition().get(1)]+=2;
         return board;
-        }
+}
 ```
 
 <br/><br/><br/>
 
 ### 8-3. boolean isBall, moveable, isBlank, isHall, isBallOnTheHole(int x, int y)
 
-배열을 update하기 위해 한 칸 앞, 두 칸 앞을 체크하는 메서드.
+배열을 update하기 위해 한 칸 앞, 두 칸 앞 등 해당 칸에 어떤 심볼이 존재하는지 체크하는 메서드.
 <br/><br/>
 
 ```java
 private boolean isBall(int x,int y){
         return this.board[x][y]==2;
-        }
+}
 
 private boolean moveable(Pair pair){
         return this.board[pair.getX()][pair.getY()]==0||this.board[pair.getX()][pair.getY()]==1;
-        }
+}
 
 private boolean isBlank(int x,int y){
         return this.board[x][y]==0;
-        }
+}
 
 private boolean isHall(int x,int y){
         return this.board[x][y]==1;
-        }
+}
 
 private boolean isBallOnTheHole(int x,int y){
         return this.board[x][y]==3;
-        }
+}
 
 private boolean isPlayer(int x,int y){
         return this.board[x][y]==4||this.board[x][y]==5;
-        }    
+}    
 ```
 
 <br/><br/><br/>
 
 ### 8-4. Pair findPlayerPosition()
 
-캐릭터의 위치를 찾기 위한 메서드.
+캐릭터의 위치를 찾기 위한 메서드. `*객체지향 체조원칙을 지키기 위해 수정하고 싶지만 아직 마땅히 대안이 떠오르지 않는다.` 
 <br/><br/>
 
 ```java
 protected Pair findPlayerPosition(){
         for(int row=0;row< this.board.length;row++){
-        for(int col=0;col< this.board[0].length;col++){
-        if(isPlayer(row,col)){
-        return Pairs.of(row,col);
-        }
-        }
+            for(int col=0;col< this.board[0].length;col++){
+                if(isPlayer(row,col)){
+                    return Pairs.of(row,col);
+                }
+            }
         }
         return null;
-        }
-
-protected boolean isAnswer(){
-        return answer.isAnswer(this.board);
-        }
-
-public void reset(){
-        int[][]reset=this.answer.getOriginal();
-        update(reset);
-        }
+}
 ```
 
 <br/><br/><br/>
 
 ### 8-5. boolean isAnswer();
 
-정답을 찾아서 비교하기 위한 메서드. Answer 클래스 내부의 answer 값을 통해 정답을 체크한다.  
+정답을 찾아서 비교하기 위한 메서드. Answer 클래스 내부의 answer 값(int[][])과 비교를 통해 정답을 체크한다.  
 <br/><br/>
 
 ```java
 protected boolean isAnswer(){
         return answer.isAnswer(this.board);
-        }
+}
 ```
 
 <br/><br/><br/>
 
 ### 8-6. void reset()
 
-해당 스테이지의 초기 값을 반환하는 메서드. Answer내부의 original 값을 통해 초기 상태로 업데이트 한다.    
+해당 스테이지의 초기 값을 반환하는 메서드. Answer내부의 original 값(int[][])을 통해 초기 상태로 되돌린다.    
 <br/><br/>
 
 ```java
 public void reset(){
         int[][]reset=this.answer.getOriginal();
         update(reset);
-        }
+}
 ```
 
 ## 9. GameManager
 
-사용자의 입력을 명령으로 변환해주고 게임의 횟수, 메시지/게임에 대한 정보 전달의 역할을 담당한다.
+사용자의 입력을 명령으로 변환해주고 게임의 횟수, 메시지/게임에 대한 정보 전달의 역할을 담당한다. 게임 안내 문구, 턴 수 체크/증가 등과 같은 게임 외적 요소들을 담당하며 플레이어의 원활한 게임 진행을 돕는
+역할을 맡고 있다.
 
 <br/><br/><br/>
 
@@ -1669,20 +1656,20 @@ public void reset(){
 ```java
 public void sayHello(){
         System.out.println(Message.GREET);
-        }
+}
 
 public void sayGoodBye(){
         System.out.println(Message.CLEAR_CELEBRATION);
         System.out.println(Message.CELEBRATION);
-        }
+}
 
 public void sayTurnCount(int value){
         System.out.println(Message.TURN_COUNT+""+value);
-        }
+}
 
 public void sayTurnReset(){
         System.out.println(Message.TURN_RESET);
-        }
+}
 ```
 
 <br/><br/><br/>
@@ -1696,15 +1683,15 @@ stageNumber을 통해 해당 스테이지를 찾고 명령을 전달한다.
 public List<Command> getCommand(List<String> direction){
         List<Command> commands=new ArrayList<>();
         for(int i=0;i<direction.size();i++){
-        Command command=getCommands(direction.get(i));
-        if(command.equals(Command.R)){
-        return List.of(Command.R);
-        }
-        validateQuit(command);
-        commands.add(command);
-        }
+            Command command=getCommands(direction.get(i));
+                if(command.equals(Command.R)){
+                    return List.of(Command.R);
+                }
+                validateQuit(command);
+                commands.add(command);
+            }
         return commands;
-        }
+}
 ```
 
 <br/><br/><br/>
@@ -1717,7 +1704,7 @@ public List<Command> getCommand(List<String> direction){
 ```java
 public int stageUp(int value){
         return value+=1;
-        }
+}
 ```
 
 <br/><br/><br/>
@@ -1730,7 +1717,7 @@ public int stageUp(int value){
 ```java
 public int plusTurn(int value){
         return value;
-        }
+}
 ```
 
 ### 9-5. int turnInit()
@@ -1742,7 +1729,7 @@ public int plusTurn(int value){
 
 public int turnInit(){
         return 0;
-        }
+}
 ```
 
 <br/><br/><br/>
