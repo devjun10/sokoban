@@ -19,4 +19,8 @@ public class Disk {
     public void save(int stageNumber, String[][] array) {
         slot.saveData(stageNumber, array);
     }
+
+    public int[][] loadSlotData(int stageNumber) {
+        return slot.loadSaveData(stageNumber);
+    }
 }

@@ -16,22 +16,31 @@ public class Main {
         Stage stage;
 
         String inputChoice = inputView.inputChoice();
-        if (Choice.YES.cotent().equals(inputChoice)) {
-            stageNumber = inputView.inputStageNumber();
-            stage = gameMachine.load(stageNumber);
-        }
+
         while (stageNumber < 5) {
-            stage = gameMachine.getStage(stageNumber);
+            if (Choice.YES.cotent().equals(inputChoice)) {
+                stageNumber = inputView.inputStageNumber();
+                System.out.println("===============================");
+                stage = gameMachine.loadSlotData(stageNumber);
+                System.out.println(stage);
+                System.out.println("===============================");
+            }else {
+                stage = gameMachine.getStage(stageNumber);
+                stageNumber = stage.getStageNumber();
+            }
+
             if (stageNumber > 1) {
                 String saveChoice = inputView.inputChoice();
                 if (Choice.YES.cotent().equals(saveChoice)) {
-//                    manager.askSave();
                     gameMachine.saveStage(stageNumber);
                 }
             }
             StageProgress currentState = StageProgress.NOT_CLEAR;
-
+            System.out.println("===========================");
+            System.out.println("This");
             outputView.printInitStage(stage.getBoard());
+            System.out.println("===========================");
+
 
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
@@ -73,6 +82,7 @@ public class Main {
                 }
             }
             turn = manager.turnInit();
+            gameMachine.clearStage(stageNumber);
             stageNumber = manager.stageUp(stageNumber);
         }
         manager.sayGoodBye();

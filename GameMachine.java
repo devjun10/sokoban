@@ -25,8 +25,15 @@ public class GameMachine {
         disk.save(stageNumber, stage.getBoard());
     }
 
-    public Stage load(int stageNumber) {
+    public Stage loadSlotData(int stageNumber) {
+        Stage stage = stages.getStage(stageNumber);
+        int[][] savedData = disk.loadSlotData(stageNumber);
+        stage.loadStageData(savedData);
+        return stage;
+    }
 
-        return null;
+    public void clearStage(int stageNumber) {
+        Stage stage = stages.getStage(stageNumber);
+        stage.resetStage();
     }
 }

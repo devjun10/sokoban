@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class OutputView {
 
     private final StringBuilder stringBuilder = new StringBuilder();
@@ -32,12 +30,5 @@ public class OutputView {
         }
         stringBuilder.append("\n");
         System.out.println(stringBuilder);
-    }
-
-    public void printResult(List<GameResult> results) {
-        for (GameResult result : results) {
-            printBoard(result);
-            System.out.println();
-        }
     }
 }

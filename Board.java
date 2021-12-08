@@ -137,7 +137,7 @@ public class Board {
         return 0;
     }
 
-    private void update(int[][] updatedBoard) {
+    protected void update(int[][] updatedBoard) {
         this.board = null;
         this.board = updatedBoard;
     }

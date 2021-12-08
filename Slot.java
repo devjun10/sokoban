@@ -1,10 +1,6 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class Slot {
 
@@ -14,10 +10,7 @@ public class Slot {
     private final String txt = ".txt";
     private List<StageData> saveData = new ArrayList<>();
 
-    private Slot() {
-    }
-
-    ;
+    private Slot() {};
 
     public static Slot of() {
         return new Slot();
@@ -44,19 +37,61 @@ public class Slot {
         }
     }
 
-    public StageData loadStageData(int stageNumber) {
-        return this.saveData.stream()
-                .filter(stage -> stage.getStage() == stageNumber)
-                .findAny()
-                .orElseThrow(NoSuchElementException::new);
+    public int[][] loadSaveData(int stageNumber){
+        return changeStringArrayToIntArrayOriginal(loadStageData(stageNumber));
+    }
+
+    private String[][] loadStageData(int stageNumber) {
+        String[] mapData = joiningTextFileWord(stageNumber);
+        String[][] temp = new String[mapData.length][mapData[0].length()];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = mapData[i].split("");
+        }
+        return temp;
+    }
+
+    String[] joiningTextFileWord(int stageNumber) {
+        String fileName = save + stageNumber + txt;
+        try {
+            stringBuilder.setLength(0);
+            File file = new File(fileName);
+            FileReader filereader = new FileReader(file);
+            BufferedReader bufReader = new BufferedReader(filereader);
+            String line = "";
+            while ((line = bufReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            bufReader.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        System.out.println(stringBuilder);
+        return splitByComma(replaceBar(stringBuilder.toString()));
+    }
+
+    private String[] splitByComma(String word) {
+        return word.split(",");
+    }
+
+    private String replaceBar(String word) {
+        return word.replace("==========", "");
     }
 
     private int[][] changeStringArrayToIntArray(String[][] array) {
-        System.out.println(array[0][0]);
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
                 temp[row][col] = changeStringSymbol(array[row][col]);
+            }
+        }
+        return temp;
+    }
+
+    private int[][] changeStringArrayToIntArrayOriginal(String[][] array) {
+        int[][] temp = new int[array.length][array[0].length];
+        for (int row = 0; row < array.length; row++) {
+            for (int col = 0; col < array[0].length; col++) {
+                temp[row][col] = Integer.parseInt(array[row][col]);
             }
         }
         return temp;

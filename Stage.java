@@ -56,6 +56,9 @@ public class Stage {
                 '}';
     }
 
+    public int getStageNumber (){
+        return stageInformation.getId();
+    }
     public boolean isNotAnswer() {
         return !this.board.isAnswer();
     }
@@ -63,5 +66,9 @@ public class Stage {
 
     public boolean checkAnswer(String[][] board) {
         return this.board.checkAnswer(board);
+    }
+
+    public void loadStageData(int[][] savedData) {
+        this.board.update(savedData);
     }
 }
