@@ -13,9 +13,12 @@ public class Main {
         int stageNumber = 1;
         int turn = 0;
 
+        Stage stage = gameMachine.getStage(stageNumber);
+
         String inputChoice = inputView.inputChoice();
         if (Choice.YES.cotent().equals(inputChoice)) {
-//            stageNumber = inputView.inputChoice();
+            stageNumber = inputView.inputStageNumber();
+            stage = gameMachine.load(stageNumber);
         }
         while (stageNumber < 5) {
             if (stageNumber > 1) {
@@ -25,7 +28,7 @@ public class Main {
                 }
             }
             StageProgress currentState = StageProgress.NOT_CLEAR;
-            Stage stage = gameMachine.getStage(stageNumber);
+
             outputView.printInitStage(stage.getBoard());
 
             while (stage.isNotAnswer()) {

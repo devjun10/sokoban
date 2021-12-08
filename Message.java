@@ -1,18 +1,19 @@
 public enum Message {
 
+    ASK_LOAD_STAGE_DATA("저장된 스테이지의 데이터를 불러오시겠습니까? (y/n) \n"),
+    ASK_STAGE_NUMBER("몇 번째 스테이지의 데이터를 불러오시겠습니까? "),
+    BYE("Bye~ "),
     STAGE_INFO("Stage "),
     BLANK("\n"),
     LINE("========================================================="),
+    CELEBRATION("축하드립니다!"),
     CLEAR("클리어!"),
     CLEAR_CELEBRATION("전체 게임을 클리어하셨습니다!"),
     TURN_COUNT("턴수:"),
-    CELEBRATION("축하드립니다!"),
     DOT("..."),
     GREET("소코반의 세계에 오신 것을 환영합니다!\n^오^\n"),
     TURN_RESET("해당 턴을 초기화 합니다.\n"),
-    SOKOBAN("SOKOBAN> "),
-    ASK_LOAD_STAGE_DATA("저장된 스테이지의 데이터를 불러오시겠습니까? (y/n) \n"),
-    BYE("Bye~ ");
+    SOKOBAN("SOKOBAN> ");
 
     private final String message;
 

@@ -21,6 +21,12 @@ public class GameMachine {
     }
 
     public void saveStage(int stageNumber) {
+        Stage stage = stages.getStage(stageNumber);
+        disk.save(stageNumber, stage.getBoard());
+    }
 
+    public Stage load(int stageNumber) {
+
+        return null;
     }
 }

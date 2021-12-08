@@ -14,7 +14,9 @@ public class InputView {
     InputView() {
         commands = Command.getCommands();
         choices = Choice.getChoices();
-    };
+    }
+
+    ;
 
     private class Input {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -27,7 +29,7 @@ public class InputView {
         while (true) {
             try {
                 value = input.br.readLine().toLowerCase();
-                validateDirectionContains(value);
+                validateChoice(value);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
@@ -38,8 +40,32 @@ public class InputView {
         return value;
     }
 
-    private void validateDirectionContains(String choice) {
+    private void validateChoice(String choice) {
         if (!choices.contains(choice)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+        }
+    }
+
+    public int inputStageNumber() {
+        int value;
+        System.out.print(Message.ASK_STAGE_NUMBER);
+
+        while (true) {
+            try {
+                value = Integer.parseInt(input.br.readLine().toLowerCase());
+                validateStageNumber(value);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            } catch (Exception e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            }
+        }
+        return value;
+    }
+
+    private void validateStageNumber(int stageNumber) {
+        if (stageNumber <= 0 || stageNumber > 4) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
         }
     }

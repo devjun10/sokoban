@@ -121,7 +121,7 @@ public class Board {
         return copyBoard;
     }
 
-    private static String changeIntSymbol(int value) {
+    private String changeIntSymbol(int value) {
         if (value == 5) return "P";
         if (value == 0) return " ";
         if (value == 1) return "O";
@@ -131,7 +131,7 @@ public class Board {
         return "#";
     }
 
-    private static int changeStringSymbol(String value) {
+    private int changeStringSymbol(String value) {
         if (value.equals("P")) return 0;
         if (value.equals(" ")) return 0;
         if (value.equals("O")) return 1;

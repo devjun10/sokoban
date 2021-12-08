@@ -10,17 +10,11 @@ public class Init {
     private static final StringBuilder stringBuilder = new StringBuilder();
     private static final StageInformationList STAGE_INFORMATION_LIST = StageInformationList.of();
 
-    static {
+    {
         List<StageInformation> information = STAGE_INFORMATION_LIST.getStageInformation();
         List<String[][]> maps = getMaps();
         for (int i = 0; i < 4; i++) {
             Board board = new Board(changeStringArrayToIntegerArray(maps.get(i)));
-//            for(int p=0; p<getBoard.getBoard().length; p++){
-//                System.out.println();
-//                for(int j=0; j<getBoard.getBoard()[0].length; j++){
-//                    System.out.print(getBoard.getBoard()[p][j]);
-//                }
-//            }
             StageInformation info = information.get(i);
             Stages.putStage(i + 1, info, board);
         }
@@ -36,13 +30,16 @@ public class Init {
         return temp;
     }
 
-    private Init() {};
+    private Init() {
+    }
+
+    ;
 
     public static Init of() {
         return new Init();
     }
 
-    public static List<String[][]> getMaps() {
+    List<String[][]> getMaps() {
         String[][] result = getStages();
         List<String[][]> answer = new ArrayList<>();
         for (int i = 0; i < result.length; i++) {
@@ -56,7 +53,7 @@ public class Init {
         return answer;
     }
 
-    public static String[][] getStages() {
+    String[][] getStages() {
         String[] eachStages = joiningTextFileWord();
         int rows = eachStages.length;
         String[][] result = new String[rows][];
@@ -72,11 +69,11 @@ public class Init {
         return result;
     }
 
-    private static String[] splitByComma(String word) {
+    private String[] splitByComma(String word) {
         return word.split(",");
     }
 
-    static String[] joiningTextFileWord() {
+    String[] joiningTextFileWord() {
         try {
             stringBuilder.setLength(0);
             File file = new File("map.txt");

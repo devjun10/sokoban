@@ -3,7 +3,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum Choice {
-    YES("yes"), NO("no");
+
+    YES("y"), NO("n");
 
     private final String description;
 

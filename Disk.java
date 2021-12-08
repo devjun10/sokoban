@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Disk {
 
     private Init init = Init.of();
@@ -9,4 +11,12 @@ public class Disk {
         return new Disk();
     }
 
+
+    public List<String[][]> getMaps() {
+        return init.getMaps();
+    }
+
+    public void save(int stageNumber, String[][] array) {
+        slot.saveData(stageNumber, array);
+    }
 }
