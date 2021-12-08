@@ -15,11 +15,11 @@ public class Stage {
         saveData.init(board.copyBoard());
     }
 
-    public String[][] getBoard() {
+    String[][] getBoard() {
         return board.getBoard();
     }
 
-    public List<GameResult> execute(List<Command> commandList) {
+    List<GameResult> execute(List<Command> commandList) {
         List<GameResult> results = new ArrayList<>();
         for (Command command : commandList) {
             if (command.equals(Command.Q)) {
@@ -44,7 +44,7 @@ public class Stage {
         return results;
     }
 
-    public GameResult resetStage() {
+    GameResult resetStage() {
         this.board.reset();
         return new GameResult(this.board.getBoard());
     }
@@ -56,19 +56,19 @@ public class Stage {
                 '}';
     }
 
-    public int getStageNumber (){
+    int getStageNumber (){
         return stageInformation.getId();
     }
-    public boolean isNotAnswer() {
+    boolean isNotAnswer() {
         return !this.board.isAnswer();
     }
 
 
-    public boolean checkAnswer(String[][] board) {
+    boolean checkAnswer(String[][] board) {
         return this.board.checkAnswer(board);
     }
 
-    public void loadStageData(int[][] savedData) {
+    void loadStageData(int[][] savedData) {
         this.board.update(savedData);
     }
 }

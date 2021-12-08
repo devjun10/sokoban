@@ -70,33 +70,33 @@ public class Board {
         int y = pair.getY();
         int fonrtOfBallX = x + command.getNextPosition().get(0);
         int fonrtOfBallY = y + command.getNextPosition().get(1);
-        return (isBall(x, y) && isBlank(fonrtOfBallX, fonrtOfBallY))
-                || (isBall(x, y) && isHall(fonrtOfBallX, fonrtOfBallY))
-                || isBallOnTheHole(x, y) && isBlank(fonrtOfBallX, fonrtOfBallY);
+        return (isBall(pair) && isBlank(Pairs.of(fonrtOfBallX, fonrtOfBallY)))
+                || (isBall(pair) && isHall(Pairs.of(fonrtOfBallX, fonrtOfBallY)))
+                || isBallOnTheHole(pair) && isBlank(Pairs.of(fonrtOfBallX, fonrtOfBallY));
     }
 
-    private boolean isBall(int x, int y) {
-        return this.board[x][y] == 2;
+    private boolean isBall(Pair pair) {
+        return this.board[pair.getX()][pair.getY()] == 2;
     }
 
     private boolean moveable(Pair pair) {
         return this.board[pair.getX()][pair.getY()] == 0 || this.board[pair.getX()][pair.getY()] == 1;
     }
 
-    private boolean isBlank(int x, int y) {
-        return this.board[x][y] == 0;
+    private boolean isBlank(Pair pair) {
+        return this.board[pair.getX()][pair.getY()] == 0;
     }
 
-    private boolean isHall(int x, int y) {
-        return this.board[x][y] == 1;
+    private boolean isHall(Pair pair) {
+        return this.board[pair.getX()][pair.getY()] == 1;
     }
 
-    private boolean isBallOnTheHole(int x, int y) {
-        return this.board[x][y] == 3;
+    private boolean isBallOnTheHole(Pair pair) {
+        return this.board[pair.getX()][pair.getY()] == 3;
     }
 
-    private boolean isPlayer(int x, int y) {
-        return this.board[x][y] == 4 || this.board[x][y] == 5;
+    private boolean isPlayer(Pair pair) {
+        return this.board[pair.getX()][pair.getY()] == 4 || this.board[pair.getX()][pair.getY()] == 5;
     }
 
     String[][] getBoard() {
@@ -145,7 +145,7 @@ public class Board {
     protected Pair findPlayerPosition() {
         for (int row = 0; row < this.board.length; row++) {
             for (int col = 0; col < this.board[0].length; col++) {
-                if (isPlayer(row, col)) {
+                if (isPlayer(Pairs.of(row, col))) {
                     return Pairs.of(row, col);
                 }
             }
