@@ -27,12 +27,7 @@ public class Main {
                 stageNumber = stage.getStageNumber();
             }
 
-            manager.askSaveData();
-            Choice choice = Choice.findChoice(inputView.inputChoice());
-            if (choice.cotent().equals(Choice.YES.cotent())) {
-                gameMachine.saveStage(stageNumber);
-            }
-            StageProgress currentState = StageProgress.NOT_CLEAR;
+            StageProgress currentStageProgress = StageProgress.NOT_CLEAR;
             outputView.printInitStage(stage.getBoard());
 
             while (stage.isNotAnswer()) {
@@ -54,20 +49,21 @@ public class Main {
                         manager.turnOffTheGame();
                     }
 
-                    if (gameResult.getMessage().equals(Command.SS.getCommand())) {
-                        System.out.println("저장완료");
+                    if (gameResult.getMessage().equals(Command.C.getCommand())) {
+                        manager.saySaveComplete();
                         gameMachine.saveStage(stageNumber);
+                        outputView.printInitStage(stage.getBoard());
                         continue;
                     }
 
                     if (stage.checkAnswer(gameResult.getBoard())) {
-                        if (currentState.equals(StageProgress.NOT_CLEAR)) {
+                        if (currentStageProgress.equals(StageProgress.NOT_CLEAR)) {
                             manager.sayTurnClear(stageNumber);
                             manager.sayTurnCount(turn);
                         }
-                        currentState = StageProgress.CLEAR;
+                        currentStageProgress = StageProgress.CLEAR;
                     }
-                    if (currentState.equals(StageProgress.NOT_CLEAR)) {
+                    if (currentStageProgress.equals(StageProgress.NOT_CLEAR)) {
                         turn = manager.plusTurn(turn);
                         manager.sayTurnCount(turn);
                         outputView.printBoard(gameResult);

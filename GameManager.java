@@ -32,6 +32,10 @@ public class GameManager {
         System.out.print(Message.ASK_LOAD_STAGE_DATA);
     }
 
+    public void saySaveComplete() {
+        System.out.println(Message.SAVE);
+    }
+
     public List<Command> getCommand(List<String> direction) {
         List<Command> commands = new ArrayList<>();
         for (int i = 0; i < direction.size(); i++) {
@@ -46,7 +50,7 @@ public class GameManager {
     }
 
     public int plusTurn(int value) {
-        return value+1;
+        return value + 1;
     }
 
     public int turnInit() {

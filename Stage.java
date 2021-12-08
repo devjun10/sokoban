@@ -32,8 +32,8 @@ public class Stage {
                 continue;
             }
 
-            if (command.equals(Command.SS)) {
-                results.add(new GameResult(Command.SS.getCommand()));
+            if (command.equals(Command.C)) {
+                results.add(new GameResult(Command.C.getCommand()));
                 continue;
             }
             GameResult result = this.board.push(command);

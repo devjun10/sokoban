@@ -10,7 +10,10 @@ public class Slot {
     private final String txt = ".txt";
     private List<StageData> saveData = new ArrayList<>();
 
-    private Slot() {};
+    private Slot() {
+    }
+
+    ;
 
     public static Slot of() {
         return new Slot();
@@ -37,7 +40,7 @@ public class Slot {
         }
     }
 
-    public int[][] loadSaveData(int stageNumber){
+    public int[][] loadSaveData(int stageNumber) {
         return changeStringArrayToIntArrayOriginal(loadStageData(stageNumber));
     }
 
@@ -65,7 +68,6 @@ public class Slot {
         } catch (IOException e) {
             System.out.println(e);
         }
-        System.out.println(stringBuilder);
         return splitByComma(replaceBar(stringBuilder.toString()));
     }
 

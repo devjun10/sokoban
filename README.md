@@ -412,11 +412,72 @@ S>  3L
 |:---:|:----------------------------------------------------------------------------------------|:-----:|
 |  1  |&nbsp;프로젝트 개요                                                                          |[링크]()|
 |  2  |&nbsp;풀이 과정 및 코드 설명. 실행 결 기술 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|[링크](#풀이-과정-및-코드-설명)|
-|     |&nbsp;&nbsp;&nbsp; `Step 01.`  1단계 풀이 과정 / 코드                                         |       |
-|     |&nbsp;&nbsp;&nbsp; `Step 02.`  2단계 풀이 과정 / 코드                                         |       |
-|  3  |&nbsp;테스트 케이스                                                                         |[링크]()|
+|     |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Step 01.`  1단계 풀이 과정 / 코드                                         |       |
+|     |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Step 02.`  2단계 풀이 과정 / 코드                                         |       |
+|     |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Step 03.`  3단계 풀이 과정 / 코드                                         |       |
+|     |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Step 04.`  4단계 풀이 과정 / 코드                                         |       |
+|  3  |&nbsp;테스트 케이스                                                                          |[링크]()|
+|  4  |&nbsp;기타                                                                                 |[링크]()|
+
+<br/><br/><br/>
+
+
+
+
+# 프로젝트 개요
+
+문제를 풀 때, 턴제 RPG이며 절차 지향적 게임이기 때문에 순서와 흐름이 필요할 것이며 조건 분기가 많이 등장하리라 생각했습니다. 따라서 `각 객체의 역할은 명확하게 분배`하고 `분기문을 지양`
+하되, `크게 구애받지 말자`고 생각했습니다. 따라서 클래스들의 역할을 나누고 Main 클래스 위에서 이를 절차적으로 이어주었습니다.
+<br/>
+
+1. InputView를 통해 사용자의 입력을 받는다.
+2. 사용자의 입력이 enum 클래스로 바뀌면서 GameMachine 클래스 내부로 전달된다.
+3. 전달된 명령들은 내부 로직을 통해 처리되어 GameResult 클래스로 반환된다.
+4. 반환된 GameResult 클래스는 OutputView에 전달되어 사용자에게 화면이 출력된다.
+
+<br/>
+
+![전체 플로우](https://user-images.githubusercontent.com/92818747/145159169-c4bba237-4730-4ae9-96de-22cdd054b24e.png)
 
 <br/><br/><br/><br/><br/>
+
+|No|종류|<center>이름</center>|<center>역할 및 책임</center>|
+|:----:|:---------------:|:------|:------------------------------------------|
+|1|class|&nbsp;GameManager       |&nbsp; 게임의 진행을 돕는 클래스로 게임의 부가적 정보 전달, 게임 외적인 일을 담당한다 | 
+|2|class|&nbsp;GameMachine       |&nbsp; 게임 데이터를 관리하고 내부 로직을 이어주는 역할을 담당하는 클래스     |
+|3|class|&nbsp;Disk              |&nbsp; 게임의 데이터를 관리하는 클래스. 클래스들의 데이터와 초기화, 생성을 관리한다 |
+|4|class|&nbsp;Init              |&nbsp; Stage에 대한 정보(Information, Board) 초기화를 담당하는 클래스 |
+|5|class|&nbsp;Slot              |&nbsp; 사용자의 게임 데이터를 저장하고 있는 클래스                      |
+|6|class|&nbsp;Stages            |&nbsp; 각 Stage에 대한 정보를 담고 있는 클래스                       |
+|7|class|&nbsp;Board             |&nbsp; Stage의 심볼을 나타내는 클래스                              |
+|8|class|&nbsp;StageInformation  |&nbsp; 해당 Board의 크기, 번호 등 정보를 저장하고 있는 클래스            |
+|9|class|&nbsp;Answer            |&nbsp; 정답과 원본 배열의 값을 저장하고 있는 클래스                     |
+
+<br/><br/><br/>
+
+
+<details>
+<summary>📚	 각 단계별 프로젝트 개요 </summary>
+<div markdown="1"></div>
+
+
+## 1단계
+사용자의 입력을 받고 . 문제가 1단계 부터 4단계 까지 있는 만큼 요구사항만 충족하고 다음 문제로 넘어갔습니다. 
+
+<br/><br/><br/>
+
+## 2단계
+
+
+<br/><br/><br/>
+
+## 3단계 
+
+
+</details>
+<br/><br/><br/><br/>
+
+
 
 # 풀이 과정 및 코드 설명
 
