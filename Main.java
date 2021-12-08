@@ -12,7 +12,7 @@ public class Main {
         manager.sayHello();
         int stageNumber = 1;
         int turn = 0;
-        if(false){
+        if(Choice.YES.getDescription().equals("yes")){
 //            stageNumber = inputView
         }
         while (stageNumber < 5) {
@@ -53,7 +53,6 @@ public class Main {
                     }
                 }
             }
-
             turn = manager.turnInit();
             stageNumber = manager.stageUp(stageNumber);
         }
