@@ -12,8 +12,10 @@ public class Main {
         manager.sayHello();
         int stageNumber = 1;
         int turn = 0;
-        if(Choice.YES.getDescription().equals("yes")){
-//            stageNumber = inputView
+
+        String choice = inputView.inputChoice();
+        if (Choice.YES.getDescription().equals(choice)) {
+//            stageNumber = inputView.inputChoice();
         }
         while (stageNumber < 5) {
             Stage stage = gameMachine.getStage(stageNumber);

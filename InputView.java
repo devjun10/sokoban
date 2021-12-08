@@ -9,13 +9,39 @@ public class InputView {
     private Input input = new Input();
 
     private List<String> commands;
+    private List<String> choices;
 
     InputView() {
         commands = Command.getCommands();
+        choices = Choice.getChoices();
     };
 
     private class Input {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    public String inputChoice() {
+        String value;
+        System.out.print(Message.ASK_LOAD_STAGE_DATA);
+
+        while (true) {
+            try {
+                value = input.br.readLine().toLowerCase();
+                validateDirectionContains(value);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            } catch (Exception e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            }
+        }
+        return value;
+    }
+
+    private void validateDirectionContains(String choice) {
+        if (!choices.contains(choice)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+        }
     }
 
     public List<String> inputCommand() {
@@ -39,17 +65,17 @@ public class InputView {
     private List<String> validateCommandContains(String direction) {
         List<String> words = new ArrayList<>();
         Objects.requireNonNull(direction);
-        if(direction.isBlank() || direction.isEmpty()){
+        if (direction.isBlank() || direction.isEmpty()) {
             throw new IllegalArgumentException();
         }
         String[] temp = direction.split("");
-        for(int number= 0; number<temp.length; number++){
+        for (int number = 0; number < temp.length; number++) {
             if (!commands.contains(temp[number])) {
                 continue;
             }
             words.add(temp[number]);
         }
-        if(words.isEmpty()){
+        if (words.isEmpty()) {
             throw new IllegalArgumentException();
         }
         return words;

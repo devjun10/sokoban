@@ -11,6 +11,7 @@ public enum Message {
     GREET("소코반의 세계에 오신 것을 환영합니다!\n^오^\n"),
     TURN_RESET("해당 턴을 초기화 합니다.\n"),
     SOKOBAN("SOKOBAN> "),
+    ASK_LOAD_STAGE_DATA("저장된 스테이지의 데이터를 불러오시겠습니까? (y/n) \n"),
     BYE("Bye~ ");
 
     private final String message;

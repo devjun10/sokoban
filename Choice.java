@@ -1,3 +1,7 @@
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public enum Choice {
     YES("yes"), NO("no");
 
@@ -9,6 +13,12 @@ public enum Choice {
 
     public String getDescription() {
         return description;
+    }
+
+    public static List<String> getChoices() {
+        return Stream.of(values())
+                .map(Choice::getDescription)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Override
