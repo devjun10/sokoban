@@ -1,7 +1,10 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.*;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +12,28 @@ public class Init {
 
     private static final StringBuilder stringBuilder = new StringBuilder();
     private static final StageInformationList STAGE_INFORMATION_LIST = StageInformationList.of();
+    private  AES256Cipher aes256Cipher = AES256Cipher.getInstance();
 
     {
         List<StageInformation> information = STAGE_INFORMATION_LIST.getStageInformation();
-        List<String[][]> maps = getMaps();
+        List<String[][]> maps = null;
+        try {
+            maps = getMaps();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < 4; i++) {
             Board board = new Board(changeStringArrayToIntegerArray(maps.get(i)));
             StageInformation info = information.get(i);
@@ -30,16 +51,13 @@ public class Init {
         return temp;
     }
 
-    private Init() {
-    }
-
-    ;
+    private Init() {};
 
     public static Init of() {
         return new Init();
     }
 
-    List<String[][]> getMaps() {
+    List<String[][]> getMaps() throws InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         String[][] result = getStages();
         List<String[][]> answer = new ArrayList<>();
         for (int i = 0; i < result.length; i++) {
@@ -53,7 +71,7 @@ public class Init {
         return answer;
     }
 
-    String[][] getStages() {
+    String[][] getStages() throws InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         String[] eachStages = joiningTextFileWord();
         int rows = eachStages.length;
         String[][] result = new String[rows][];
@@ -73,10 +91,10 @@ public class Init {
         return word.split(",");
     }
 
-    String[] joiningTextFileWord() {
+    static String[] joiningTextFileWord() throws InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         try {
             stringBuilder.setLength(0);
-            File file = new File("map.txt");
+            File file = new File("map_enc.txt");
             FileReader filereader = new FileReader(file);
             BufferedReader bufReader = new BufferedReader(filereader);
             String line = "";
@@ -87,7 +105,7 @@ public class Init {
         } catch (IOException e) {
             System.out.println(e);
         }
-        return splitByStage(stringBuilder.toString());
+        return splitByStage(AES256Cipher.AES_Decode(stringBuilder.toString()));
     }
 
     private static String[] splitByStage(String word) {

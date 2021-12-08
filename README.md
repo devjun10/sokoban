@@ -1,5 +1,8 @@
 # 소코반(Sokoban)
 
+시연 영상은 [해당 링크](https://github.com/devjun10/CodeSquad_Cocoa/issues/3) 를 [클릭](https://github.com/devjun10/CodeSquad_Cocoa/issues/4) 하시면 됩니다.
+<br/><br/>
+
 <details>
 <summary>📚	 문제 설명 및 요구사항</summary>
 <div markdown="1">
@@ -357,9 +360,6 @@ S>  3L
 </div>
 <br/><br/>
 </details>
-
-
-
 </details> 
 
 
@@ -444,8 +444,8 @@ S>  3L
 
 <br/><br/><br/><br/><br/>
 
-아래와 같이 클래스들의 역할은 나누고 Main 클래스 위에서 이를 절차적으로 이어주었습니다. *메인 클래스 위에서 흐름을 제어하다 보니 이 과정에서 분기문이 많이 생겼습니다.  
-(* 아래와 같이 구조가 이쁘지 않습니다 ㅠㅠ) 
+아래와 같이 클래스들의 역할은 나누고 Main 클래스 위에서 이를 절차적으로 이어주었습니다. <br/>
+*메인 클래스 위에서 흐름을 제어하다 보니 분기문이 많이 생겼습니다. * 아래와 같이 구조가 이쁘지 않습니다 ㅠㅠ
 
 ![Main_클래스](https://user-images.githubusercontent.com/92818747/145164780-88f5e8a7-0c5b-4d4c-bb5d-68f1b1592342.png)
 <br/><br/><br/><br/><br/>
@@ -1519,15 +1519,15 @@ public class Stages {
 ```java
 public class StageInformation {
 
-  private final int id;
-  private final int height;
-  private final int width;
+    private final int id;
+    private final int height;
+    private final int width;
 
-  public StageInformation(int id, int height, int width) {
-    this.id = id;
-    this.height = height;
-    this.width = width;
-  }
+    public StageInformation(int id, int height, int width) {
+        this.id = id;
+        this.height = height;
+        this.width = width;
+}
 
 ```
 
@@ -1822,39 +1822,162 @@ public int turnInit(){
 ## 추가/변경된 주요 클래스
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:-------------------:|:------|:---|
-|1|class|&nbsp;StageData     |&nbsp; 명령어를 통해 불러올 수 있는 스테이지의 목록을 보여주기 위한 클래스  |
-|2|enum|&nbsp;StageProgress  |&nbsp; 스테이지의 진행 상황을 보여주기 위해 존재하는 클래스              |
-|3|enum|&nbsp;Choice         |&nbsp; 선택 사항을 알려주기 위해 존재하는 클래스                     |
+|1|class|&nbsp;Init          |&nbsp; 데이터의 초기화를 담당하는 클래스                           |
+|2|class|&nbsp;StageData     |&nbsp; 명령어를 통해 불러올 수 있는 스테이지의 목록을 보여주기 위한 클래스  |
+|3|class|&nbsp;AES256Cipher   |&nbsp; 암호화/복호화를 위한 유틸 클래스                           |
 
-## 1. StageData 클래스
+## 1. Init 클래스
 
-GameMachine 내부의 2차원 배열의 값과 연관된 메서드를 가지고 있는 클래스. 게임 캐릭터와 구멍, 공 등 각 심볼들의 상태를 관리하며 사이드 이펙트를 제거하기 위해 내부 배열을 갈아 끼우는 형태로 매 번
-업데이트 한다.
+각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스. 사용자는 데이터를 사용하는 것에만 집중할 수 있도록 하기 위해 애플리케이션이 실행되는 시점에 데이터를 초기화한다. 3, 4단계에서 각 파일을 읽어와서 이를 암
 
 <br/>
 
-### 1-1. void initBoard()
+### 1-1. List<String[][]> getMaps()
 
-Board 클래스 객체가 생성될 때 String[ ][ ] 배열을 초기화시켜주는 메서드.
+
 <br/><br/>
 
 ```java
-void initBoard(){
-        board=new String[BOARD_WIDTH][BOARD_HEIGHT];
-        this.board[0]=new String[]{" "," ","#","#","#","#","#","#","#"," "," "};
-        this.board[1]=new String[]{"#","#","#"," "," ","O"," "," ","#","#","#"};
-        this.board[2]=new String[]{"#"," "," "," "," ","o"," "," "," "," ","#"};
-        this.board[3]=new String[]{"#"," ","O","o"," ","P"," ","o","O"," ","#"};
-        this.board[4]=new String[]{"#","#","#"," "," ","o"," "," ","#","#","#"};
-        this.board[5]=new String[]{" ","#"," "," "," ","O"," "," ","#"," "," "};
-        this.board[6]=new String[]{" ","#","#","#","#","#","#","#","#"," "," "};
+List<String[][]> getMaps() {
+        String[][] result = getStages();
+        List<String[][]> answer = new ArrayList<>();
+        for (int i = 0; i < result.length; i++) {
+            String[] temp = result[i];
+            String[][] array = new String[temp.length][temp[0].length()];
+            for (int j = 0; j < temp.length; j++) {
+                array[j] = temp[j].split("");
+            }
+            answer.add(array);
+        }
+            return answer;
+}
+
+```
+
+<br/><br/><br/>
+### 1-2. String[][] getStages()
+
+
+<br/><br/>
+
+```java
+String[][] getStages() {
+    String[] eachStages = joiningTextFileWord();
+    int rows = eachStages.length;
+    String[][] result = new String[rows][];
+    
+    for (int i = 0; i < rows; i++) {
+        String[] temp = splitByComma(eachStages[i]);
+        int tempCols = temp.length;
+        result[i] = new String[tempCols];
+        for (int j = 0; j < tempCols; j++) {
+                result[i][j] = temp[j];
+            }
+        }
+        return result;
 }
 ```
 
 <br/><br/><br/>
 
 
+```java
+private String[] splitByComma(String word) {
+        return word.split(",");
+        }
+
+        String[] joiningTextFileWord() {
+        try {
+            stringBuilder.setLength(0);
+            File file = new File("map.txt");
+            FileReader filereader = new FileReader(file);
+            BufferedReader bufReader = new BufferedReader(filereader);
+            String line = "";
+            while ((line = bufReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            bufReader.close();
+            } catch (IOException e) {
+                System.out.println(e);
+        }
+        return splitByStage(stringBuilder.toString());
+}
+```
+
 <br/><br/><br/>
+
+
+## 5. AES256Cipher 클래스
+
+암호화/복호화를 위한 클래스. 
+
+<br/>
+
+### 5-1. static AES256Cipher getInstance()
+
+싱글턴으로 객체를 생성하기 위한 스태틱 메서드. 
+<br/><br/>
+
+```java
+public static AES256Cipher getInstance() {
+        if(INSTANCE==null){
+            synchronized (AES256Cipher.class){
+                if(INSTANCE==null)
+                    INSTANCE=new AES256Cipher();
+                }
+            }
+        return INSTANCE;
+}
+```
+
+<br/><br/><br/>
+
+
+### 5-2. static String AES_Encode(String str)
+
+암호화를 위한 스태틱 메서드. 이를 통해 문자열을 암호화시킬 수 있다.
+<br/><br/>
+
+```java
+public static String AES_Encode(String str) {
+        throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException,
+        InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        byte[] keyData = secretKey.getBytes();
+
+        SecretKey secureKey = new SecretKeySpec(keyData, "AES");
+
+        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        c.init(Cipher.ENCRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes()));
+
+        byte[] encrypted = c.doFinal(str.getBytes("UTF-8"));
+        String enStr = new String(Base64.getEncoder().encode(encrypted));
+
+        return enStr;
+}
+```
+
+<br/><br/><br/>
+
+### 5-4. static String AES_Decode(String str)
+
+복호화를 위한 스태틱 메서드. 이를 통해 문자열을 복호화시킬 수 있다.
+<br/><br/>
+
+```java
+public static String AES_Decode(String str) {
+        throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException,
+        InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        byte[] keyData = secretKey.getBytes();
+        SecretKey secureKey = new SecretKeySpec(keyData, "AES");
+        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        c.init(Cipher.DECRYPT_MODE, secureKey, new IvParameterSpec(IV.getBytes("UTF-8")));
+
+        byte[] byteStr = Base64.getDecoder().decode(str.getBytes());
+
+        return new String(c.doFinal(byteStr), "UTF-8");
+        }
+```
+
 </div>
 
 </details>
@@ -1866,7 +1989,7 @@ void initBoard(){
 
 ##테스트 케이스
 
-각 테스트 케이스에 대한 예시와 출력 답안입니다.
+각 테스트 케이스에 대한 예시와 출력 답안입니다. 4단계는 너무 많은 케이스가 있어 [영상](https://github.com/devjun10/CodeSquad_Cocoa/issues/4) 으로 대체했습니다. 
 <br/><br/>
 
 

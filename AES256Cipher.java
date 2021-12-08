@@ -8,14 +8,6 @@ import java.util.Base64;
 
 public class AES256Cipher {
 
-    public static void main(String[] args) throws Exception {
-        AES256Cipher aes256Cipher = new AES256Cipher();
-        String word = "aaaa";
-        String a = AES256Cipher.AES_Encode(word);
-        String trans = AES256Cipher.AES_Decode(a);
-        System.out.println(trans);
-    }
-
     private static volatile AES256Cipher INSTANCE;
 
     final static String secretKey = "shplab123456789abcdefghijklmnopq";
@@ -31,7 +23,7 @@ public class AES256Cipher {
         return INSTANCE;
     }
 
-    private AES256Cipher() {
+    AES256Cipher() {
         IV = secretKey.substring(0, 16);
     }
 
