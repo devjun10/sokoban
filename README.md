@@ -1822,13 +1822,13 @@ public int turnInit(){
 ## 추가/변경된 주요 클래스
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:-------------------:|:------|:---|
-|1|class|&nbsp;Init          |&nbsp; 데이터의 초기화를 담당하는 클래스                           |
-|2|class|&nbsp;StageData     |&nbsp; 명령어를 통해 불러올 수 있는 스테이지의 목록을 보여주기 위한 클래스  |
-|3|class|&nbsp;AES256Cipher   |&nbsp; 암호화/복호화를 위한 유틸 클래스                           |
+|1|class|&nbsp;Init           |&nbsp; 데이터의 초기화를 담당하는 클래스                           |
+|2|class|&nbsp;StageData      |&nbsp; 명령어를 통해 불러올 수 있는 스테이지의 목록을 보여주기 위한 클래스  |
+|3|class|&nbsp;AES256Cipher   |&nbsp; 암호화/복호화를 위한 클래스                               |
 
 ## 1. Init 클래스
 
-각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스. 사용자는 데이터를 사용하는 것에만 집중할 수 있도록 하기 위해 애플리케이션이 실행되는 시점에 데이터를 초기화한다. 3, 4단계에서 각 파일을 읽어와서 이를 암
+각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스. 사용자는 데이터를 사용하는 것에만 집중할 수 있도록 하기 위해 애플리케이션이 실행되는 시점에 데이터를 초기화한다.
 
 <br/>
 
@@ -1849,7 +1849,7 @@ List<String[][]> getMaps() {
             }
             answer.add(array);
         }
-            return answer;
+        return answer;
 }
 
 ```
@@ -1881,39 +1881,53 @@ String[][] getStages() {
 <br/><br/><br/>
 
 
+## String[] splitByComma(String word)
+
 ```java
 private String[] splitByComma(String word) {
         return word.split(",");
-        }
-
-        String[] joiningTextFileWord() {
-        try {
-            stringBuilder.setLength(0);
-            File file = new File("map.txt");
-            FileReader filereader = new FileReader(file);
-            BufferedReader bufReader = new BufferedReader(filereader);
-            String line = "";
-            while ((line = bufReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-            bufReader.close();
-            } catch (IOException e) {
-                System.out.println(e);
-        }
-        return splitByStage(stringBuilder.toString());
 }
 ```
 
 <br/><br/><br/>
 
 
-## 5. AES256Cipher 클래스
+
+## String[] joiningTextFileWord()
+
+```java
+String[] joiningTextFileWord() {
+    try {
+        stringBuilder.setLength(0);
+        File file = new File("map.txt");
+        FileReader filereader = new FileReader(file);
+        BufferedReader bufReader = new BufferedReader(filereader);
+        String line = "";
+        while ((line = bufReader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        bufReader.close();
+    } catch (IOException e) {
+        System.out.println(e);
+    }
+    return splitByStage(stringBuilder.toString());
+}
+```
+
+<br/><br/><br/>
+
+
+## 2. Init 클래스
+
+
+
+## 3. AES256Cipher 클래스
 
 암호화/복호화를 위한 클래스. 
 
 <br/>
 
-### 5-1. static AES256Cipher getInstance()
+### 3-1. static AES256Cipher getInstance()
 
 싱글턴으로 객체를 생성하기 위한 스태틱 메서드. 
 <br/><br/>
@@ -1933,7 +1947,7 @@ public static AES256Cipher getInstance() {
 <br/><br/><br/>
 
 
-### 5-2. static String AES_Encode(String str)
+### 3-2. static String AES_Encode(String str)
 
 암호화를 위한 스태틱 메서드. 이를 통해 문자열을 암호화시킬 수 있다.
 <br/><br/>
@@ -1958,7 +1972,7 @@ public static String AES_Encode(String str) {
 
 <br/><br/><br/>
 
-### 5-4. static String AES_Decode(String str)
+### 3-3. static String AES_Decode(String str)
 
 복호화를 위한 스태틱 메서드. 이를 통해 문자열을 복호화시킬 수 있다.
 <br/><br/>
@@ -1987,7 +2001,7 @@ public static String AES_Decode(String str) {
 
 <br/><br/><br/><br/>
 
-##테스트 케이스
+## 테스트 케이스
 
 각 테스트 케이스에 대한 예시와 출력 답안입니다. 4단계는 너무 많은 케이스가 있어 [영상](https://github.com/devjun10/CodeSquad_Cocoa/issues/4) 으로 대체했습니다. 
 <br/><br/>
@@ -2249,6 +2263,6 @@ Bye~
 
 <br/><br/>
 
-#기타
+# 기타
 
-시험을 치면서 설계의 중요성을 다시 한 번 느꼈습니다.  
+시험을 치면서 설계의 중요성을 다시 한 번 느꼈습니다. Main 한 곳에서 클래스를 이으려다 보니 많은 분기문이 생기게 되었고 
