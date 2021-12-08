@@ -73,7 +73,6 @@ public class Answer {
         return value;
     }
 
-
     public boolean checkAnswer(String[][] arry) {
         return false;
     }

@@ -69,4 +69,11 @@ public class GameManager {
         return machine.getSlotData();
     }
 
+    public void saySaveList() {
+        System.out.println(Message.ASK_STAGE_NUMBER);
+    }
+
+    public void sayNoMap() {
+        System.out.println(Message.SAY_NO_MAP);
+    }
 }

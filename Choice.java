@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -11,14 +10,6 @@ public enum Choice {
 
     Choice(String description) {
         this.description = description;
-    }
-
-    public static Choice findChoice(String inputChoice) {
-
-        return Stream.of(values())
-                .filter(choice->choice.description.equals(inputChoice))
-                .findAny()
-                .orElseThrow(NoSuchElementException::new);
     }
 
     public String cotent() {

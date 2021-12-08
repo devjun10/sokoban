@@ -14,21 +14,33 @@ public class Main {
         int turn = 0;
 
         while (stageNumber < 5) {
-            manager.askLoadSavedData();
             Stage stage = gameMachine.getStage(stageNumber);
             StageProgress currentStageProgress = StageProgress.NOT_CLEAR;
             outputView.printInitStage(stage.getBoard());
 
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
-
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
                 for (GameResult gameResult : result) {
+                    if (gameResult.getMessage().equals(Command.L.getCommand())) {
+                        List<StageData> data = manager.getSlotData(gameMachine);
+                        data.forEach(System.out::println);
+                        manager.saySaveList();
+                        String inputStage = inputView.inputStage();
+                        int inputStageNumber = Integer.parseInt(inputStage.substring(0, 1));
 
-                    if(gameResult.getMessage().equals(Command.L.getCommand())){
-                        gameMachine.getSlotData().forEach(System.out::println);
-
+                        if (!data.get(inputStageNumber - 1).getName().equals("Empty")) {
+                            stage = gameMachine.loadSlotData(inputStageNumber);
+                            stageNumber = stage.getStageNumber();
+                            outputView.printInitStage(stage.getBoard());
+                            turn=0;
+                        } else {
+                            manager.sayNoMap();
+                            outputView.printInitStage(stage.getBoard());
+                        }
+                        break;
                     }
+
                     if (gameResult.getMessage().equals(Command.R.getCommand())) {
                         stage.resetStage();
                         turn = 0;
@@ -45,6 +57,8 @@ public class Main {
 
                     if (gameResult.getMessage().equals(Command.C.getCommand())) {
                         manager.saySaveComplete();
+                        stageNumber = stage.getStageNumber();
+                        System.out.println(stageNumber);
                         gameMachine.saveStage(stageNumber);
                         outputView.printInitStage(stage.getBoard());
                         continue;

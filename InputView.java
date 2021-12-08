@@ -45,6 +45,35 @@ public class InputView {
         }
     }
 
+    public String inputStage() {
+        String value;
+
+        while (true) {
+            try {
+                value = input.br.readLine().toLowerCase();
+                System.out.println(value);
+                validateStage(value);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            } catch (Exception e) {
+                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+            }
+        }
+        return value;
+    }
+
+    private void validateStage(String choice) {
+        int number = Integer.parseInt(choice.substring(0, 1));
+        String command = choice.substring(1, 2).toLowerCase();
+        if(number>=5 || number<0 ){
+            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+        }
+        if (!command.equals("l")) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+        }
+    }
+
     public int inputIntValue() {
         int value;
         while (true) {

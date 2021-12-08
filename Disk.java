@@ -2,6 +2,7 @@ import java.util.List;
 
 public class Disk {
 
+    private  AES256Cipher aes256Cipher = AES256Cipher.getInstance();
     private Init init = Init.of();
     private Slot slot = Slot.of();
 

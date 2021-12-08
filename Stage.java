@@ -22,8 +22,11 @@ public class Stage {
     List<GameResult> execute(List<Command> commandList) {
         List<GameResult> results = new ArrayList<>();
         for (Command command : commandList) {
+            if(command.equals(Command.L)){
+                results.add(new GameResult(Command.L.getCommand()));
+                return results;
+            }
             if (command.equals(Command.Q)) {
-                // 이 직전 까지를 모두 더해야함
                 results.add(new GameResult(Command.Q.getCommand()));
                 return results;
             }
