@@ -16,13 +16,14 @@ public class Main {
         GameManager manager = new GameManager();
 
         manager.sayHello();
+
         int stageNumber = 1;
         int turn = 0;
 
         while (stageNumber < 5) {
             Stage stage = gameMachine.getStage(stageNumber);
             StageProgress currentStageProgress = StageProgress.NOT_CLEAR;
-            outputView.printInitStage(stage.getBoard());
+            outputView.printBoard(stage.getBoard());
 
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
@@ -39,11 +40,11 @@ public class Main {
                         if (!data.get(inputStageNumber - 1).getName().equals("Empty")) {
                             stage = gameMachine.loadSlotData(inputStageNumber);
                             stageNumber = stage.getStageNumber();
-                            outputView.printInitStage(stage.getBoard());
+                            outputView.printBoard(stage.getBoard());
                             turn = 0;
                         } else {
                             manager.sayNoMap();
-                            outputView.printInitStage(stage.getBoard());
+                            outputView.printBoard(stage.getBoard());
                         }
                         break;
                     }
@@ -52,7 +53,7 @@ public class Main {
                         stage.resetStage();
                         turn = 0;
                         manager.sayTurnReset();
-                        outputView.printInitStage(stage.getBoard());
+                        outputView.printBoard(stage.getBoard());
                         break;
                     }
 
@@ -66,7 +67,7 @@ public class Main {
                         manager.saySaveComplete();
                         stageNumber = stage.getStageNumber();
                         gameMachine.saveStage(stageNumber);
-                        outputView.printInitStage(stage.getBoard());
+                        outputView.printBoard(stage.getBoard());
                         continue;
                     }
 
@@ -80,7 +81,7 @@ public class Main {
                     if (currentStageProgress.equals(StageProgress.NOT_CLEAR)) {
                         turn = manager.plusCount(turn);
                         manager.sayTurnCount(turn);
-                        outputView.printBoard(gameResult);
+                        outputView.printGameResult(gameResult);
                     }
                 }
             }

@@ -4,7 +4,7 @@ public class OutputView {
 
     private final StringBuilder stringBuilder = new StringBuilder();
 
-    public void printInitStage(String[][] board) {
+    public void printBoard(String[][] board) {
         stringBuilder.setLength(0);
 
         for (int row = 0; row < board.length; row++) {
@@ -19,7 +19,7 @@ public class OutputView {
         System.out.println(stringBuilder);
     }
 
-    public void printBoard(GameResult result) {
+    public void printGameResult(GameResult result) {
         stringBuilder.setLength(0);
         String[][] board = result.getBoard();
         for (int row = 0; row < board.length; row++) {

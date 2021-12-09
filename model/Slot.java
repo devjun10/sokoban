@@ -5,20 +5,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import static utils.BoardUtils.changeStringArrayToIntArrayOriginal;
-import static utils.BoardUtils.changeStringArrayToIntArrayUsingSymbol;
+
+import static utils.BoardUtils.convertStringArrayToIntArrayOriginal;
+import static utils.BoardUtils.convertStringArrayToIntArrayUsingSymbol;
 import static utils.Parser.*;
 
 
 public class Slot {
 
-    private final StringBuilder stringBuilder = new StringBuilder();
+    private static final StringBuilder stringBuilder = new StringBuilder();
     private final String empty = "Empty";
     private final String slot = "slot";
+    private final String directory = "slot/";
+    private final String stage = "Stage";
     private final String line = "==========";
     private final String txt = ".txt";
     private final String blank = "";
-    private final String directory = "slot/";
     private final int minLine = 2;
     private List<StageData> saveData = new ArrayList<>();
     private List<StageData> checkData;
@@ -29,21 +31,21 @@ public class Slot {
         }
         List<StageData> temp = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            temp.add(new StageData(i, "Stage" + i));
+            temp.add(new StageData(i, stage + i));
         }
         this.checkData = Collections.unmodifiableList(temp);
     }
 
-    public static Slot of() {
+    static Slot of() {
         return new Slot();
     }
 
     void saveData(int stageNumber, String[][] array) {
         validateStageNumber(stageNumber);
         stringBuilder.setLength(0);
-        String name = slot + stageNumber + txt;
+        String name = directory + slot + stageNumber + txt;
         File file = new File(name);
-        int[][] intArray = changeStringArrayToIntArrayUsingSymbol(array);
+        int[][] intArray = convertStringArrayToIntArrayUsingSymbol(array);
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
                 stringBuilder.append(intArray[row][col]).append("");
@@ -78,7 +80,7 @@ public class Slot {
     }
 
     int[][] loadSaveData(int stageNumber) {
-        return changeStringArrayToIntArrayOriginal(loadStageData(stageNumber));
+        return convertStringArrayToIntArrayOriginal(loadStageData(stageNumber));
     }
 
     private String[][] loadStageData(int stageNumber) {
@@ -107,5 +109,4 @@ public class Slot {
         }
         return splitByComma(replaceBar(stringBuilder.toString()));
     }
-
 }

@@ -37,6 +37,14 @@ public class GameManager {
         System.out.println(SystemMessage.SAVE);
     }
 
+    public void saySaveList() {
+        System.out.println(SystemMessage.ASK_STAGE_NUMBER);
+    }
+
+    public void sayNoMap() {
+        System.out.println(SystemMessage.SAY_NO_MAP);
+    }
+
     public List<Command> getCommand(List<String> direction) {
         List<Command> commands = new ArrayList<>();
         for (String s : direction) {
@@ -60,13 +68,5 @@ public class GameManager {
 
     public List<StageData> getSlotData(GameMachine machine){
         return machine.getSlotData();
-    }
-
-    public void saySaveList() {
-        System.out.println(SystemMessage.ASK_STAGE_NUMBER);
-    }
-
-    public void sayNoMap() {
-        System.out.println(SystemMessage.SAY_NO_MAP);
     }
 }

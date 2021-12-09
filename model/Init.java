@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.BoardUtils.changeStringArrayToIntArrayOriginal;
+import static utils.BoardUtils.convertStringArrayToIntArrayOriginal;
 import static utils.Parser.splitByComma;
 import static utils.Parser.splitByStage;
 
@@ -28,16 +28,13 @@ public class Init {
         }
 
         for (int i = 0; i < 4; i++) {
-            Board board = new Board(changeStringArrayToIntArrayOriginal(maps.get(i)));
+            Board board = new Board(convertStringArrayToIntArrayOriginal(maps.get(i)));
             StageInformation info = information.get(i);
             Stages.putStage(i + 1, info, board);
         }
     }
 
-    private Init() {
-    }
-
-    ;
+    private Init() {};
 
     static Init of() {
         return new Init();
@@ -46,6 +43,7 @@ public class Init {
     List<String[][]> getMaps() throws Exception {
         String[][] result = getStages();
         List<String[][]> answer = new ArrayList<>();
+
         for (int i = 0; i < result.length; i++) {
             String[] temp = result[i];
             String[][] array = new String[temp.length][temp[0].length()];
@@ -79,6 +77,7 @@ public class Init {
             File file = new File(mapFile);
             FileReader filereader = new FileReader(file);
             BufferedReader bufReader = new BufferedReader(filereader);
+
             String line = "";
             while ((line = bufReader.readLine()) != null) {
                 stringBuilder.append(line);

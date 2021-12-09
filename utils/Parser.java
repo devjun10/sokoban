@@ -33,5 +33,4 @@ public class Parser {
         if (value == 4) return "P";
         return "#";
     }
-
 }

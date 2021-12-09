@@ -64,8 +64,10 @@ public class Board {
     private boolean pushable(Point point, Command command) {
         int x = point.getX();
         int y = point.getY();
+
         int fonrtOfBallX = x + command.getNextPosition().get(0);
         int fonrtOfBallY = y + command.getNextPosition().get(1);
+
         return (isBall(point) && isBlank(Position.of(fonrtOfBallX, fonrtOfBallY)))
                 || (isBall(point) && isHall(Position.of(fonrtOfBallX, fonrtOfBallY)))
                 || isBallOnTheHole(point) && isBlank(Position.of(fonrtOfBallX, fonrtOfBallY));
@@ -96,7 +98,7 @@ public class Board {
     }
 
     String[][] getStringBoard() {
-        return changeIntArrayToStringArrayUsingSymbol(this.board);
+        return convertIntArrayToStringArrayUsingSymbol(this.board);
     }
 
     int[][] getIntBoard() {
@@ -124,7 +126,7 @@ public class Board {
     }
 
     protected boolean checkAnswer(String[][] arry) {
-        return answer.isAnswer(changeStringArrayToIntArrayUsingSymbol(arry));
+        return answer.isAnswer(convertStringArrayToIntArrayUsingSymbol(arry));
     }
 
     void reset() {

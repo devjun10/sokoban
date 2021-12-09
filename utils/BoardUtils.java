@@ -15,7 +15,7 @@ public class BoardUtils {
         return temp;
     }
 
-    public static int[][] changeStringArrayToIntArrayOriginal(String[][] array) {
+    public static int[][] convertStringArrayToIntArrayOriginal(String[][] array) {
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
@@ -25,7 +25,7 @@ public class BoardUtils {
         return temp;
     }
 
-    public static int[][] changeStringArrayToIntArrayUsingSymbol(String[][] array) {
+    public static int[][] convertStringArrayToIntArrayUsingSymbol(String[][] array) {
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
@@ -35,7 +35,7 @@ public class BoardUtils {
         return temp;
     }
 
-    public static String[][] changeIntArrayToStringArrayUsingSymbol(int[][] array) {
+    public static String[][] convertIntArrayToStringArrayUsingSymbol(int[][] array) {
         String[][] temp = new String[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {

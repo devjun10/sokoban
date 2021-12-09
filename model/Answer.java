@@ -30,7 +30,7 @@ public class Answer {
         return value;
     }
 
-    public boolean isAnswer(int[][] array) {
+    boolean isAnswer(int[][] array) {
         int[][] map = deleteOnlyCharacter(array);
         int[][] answer = this.answer;
         for (int row = 0; row < answer.length; row++) {
