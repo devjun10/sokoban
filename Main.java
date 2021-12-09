@@ -1,3 +1,9 @@
+import model.GameMachine;
+import model.GameManager;
+import model.Stage;
+import model.StageData;
+import view.*;
+
 import java.util.List;
 
 public class Main {
@@ -5,7 +11,7 @@ public class Main {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         GameMachine gameMachine = new GameMachine();
         GameManager manager = new GameManager();
 
@@ -21,6 +27,7 @@ public class Main {
             while (stage.isNotAnswer()) {
                 List<Command> commands = manager.getCommand(inputView.inputCommand());
                 List<GameResult> result = gameMachine.play(stageNumber, commands);
+
                 for (GameResult gameResult : result) {
                     if (gameResult.getMessage().equals(Command.L.getCommand())) {
                         List<StageData> data = manager.getSlotData(gameMachine);
@@ -33,7 +40,7 @@ public class Main {
                             stage = gameMachine.loadSlotData(inputStageNumber);
                             stageNumber = stage.getStageNumber();
                             outputView.printInitStage(stage.getBoard());
-                            turn=0;
+                            turn = 0;
                         } else {
                             manager.sayNoMap();
                             outputView.printInitStage(stage.getBoard());
@@ -58,7 +65,6 @@ public class Main {
                     if (gameResult.getMessage().equals(Command.C.getCommand())) {
                         manager.saySaveComplete();
                         stageNumber = stage.getStageNumber();
-                        System.out.println(stageNumber);
                         gameMachine.saveStage(stageNumber);
                         outputView.printInitStage(stage.getBoard());
                         continue;
@@ -72,15 +78,16 @@ public class Main {
                         currentStageProgress = StageProgress.CLEAR;
                     }
                     if (currentStageProgress.equals(StageProgress.NOT_CLEAR)) {
-                        turn = manager.plusTurn(turn);
+                        turn = manager.plusCount(turn);
                         manager.sayTurnCount(turn);
                         outputView.printBoard(gameResult);
                     }
                 }
             }
+            
             turn = manager.turnInit();
             gameMachine.clearStage(stageNumber);
-            stageNumber = manager.stageUp(stageNumber);
+            stageNumber = manager.plusCount(stageNumber);
         }
         manager.sayGoodBye();
     }

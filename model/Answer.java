@@ -1,3 +1,7 @@
+package model;
+
+import static utils.BoardUtils.copyIntArray;
+
 public class Answer {
 
     private int[][] answer;
@@ -47,13 +51,7 @@ public class Answer {
     }
 
     public int[][] getOriginal() {
-        int[][] temp = new int[original.length][original[0].length];
-        for (int row = 0; row < original.length; row++) {
-            for (int col = 0; col < original[0].length; col++) {
-                temp[row][col] = original[row][col];
-            }
-        }
-        return temp;
+        return copyIntArray(original);
     }
 
     private int[][] deleteCharacter(int[][] array) {
@@ -71,9 +69,5 @@ public class Answer {
             return 0;
         }
         return value;
-    }
-
-    public boolean checkAnswer(String[][] arry) {
-        return false;
     }
 }

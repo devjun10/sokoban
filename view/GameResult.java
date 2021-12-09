@@ -1,3 +1,5 @@
+package view;
+
 public class GameResult {
 
     private String[][] board;

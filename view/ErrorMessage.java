@@ -1,3 +1,5 @@
+package view;
+
 public enum ErrorMessage {
 
     INVALID_INPUT_VALUE("올바르지 않은 입력 입니다."),

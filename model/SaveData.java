@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +32,6 @@ public class SaveData {
         compileData.add(copyBoard);
     }
 
-    public void resetData() {
-        int[][] importantData = copyBoard();
-        compileData.clear();
-        compileData.add(importantData);
-    }
-
     private int[][] copyBoard() {
         int[][] firstElement = this.rollbackData.get(0);
         int[][] temp = new int[firstElement.length][firstElement[0].length];
@@ -43,10 +39,6 @@ public class SaveData {
             temp[row] = firstElement[row].clone();
         }
         return temp;
-    }
-
-    public void addAll(List<GameResult> executeResult) {
-
     }
 
 }

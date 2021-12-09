@@ -1,3 +1,8 @@
+package model;
+
+import view.Command;
+import view.GameResult;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,15 +12,13 @@ public class Stage {
     private StageInformation stageInformation;
     private SaveData saveData = SaveData.of();
 
-    Stage() {};
-
     Stage(Board board, StageInformation stageInformation) {
         this.board = board;
         this.stageInformation = stageInformation;
         saveData.init(board.copyBoard());
     }
 
-    String[][] getBoard() {
+    public String[][] getBoard() {
         return board.getBoard();
     }
 
@@ -38,17 +41,38 @@ public class Stage {
                 results.add(new GameResult(Command.C.getCommand()));
                 continue;
             }
-            GameResult result = this.board.push(command);
-            if(result.getMessage()==null)
-                result.addMesage(command.getCommand());
+            GameResult result = getResult(command);
             results.add(result);
         }
         return results;
     }
 
-    GameResult resetStage() {
+    private GameResult getResult(Command command){
+        GameResult result = this.board.push(command);
+        if(result.getMessage()==null)
+            result.addMesage(command.getCommand());
+        return result;
+    }
+
+    public GameResult resetStage() {
         this.board.reset();
         return new GameResult(this.board.getBoard());
+    }
+
+    public int getStageNumber(){
+        return stageInformation.getId();
+    }
+
+    public boolean isNotAnswer() {
+        return !this.board.isAnswer();
+    }
+
+    public boolean checkAnswer(String[][] board) {
+        return this.board.checkAnswer(board);
+    }
+
+    void loadStageData(int[][] savedData) {
+        this.board.update(savedData);
     }
 
     @Override
@@ -56,21 +80,5 @@ public class Stage {
         return "Stage{" +
                 "id=" + stageInformation.getId() + ", stageInformation=" + stageInformation +
                 '}';
-    }
-
-    int getStageNumber (){
-        return stageInformation.getId();
-    }
-    boolean isNotAnswer() {
-        return !this.board.isAnswer();
-    }
-
-
-    boolean checkAnswer(String[][] board) {
-        return this.board.checkAnswer(board);
-    }
-
-    void loadStageData(int[][] savedData) {
-        this.board.update(savedData);
     }
 }

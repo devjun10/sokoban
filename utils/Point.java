@@ -1,15 +1,13 @@
+package utils;
+
 import java.util.Objects;
 
-public class Pair {
+public class Point {
 
     private int x;
     private int y;
 
-    private Pair (){
-
-    };
-
-    Pair(int x, int y) {
+    Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -26,8 +24,8 @@ public class Pair {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pair pair = (Pair) o;
-        return x == pair.x && y == pair.y;
+        Point point = (Point) o;
+        return x == point.x && y == point.y;
     }
 
     @Override

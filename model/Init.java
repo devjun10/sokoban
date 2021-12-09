@@ -1,27 +1,32 @@
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.io.*;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+package model;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.BoardUtils.changeStringArrayToIntegerArray;
+import static utils.Parser.splitByComma;
+import static utils.Parser.splitByStage;
+
 public class Init {
 
+    private static final String mapFile = "map/map_enc.txt";
     private static final StringBuilder stringBuilder = new StringBuilder();
     private static final StageInformationList STAGE_INFORMATION_LIST = StageInformationList.of();
-    private  AES256Cipher aes256Cipher = AES256Cipher.getInstance();
+    private AES256Cipher aes256Cipher = model.AES256Cipher.getInstance();
 
     {
         List<StageInformation> information = STAGE_INFORMATION_LIST.getStageInformation();
         List<String[][]> maps = null;
         try {
             maps = getMaps();
-        } catch (InvalidAlgorithmParameterException | UnsupportedEncodingException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         for (int i = 0; i < 4; i++) {
             Board board = new Board(changeStringArrayToIntegerArray(maps.get(i)));
             StageInformation info = information.get(i);
@@ -29,23 +34,13 @@ public class Init {
         }
     }
 
-    private static int[][] changeStringArrayToIntegerArray(String[][] array) {
-        int[][] temp = new int[array.length][array[0].length];
-        for (int row = 0; row < array.length; row++) {
-            for (int col = 0; col < array[0].length; col++) {
-                temp[row][col] = Integer.parseInt(array[row][col]);
-            }
-        }
-        return temp;
-    }
-
     private Init() {};
 
-    public static Init of() {
+    static Init of() {
         return new Init();
     }
 
-    List<String[][]> getMaps() throws InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    List<String[][]> getMaps() throws Exception {
         String[][] result = getStages();
         List<String[][]> answer = new ArrayList<>();
         for (int i = 0; i < result.length; i++) {
@@ -59,7 +54,7 @@ public class Init {
         return answer;
     }
 
-    String[][] getStages() throws InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    String[][] getStages() throws Exception {
         String[] eachStages = joiningTextFileWord();
         int rows = eachStages.length;
         String[][] result = new String[rows][];
@@ -75,14 +70,10 @@ public class Init {
         return result;
     }
 
-    private String[] splitByComma(String word) {
-        return word.split(",");
-    }
-
-    static String[] joiningTextFileWord() throws InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    String[] joiningTextFileWord() throws Exception {
         try {
             stringBuilder.setLength(0);
-            File file = new File("map_enc.txt");
+            File file = new File(mapFile);
             FileReader filereader = new FileReader(file);
             BufferedReader bufReader = new BufferedReader(filereader);
             String line = "";
@@ -95,12 +86,4 @@ public class Init {
         }
         return splitByStage(AES256Cipher.AES_Decode(stringBuilder.toString()));
     }
-
-    private static String[] splitByStage(String word) {
-        return word.split("==========");
-    }
 }
-
-
-
-

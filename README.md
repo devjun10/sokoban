@@ -41,12 +41,12 @@
 <br/>
 
 ````text
-Stage 1
+model.Stage 1
 #####
 #OoP#
 #####
 =====
-Stage 2
+model.Stage 2
   #######
 ###  O  ###
 #    o    #
@@ -80,7 +80,7 @@ Stage 2
   <br/>
 
 ```text
-Stage 1
+model.Stage 1
 
 #####
 #OoP#
@@ -92,7 +92,7 @@ Stage 1
 공의 수: 1
 플레이어 위치 (2, 4)
 
-Stage 2
+model.Stage 2
 
   #######
 ###  O  ###
@@ -153,7 +153,7 @@ Stage 2
 ## 🖥 출력
 
 ```text
-Stage 2
+model.Stage 2
 
   #######
 ###  O  ###
@@ -235,7 +235,7 @@ Bye~
 
 - 난이도를 고려하여 스테이지 1부터 5까지 플레이 가능한 map.txt 파일을 스스로 작성한다.
 - 지도 파일 map.txt를 문자열로 읽어서 처리하도록 개선한다.
-- 처음 시작시 Stage 1의 지도와 프롬프트가 표시된다.
+- 처음 시작시 model.Stage 1의 지도와 프롬프트가 표시된다.
 - r 명령 입력시 스테이지를 초기화 한다.
 - 모든 o를 O자리에 이동시키면 클리어 화면을 표시하고 다음 스테이지로 표시한다.
 - 주어진 모든 스테이지를 클리어시 축하메시지를 출력하고 게임을 종료한다.
@@ -280,7 +280,7 @@ function main() {
 소코반의 세계에 오신 것을 환영합니다!
 ^오^
 
-Stage 1
+model.Stage 1
 
 #####
 #OoP#
@@ -292,16 +292,16 @@ SOKOBAN> A
 #0P #
 #####
 
-빠밤! Stage 1 클리어!
+빠밤! model.Stage 1 클리어!
 턴수: 1
 
-Stage 2
+model.Stage 2
 ...
 
-Stage 5
+model.Stage 5
 ...
 
-빠밤! Stage 5 클리어!
+빠밤! model.Stage 5 클리어!
 턴수: 5
 
 전체 게임을 클리어하셨습니다!
@@ -431,10 +431,10 @@ S>  3L
 <br/>
 
 1. InputView를 통해 사용자의 입력을 받는다.
-2. GameManager는 사용자의 입력이 적절한 명령인지 판단하고 이를 GameMachine 내부로 전달한다.
+2. GameManager는 사용자의 입력이 적절한 명령인지 판단하고 이를 model.GameMachine 내부로 전달한다.
 3. GameMachine은 사용자의 명령을 받아 내부로직을 통해 이를 처리한다. 
-4. 처리된 작업은 GameResult 클래스를 통해 바깥으로 반환된다.
-5. 반환된 GameResult 클래스는 OutputView에 전달되어 사용자의 화면에 출력된다.
+4. 처리된 작업은 view.GameResult 클래스를 통해 바깥으로 반환된다.
+5. 반환된 view.GameResult 클래스는 OutputView에 전달되어 사용자의 화면에 출력된다.
 
 <br/>
 
@@ -447,15 +447,15 @@ S>  3L
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:------------------------------------------|
-|1|class|&nbsp;GameManager       |&nbsp; 게임의 진행을 돕는 클래스로 게임의 부가적 정보 전달, 게임 외적인 일을 담당한다 | 
-|2|class|&nbsp;GameMachine       |&nbsp; 게임 데이터를 관리하고 내부 로직을 이어주는 역할을 담당하는 클래스     |
-|3|class|&nbsp;Disk              |&nbsp; 게임의 데이터를 관리하는 클래스. 클래스들의 데이터와 초기화, 생성을 관리한다 |
-|4|class|&nbsp;Init              |&nbsp; Stage에 대한 정보(Information, Board) 초기화를 담당하는 클래스 |
-|5|class|&nbsp;Slot              |&nbsp; 사용자의 게임 데이터를 저장하고 있는 클래스                      |
-|6|class|&nbsp;Stages            |&nbsp; 각 Stage에 대한 정보를 담고 있는 클래스                       |
-|7|class|&nbsp;Board             |&nbsp; Stage의 심볼을 나타내는 클래스                              |
-|8|class|&nbsp;StageInformation  |&nbsp; 해당 Board의 크기, 번호 등 정보를 저장하고 있는 클래스            |
-|9|class|&nbsp;Answer            |&nbsp; 정답과 원본 배열의 값을 저장하고 있는 클래스                     |
+|1|class|&nbsp;model.GameManager       |&nbsp; 게임의 진행을 돕는 클래스로 게임의 부가적 정보 전달, 게임 외적인 일을 담당한다 | 
+|2|class|&nbsp;model.GameMachine       |&nbsp; 게임 데이터를 관리하고 내부 로직을 이어주는 역할을 담당하는 클래스     |
+|3|class|&nbsp;model.Disk              |&nbsp; 게임의 데이터를 관리하는 클래스. 클래스들의 데이터와 초기화, 생성을 관리한다 |
+|4|class|&nbsp;model.Init              |&nbsp; Stage에 대한 정보(Information, model.Board) 초기화를 담당하는 클래스 |
+|5|class|&nbsp;model.Slot              |&nbsp; 사용자의 게임 데이터를 저장하고 있는 클래스                      |
+|6|class|&nbsp;model.Stages            |&nbsp; 각 Stage에 대한 정보를 담고 있는 클래스                       |
+|7|class|&nbsp;model.Board             |&nbsp; Stage의 심볼을 나타내는 클래스                              |
+|8|class|&nbsp;model.StageInformation  |&nbsp; 해당 Board의 크기, 번호 등 정보를 저장하고 있는 클래스            |
+|9|class|&nbsp;model.Answer            |&nbsp; 정답과 원본 배열의 값을 저장하고 있는 클래스                     |
 
 
 
@@ -478,16 +478,16 @@ S>  3L
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:----:|:---|:---|
-|1|class|&nbsp;InputView|&nbsp; 사용자의 입력을 담당하는 클래스        |
-|2|class|&nbsp;OutputView|&nbsp; 사용자에게 게임의 결과를 출력해주는 클래스        |
-|3|enum|&nbsp;Message|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
-|4|class|&nbsp;ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
+|1|class|&nbsp;view.InputView|&nbsp; 사용자의 입력을 담당하는 클래스        |
+|2|class|&nbsp;view.OutputView|&nbsp; 사용자에게 게임의 결과를 출력해주는 클래스        |
+|3|enum|&nbsp;view.ManageMessage|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
+|4|class|&nbsp;view.ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
 |5|class|&nbsp;Position|&nbsp; Player의 좌표를 나타내는 클래스|
 |6|class|&nbsp;StageResult|&nbsp; Stage의 정보를 담고 있는 클래스|
 
 <br/><br/><br/>
 
-## 1. InputView 클래스
+## 1. view.InputView 클래스
 
 사용자의 입력을 받는 클래스
 
@@ -622,7 +622,7 @@ private int getIntValue(String symbol){
 
 <br/><br/><br/><br/>
 
-## 2. OutputView
+## 2. view.OutputView
 
 Stage의 정보를 출력해주는 클래스
 
@@ -637,7 +637,7 @@ public void print(List<StageResult> results){
         stringBuilder.setLength(0);
         for(int number=0;number<results.size();number++){
             StageResult stageInfo=results.get(number);
-            stringBuilder.append(Message.STAGE_INFO).append(stageInfo.getStage()).append("\n");
+            stringBuilder.append(view.ManageMessage.STAGE_INFO).append(stageInfo.getStage()).append("\n");
             String[][]stageMap=getStringArray(results.get(number).getMap());
             for(int row=0;row<stageInfo.getMap().length;row++){
                 stringBuilder.append("\n");
@@ -646,11 +646,11 @@ public void print(List<StageResult> results){
                 }
             }
             
-        stringBuilder.append("\n").append("\n").append(Message.HORIZONTAL_LENGTH).append(stageInfo.getHorizontalCount()).append("\n")
-        .append(Message.VERTICAL_LENGTH).append(stageInfo.getVerticalCount()).append("\n")
-        .append(Message.HOLE_COUNT).append(stageInfo.getHoleCount()).append("\n")
-        .append(Message.BALL_COUNT).append(stageInfo.getBallCount()).append("\n")
-        .append(Message.PLAYER_POSITION).append(stageInfo.getPlayerPosition()).append("\n").append("\n");
+        stringBuilder.append("\n").append("\n").append(view.ManageMessage.HORIZONTAL_LENGTH).append(stageInfo.getHorizontalCount()).append("\n")
+        .append(view.ManageMessage.VERTICAL_LENGTH).append(stageInfo.getVerticalCount()).append("\n")
+        .append(view.ManageMessage.HOLE_COUNT).append(stageInfo.getHoleCount()).append("\n")
+        .append(view.ManageMessage.BALL_COUNT).append(stageInfo.getBallCount()).append("\n")
+        .append(view.ManageMessage.PLAYER_POSITION).append(stageInfo.getPlayerPosition()).append("\n").append("\n");
         }
         System.out.println(stringBuilder);
 }
@@ -660,7 +660,7 @@ public void print(List<StageResult> results){
 
 ### 2-2. String[][] getStringArray(int[][] map)
 
-Stage 정보 중 int[ ][ ]를 인자로 받아 String[ ][ ]로 변환해주는 메서드.
+model.Stage 정보 중 int[ ][ ]를 인자로 받아 String[ ][ ]로 변환해주는 메서드.
 <br/><br/>
 
 ```java
@@ -704,13 +704,13 @@ private String getStringValue(int symbol){
 
 <br/><br/><br/><br/>
 
-## 3.Message
+## 3.view.ManageMessage
 
 사용자에게 보여질 메시지를 관리하기 위한 enum 클래스.
 
 <br/><br/>
 
-## 4.ErrorMessage
+## 4.view.ErrorMessage
 
 사용자에게 보여질 오류 메시지를 관리하기 위한 enum 클래스.
 
@@ -829,22 +829,22 @@ private Position getPlayerPosition(int[][]map){
 ## 추가된 클래스
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:---|
-|1|class|&nbsp;Board     |&nbsp; 게임 캐릭터와 구멍, 공 등 각 요소들의 정보를 저장하는 클래스  |
-|2|class|&nbsp;Command   |&nbsp; 명령어(w,a,q)들과 다음 위치의 계산을 돕는 값을 가진 클래스 |
-|3|class|&nbsp;GameResult|&nbsp; 배열의 상태를 담아 반환해주는 클래스                   |
-|4|class|&nbsp;Pair      |&nbsp; (x, y) 좌표를 묶어서 관리하는 클래스                   |
-|5|class|&nbsp;Pairs     |&nbsp; Pair의 값들이 저장된 클래스                        |
+|1|class|&nbsp;model.Board     |&nbsp; 게임 캐릭터와 구멍, 공 등 각 요소들의 정보를 저장하는 클래스  |
+|2|class|&nbsp;view.Command   |&nbsp; 명령어(w,a,q)들과 다음 위치의 계산을 돕는 값을 가진 클래스 |
+|3|class|&nbsp;view.GameResult|&nbsp; 배열의 상태를 담아 반환해주는 클래스                   |
+|4|class|&nbsp;utils.Point      |&nbsp; (x, y) 좌표를 묶어서 관리하는 클래스                   |
+|5|class|&nbsp;utils.Position     |&nbsp; Pair의 값들이 저장된 클래스                        |
 
-## 1. Board 클래스
+## 1. model.Board 클래스
 
-GameMachine 내부의 2차원 배열의 값과 연관된 메서드를 가지고 있는 클래스. 게임 캐릭터와 구멍, 공 등 각 심볼들의 상태를 관리하며 사이드 이펙트를 제거하기 위해 내부 배열을 갈아 끼우는 형태로 매 번
+model.GameMachine 내부의 2차원 배열의 값과 연관된 메서드를 가지고 있는 클래스. 게임 캐릭터와 구멍, 공 등 각 심볼들의 상태를 관리하며 사이드 이펙트를 제거하기 위해 내부 배열을 갈아 끼우는 형태로 매 번
 업데이트 한다.
 
 <br/>
 
 ### 1-1. void initBoard()
 
-Board 클래스 객체가 생성될 때 String[ ][ ] 배열을 초기화시켜주는 메서드. 
+model.Board 클래스 객체가 생성될 때 String[ ][ ] 배열을 초기화시켜주는 메서드. 
 <br/><br/>
 
 ```java
@@ -894,13 +894,13 @@ protected void update(String[][]updatedBoard){
 
 <br/><br/><br/>
 
-### 1-4. Pair findPlayerPosition()
+### 1-4. utils.Point findPlayerPosition()
 
 현재 캐릭터의 위치를 찾는 메서드. 캐릭터를 기준으로 이동할 방향과 다음 칸을 보면 빠른 빠른 계산이 가능하다. String[][] 배열을 순회하며 `P` 인 칸의 좌표를 Pair로 반환한다.  
 <br/>
 
 ```java
-protected Pair findPlayerPosition(){
+protected utils.Point findPlayerPosition(){
         int x=Integer.MAX_VALUE;
         int y=Integer.MAX_VALUE;
 
@@ -912,13 +912,13 @@ protected Pair findPlayerPosition(){
                 }
             }
         }
-        return Pairs.of(x,y);
+        return utils.Position.of(x,y);
 }
 ```
 
 <br/><br/><br/>
 
-### 1-5. Pair validatePosition(int x, int y)
+### 1-5. utils.Point validatePosition(int x, int y)
 
 캐릭터가 움직일 칸을 검증하는 메서드. 이동할 칸이 범위 내에 있을 때, 해당 칸이 비었을 때 true를 반환하고 그 외에는 false를 반환한다. 이를 통해 메서드 내부에서 if문으로 매 번 검증하는 것을 고려하지
 않아도 된다.
@@ -939,9 +939,9 @@ protected boolean validatePosition(int x,int y){
 
 <br/><br/><br/>
 
-### 1-6. Pair validateRange(int x, int y)
+### 1-6. utils.Point validateRange(int x, int y)
 
-Pair(x, y) 값이 이동 가능한 범위 내에 있는지를 체크하는 메서드.
+utils.Point(x, y) 값이 이동 가능한 범위 내에 있는지를 체크하는 메서드.
 <br/>
 
 ```java
@@ -952,26 +952,26 @@ private boolean validateRange(int x,int y){
 
 <br/><br/><br/>
 
-### 1-7. Pair validateRange(int x, int y)
+### 1-7. utils.Point validateRange(int x, int y)
 
 해당 칸이 비어있는지 체크하는 메서드. 
 <br/>
 
 ```java
-private boolean validateMoveable(Pair pair){
-        return this.board[pair.getX()][pair.getY()].equals(" ");
+private boolean validateMoveable(utils.Point point){
+        return this.board[point.getX()][point.getY()].equals(" ");
 }
 ```
 
 <br/><br/><br/>
 
-## 2. Command 클래스
+## 2. view.Command 클래스
 
 사용자의 입력을 명령으로 바꿔주고, 다음에 이동할 칸의 위치를 계산할 수 있는 내부 좌표 값을 가지고 있다.
 <br/>
 
 ```java
-public enum Command {
+public enum view.Command {
 
     UP("U", "위쪽으로 한 칸 이동", List.of(1, 0)),
     DOWN("D", "아랫쪽으로 한 칸 이동", List.of(-1, 0)),
@@ -984,12 +984,12 @@ public enum Command {
 
 <br/><br/><br/>
 
-### 2-1. Command getDirection(String input)
+### 2-1. view.Command getDirection(String input)
 
 사용자의 입력 값으로 그에 맞는 명령을 찾는 메서드.
 
 ````java
-public static Command getDirection(String input){
+public static view.Command getDirection(String input){
         return Stream.of(values())
             .filter(command->command.command.toLowerCase().equals(input))
             .findAny()
@@ -1006,7 +1006,7 @@ public static Command getDirection(String input){
 ````java
 public static List<String> getCommands(){
             return Stream.of(values())
-                .map(Command::getCommand)
+                .map(view.Command::getCommand)
                 .sorted()
                 .collect(Collectors.toUnmodifiableList());
 }
@@ -1026,7 +1026,7 @@ public List<Integer> getNextPosition(){
 
 <br/><br/><br/>
 
-## 3. GameResult
+## 3. view.GameResult
 
 Board의 상태를 받아 반환해주는 클래스. 
 <br/>
@@ -1039,7 +1039,7 @@ public String[][]getBoard(){
 
 <br/><br/><br/>
 
-## 4. Pair
+## 4. utils.Point
 
 x, y를 한 쌍으로 묶어서 관리해주는 클래스. 
 <br/><br/><br/>
@@ -1061,18 +1061,18 @@ public int getY(){
 
 <br/><br/><br/>
 
-## 5. Pairs
+## 5. utils.Position
 
 pair의 값들을 저장하고 있는 클래스. 값 객체를 저장해서 필요한 값들을 꺼내 사용한다.
 <br/><br/>
 
-### static Pair of(int inputX, int inputY)
+### static utils.Point of(int inputX, int inputY)
 
 x와 y의 원시 값을 반환하는 메서드입니다.
 <br/>
 
 ```java
-public static Pair of(int inputX,int inputY){
+public static utils.Point of(int inputX,int inputY){
         return pairs.stream()
             .filter(position->position.getX()==inputX)
             .filter(position->position.getY()==inputY)
@@ -1087,20 +1087,20 @@ public static Pair of(int inputX,int inputY){
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:----:|:---|:---|
-|6|class|&nbsp;InputView|&nbsp;   사용자의 입력을 담당하는 클래스 |
-|7|class|&nbsp;OutputView|&nbsp;   사용자에게 게임의 결과를 출력해주는 클래스|
-|8|enum|&nbsp;Message|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
-|9|class|&nbsp;ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
+|6|class|&nbsp;view.InputView|&nbsp;   사용자의 입력을 담당하는 클래스 |
+|7|class|&nbsp;view.OutputView|&nbsp;   사용자에게 게임의 결과를 출력해주는 클래스|
+|8|enum|&nbsp;view.ManageMessage|&nbsp; 사용자에게 보여질 메시지를 관리하는 클래스        |
+|9|class|&nbsp;view.ErrorMessage|&nbsp; 사용자에게 보여질 에러메시지를 관리하는 클래스|
 
 <br/><br/><br/>
 
-## 6. InputView 클래스
+## 6. view.InputView 클래스
 
 사용자의 입력을 받는 클래스.
 <br/>
 
 ```java
-public enum Command {
+public enum view.Command {
 
     UP("U", "위쪽으로 한 칸 이동", List.of(1, 0)),
     DOWN("D", "아랫쪽으로 한 칸 이동", List.of(-1, 0)),
@@ -1119,7 +1119,7 @@ public enum Command {
 ```java
 public List<String> inputCommand(){
         String value;
-        System.out.print(Message.SOKOBAN);
+        System.out.print(view.ManageMessage.SOKOBAN);
         List<String> words;
         while(true){
             try{
@@ -1127,9 +1127,9 @@ public List<String> inputCommand(){
                 words=validateCommandContains(value);
                 break;
             } catch(IllegalArgumentException e){
-                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+                System.out.println(view.ErrorMessage.INVALID_INPUT_VALUE);
             } catch(Exception e){
-                System.out.println(ErrorMessage.INVALID_INPUT_VALUE);
+                System.out.println(view.ErrorMessage.INVALID_INPUT_VALUE);
             }
         }
         return words;
@@ -1150,7 +1150,7 @@ private List<String> validateCommandContains(String direction){
         String[]temp=direction.split("");
         for(int number=0;number<temp.length;number++){
             if(!commands.contains(temp[number])){
-                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT_VALUE.toString());
+                throw new IllegalArgumentException(view.ErrorMessage.INVALID_INPUT_VALUE.toString());
             }
         words.add(temp[number]);
         }
@@ -1160,7 +1160,7 @@ private List<String> validateCommandContains(String direction){
 
 <br/><br/>
 
-## 7. OutputView 클래스
+## 7. view.OutputView 클래스
 
 Stage의 정보를 출력해주는 클래스.
 <br/>
@@ -1173,7 +1173,7 @@ String[][] 배열을 인자로 받아 보드의 초기 상태를 출력해주는
 ```java
 public void initBoard(String[][]board){
         stringBuilder.setLength(0);
-        stringBuilder.append("Stage 2").append("\n").append("\n");
+        stringBuilder.append("model.Stage 2").append("\n").append("\n");
 
         for(int row=0;row<board.length;row++){
             if(row!=0){
@@ -1190,13 +1190,13 @@ public void initBoard(String[][]board){
 
 <br/><br/><br/>
 
-### 7-2. void printBoard(GameResult result)
+### 7-2. void printBoard(view.GameResult result)
 
-GameResult(Board의 상태(String[ ][ ]))를 인자로 받아서 이를 화면에 출력해주는 메서드. 
+view.GameResult(Board의 상태(String[ ][ ]))를 인자로 받아서 이를 화면에 출력해주는 메서드. 
 <br/>
 
 ```java
-public void printBoard(GameResult result){
+public void printBoard(view.GameResult result){
         stringBuilder.setLength(0);
         String[][]board=result.getBoard();
         for(int row=0;row<board.length;row++){
@@ -1253,17 +1253,17 @@ public void printBoard(GameResult result){
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:---|
-|1|class|&nbsp;Answer               |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
-|2|class|&nbsp;Disk                 |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
-|3|class|&nbsp;Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스                  |
-|4|class|&nbsp;Stage                |&nbsp; Board와 Stageinformation을 담고 있는 클래스                   |
-|5|class|&nbsp;Stages               |&nbsp; Stage들을 저장하고 있는 클래스                                 |
-|6|class|&nbsp;StageInformation     |&nbsp; 가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스               |
-|7|class|&nbsp;StageInformationList |&nbsp; StageInformation 클래스들을 저장하고 있는 클래스                 |
+|1|class|&nbsp;model.Answer               |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
+|2|class|&nbsp;model.Disk                 |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+|3|class|&nbsp;model.Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스                  |
+|4|class|&nbsp;model.Stage                |&nbsp; Board와 Stageinformation을 담고 있는 클래스                   |
+|5|class|&nbsp;model.Stages               |&nbsp; Stage들을 저장하고 있는 클래스                                 |
+|6|class|&nbsp;model.StageInformation     |&nbsp; 가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스               |
+|7|class|&nbsp;model.StageInformationList |&nbsp; model.StageInformation 클래스들을 저장하고 있는 클래스                 |
 
 <br/><br/><br/><br/><br/>
 
-## 1. Answer
+## 1. model.Answer
 
 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스. 다음 스테이지로 넘어가기 위해서는 모든 퍼즐을 맞췄는지 체크해야 하는데, 이에 관한 정보를 가지고 있다. 또한 original이라는
 원본 배열을 추가로 저장하고 있는데, 이는 명령어 R이 들어왔을 때 해당 값을 반환하기 위함이다.
@@ -1395,21 +1395,25 @@ private int changeCharacter(int value){
 
 <br/><br/><br/><br/>
 
-## 2. Disk
+## 2. model.Disk
 
 Sokoban 내부의 데이터를 저장/불러오기 위한 클래스. Init메서드를 통해 애플리케이션이 동작할 때 필요한 데이터를 모두 초기화 한다. 애플리케이션에서 데이터의 저장/초기화와 관련된 정보를 관리하는 역할을
 담당한다.
 <br/>
 
 ````java
-public class Disk {
+public class model.Disk {
 
-    private Init init = Init.of();
-    private Disk() {};
+  private model.Init init = model.Init.of();
 
-    public static Disk of() {
-        return new Disk();
-    }
+  private Disk() {
+  }
+
+  ;
+
+  public static model.Disk of() {
+    return new model.Disk();
+  }
 
 }
 
@@ -1417,27 +1421,27 @@ public class Disk {
 
 <br/>
 
-## 3. Init
+## 3. model.Init
 
 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스. 사용자는 데이터를 사용하는 것에만 집중할 수 있도록 하기 위해 애플리케이션이 실행되는 시점에 데이터를 초기화한다.
 
 <br/><br/><br/>
 
-## 4. Stage
+## 4. model.Stage
 
 Board와 Stageinformation을 담고 있는 클래스. 이전에는 Board에서 모든 정보를 관리했지만 각 Stage가 나누어져 있기 때문에 각각의 Stage는 자신에 대한 정보를 담고 있다. 따라서 가로
 크기, 세로 크기, 맵 등과 같은 자신과 연관된 정보를 가지고 있다.
 <br/>
 
-### 4-1. List<GameResult> execute(List<Command> commandList)
+### 4-1. List<view.GameResult> execute(List<view.Command> commandList)
 
 플레이 한 게임의 실행 결과를 반환하는 메서드. 리스트를 순회하며 사용자로 부터 입력받은 명령어를 실행하고 그 결과(Board의 상태)를 반환한다. 
 
 ```java
-public List<GameResult> execute(List<Command> commandList){
-        List<GameResult> results=new ArrayList<>();
-        for(Command command:commandList){
-            if(command.equals(Command.R)){
+public List<view.GameResult> execute(List<view.Command> commandList){
+        List<view.GameResult> results=new ArrayList<>();
+        for(view.Command command:commandList){
+            if(command.equals(view.Command.R)){
                 return List.of(resetStage());
             }
             results.add(this.board.push(command));
@@ -1448,58 +1452,62 @@ public List<GameResult> execute(List<Command> commandList){
 
 <br/>
 
-### 4-2. GameResult resetStage()
+### 4-2. view.GameResult resetStage()
 
-리셋 명령어를 처리하기 위한 메서드. Answer 내에 있는 original 배열을 가져와 이를 반환한다. 
+리셋 명령어를 처리하기 위한 메서드. model.Answer 내에 있는 original 배열을 가져와 이를 반환한다. 
 
 ```java
-public GameResult resetStage(){
+public view.GameResult resetStage(){
         this.board.reset();
-        return new GameResult(this.board.getBoard());
+        return new view.GameResult(this.board.getBoard());
 }
 ```
 
 <br/><br/><br/>
 
-## 5. Stages
+## 5. model.Stages
 
-Stage들을 저장하고 있는 클래스. Stage 클래스는 매 번 새로 생성될 필요가 없기 때문에 애플리케이션이 시작되는 시점에 한 번만 초기화를 한다.
+Stage들을 저장하고 있는 클래스. model.Stage 클래스는 매 번 새로 생성될 필요가 없기 때문에 애플리케이션이 시작되는 시점에 한 번만 초기화를 한다.
 
 ```java
+import model.Board;import model.Stage;
+import model.StageInformation;
+
 public class Stages {
 
-    private static final Map<Integer, Stage> stages = new HashMap<>();
+  private static final Map<Integer, Stage> stages = new HashMap<>();
 
-    private Stages() {}
+  private Stages() {
+  }
 
-    public static void putStage(int id, StageInformation information, Board board) {
-        stages.put(id, new Stage(board, information));
-    }
+  public static void putStage(int id, StageInformation information, Board board) {
+    stages.put(id, new Stage(board, information));
+  }
 
-    public static Stages of() {
-        return new Stages();
-    }
+  public static model.Stages of() {
+    return new model.Stages();
+  }
 
-    public Stage getStage(int value) {
-        return stages.get(value);
-    }
+  public Stage getStage(int value) {
+    return stages.get(value);
+  }
 }
 ```
 
 <br/><br/><br/>
 
-## 6. StageInformation
+## 6. model.StageInformation
 
 가로, 세로크기, id와 같은 Stage의 기본 정보를 담고 있는 클래스. 값 객체를 사용해 상태를 표현하기 위해 한 단계 포장(Wrapping) 했다. 
 
 ```java
-public class StageInformation {
+public class model.StageInformation {
 
     private final int id;
     private final int height;
     private final int width;
 
-    public StageInformation(int id, int height, int width) {
+    public model.StageInformation(int id, int height, int width) {
         this.id = id;
         this.height = height;
         this.width = width;
@@ -1509,28 +1517,31 @@ public class StageInformation {
 
 <br/><br/><br/>
 
-## 7. StageInformationList
+## 7. model.StageInformationList
 
-StageInformation 클래스들을 저장하고 있는 클래스. 내부에 새로운 객체를 담아서 저장하는데, 이는 클래스가 생성될 때마다 초기화될 필요가 없으며, 스테이지 수가 많지 않기 때문에 이를 직접 생성해서
+model.StageInformation 클래스들을 저장하고 있는 클래스. 내부에 새로운 객체를 담아서 저장하는데, 이는 클래스가 생성될 때마다 초기화될 필요가 없으며, 스테이지 수가 많지 않기 때문에 이를 직접 생성해서
 관리해도 나쁘지 않다고 판단했기 때문이다.
 
 ```java
+import model.StageInformation;
+
 public class StageInformationList {
 
-    private static List<StageInformation> stages;
+  private static List<StageInformation> stages;
 
-    private StageInformationList() {}
+  private StageInformationList() {
+  }
 
-    static StageInformationList of() {
-        List<StageInformation> lst = List.of(
-                new StageInformation(1, 6, 6),
-                new StageInformation(2, 5, 6),
-                new StageInformation(3, 6, 6),
-                new StageInformation(4, 6, 7)
-        );
-        stages = lst;
-        return new StageInformationList();
-    }
+  static model.StageInformationList of() {
+    List<StageInformation> lst = List.of(
+            new StageInformation(1, 6, 6),
+            new StageInformation(2, 5, 6),
+            new StageInformation(3, 6, 6),
+            new StageInformation(4, 6, 7)
+    );
+    stages = lst;
+    return new model.StageInformationList();
+  }
     ......
 
 ```
@@ -1541,37 +1552,37 @@ public class StageInformationList {
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:---|
-|8|class|&nbsp;Board                |&nbsp; 각 Stage의 배열의 상태를 관리하며 정답 클래스를 알고 있다            |
-|9|class|&nbsp;GameMachine          |&nbsp; Sokoban게임의 중심에서 모든 정보를 관리하며 이를 조합해주는 클래스     |
-|10|class|&nbsp;GameManager          |&nbsp; 게임에 관련된 부가 정보를 처리하는 클래스                         |
+|8|class|&nbsp;model.Board                |&nbsp; 각 Stage의 배열의 상태를 관리하며 정답 클래스를 알고 있다            |
+|9|class|&nbsp;model.GameMachine          |&nbsp; Sokoban게임의 중심에서 모든 정보를 관리하며 이를 조합해주는 클래스     |
+|10|class|&nbsp;model.GameManager          |&nbsp; 게임에 관련된 부가 정보를 처리하는 클래스                         |
 
 <br/><br/><br/><br/><br/>
 
-## 8. Board
+## 8. model.Board
 
 각 Stage의 배열의 상태를 관리하며 정답 클래스로 Stage의 상태와 관련된 역할과 책임을 가진다. 따라서 배열의 이동, 상태 변화 등과 같은 모든 
 
-### 8-1. GameResult push(Command command)
+### 8-1. view.GameResult push(view.Command command)
 
 배열을 변환하는 메서드. 현재 캐릭터의 위치를 기준으로 미는 방향의 한 칸, 두 칸 앞을 체크해서 배열을 변환할 지 결정한다. 모든 배열은 사이드 이펙트를 제거하기 위해 방어적 복사를 통해 값을 반환한다.
 <br/><br/>
 
 ```java
-GameResult push(Command command){
-        GameResult gameResult=new GameResult();
-        Pair pair=findPlayerPosition();
+view.GameResult push(view.Command command){
+        view.GameResult gameResult=new view.GameResult();
+        utils.Point point=findPlayerPosition();
 
-        int moveBlockX=pair.getX()+command.getNextPosition().get(0);
-        int moveBlockY=pair.getY()+command.getNextPosition().get(1);
+        int moveBlockX=point.getX()+command.getNextPosition().get(0);
+        int moveBlockY=point.getY()+command.getNextPosition().get(1);
         int[][]newBoard=copyBoard();
 
-        if(moveable(Pairs.of(moveBlockX,moveBlockY))){
-            int[][]updatedBoard=move(pair,newBoard,Pairs.of(moveBlockX,moveBlockY));
+        if(moveable(utils.Position.of(moveBlockX,moveBlockY))){
+            int[][]updatedBoard=move(point,newBoard,utils.Position.of(moveBlockX,moveBlockY));
             update(updatedBoard);
             gameResult.addBoard(this.getBoard());
         }else if(
-            pushable(Pairs.of(moveBlockX,moveBlockY),command)){
-            int[][]updatedBoard=pushBall(pair,newBoard,Pairs.of(moveBlockX,moveBlockY),command);
+            pushable(utils.Position.of(moveBlockX,moveBlockY),command)){
+            int[][]updatedBoard=pushBall(point,newBoard,utils.Position.of(moveBlockX,moveBlockY),command);
             update(updatedBoard);
             gameResult.addBoard(this.getBoard());
         }
@@ -1582,19 +1593,19 @@ GameResult push(Command command){
 
 <br/><br/><br/>
 
-### 8-2. GameResult push(Command command)
+### 8-2. view.GameResult push(view.Command command)
 
 push를 두 가지로 나눈 메서드로 캐릭터가 이동 가능할 때는 move를, move를 할 수 없지만 다음 칸에서 공을 밀 수 있을 때는 pushBall 메서드를 실행한다. 
 <br/><br/>
 
 ```java
-private int[][]move(Pair position,int[][]board,Pair nextPosition){
+private int[][]move(utils.Point position,int[][]board,utils.Point nextPosition){
         board[position.getX()][position.getY()]-=4;
         board[nextPosition.getX()][nextPosition.getY()]+=4;
         return board;
 }
 
-private int[][]pushBall(Pair position,int[][]board,Pair nextPosition,Command command){
+private int[][]pushBall(utils.Point position,int[][]board,utils.Point nextPosition,view.Command command){
         board[position.getX()][position.getY()]-=4;
         board[nextPosition.getX()][nextPosition.getY()]+=4;
         board[nextPosition.getX()][nextPosition.getY()]-=2;
@@ -1615,8 +1626,8 @@ private boolean isBall(int x,int y){
         return this.board[x][y]==2;
 }
 
-private boolean moveable(Pair pair){
-        return this.board[pair.getX()][pair.getY()]==0||this.board[pair.getX()][pair.getY()]==1;
+private boolean moveable(utils.Point point){
+        return this.board[point.getX()][point.getY()]==0||this.board[point.getX()][point.getY()]==1;
 }
 
 private boolean isBlank(int x,int y){
@@ -1638,17 +1649,17 @@ private boolean isPlayer(int x,int y){
 
 <br/><br/><br/>
 
-### 8-4. Pair findPlayerPosition()
+### 8-4. utils.Point findPlayerPosition()
 
 캐릭터의 위치를 찾기 위한 메서드. `*객체지향 체조원칙을 지키기 위해 수정하고 싶지만 아직 마땅히 대안이 떠오르지 않는다.` 
 <br/><br/>
 
 ```java
-protected Pair findPlayerPosition(){
+protected utils.Point findPlayerPosition(){
         for(int row=0;row< this.board.length;row++){
             for(int col=0;col< this.board[0].length;col++){
                 if(isPlayer(row,col)){
-                    return Pairs.of(row,col);
+                    return utils.Position.of(row,col);
                 }
             }
         }
@@ -1660,7 +1671,7 @@ protected Pair findPlayerPosition(){
 
 ### 8-5. boolean isAnswer();
 
-정답을 찾아서 비교하기 위한 메서드. Answer 클래스 내부의 answer 값(int[][])과 비교를 통해 정답을 체크한다.  
+정답을 찾아서 비교하기 위한 메서드. model.Answer 클래스 내부의 answer 값(int[][])과 비교를 통해 정답을 체크한다.  
 <br/><br/>
 
 ```java
@@ -1684,7 +1695,7 @@ public void reset(){
 ```
 <br/><br/><br/>
 
-## 9. GameManager
+## 9. model.GameManager
 
 사용자의 입력을 명령으로 변환해주고 게임의 횟수, 메시지/게임에 대한 정보 전달의 역할을 담당한다. 게임 안내 문구, 턴 수 체크/증가 등과 같은 게임 외적 요소들을 담당하며 플레이어의 원활한 게임 진행을 돕는
 역할을 맡고 있다.
@@ -1698,37 +1709,37 @@ public void reset(){
 
 ```java
 public void sayHello(){
-        System.out.println(Message.GREET);
+        System.out.println(view.ManageMessage.GREET);
 }
 
 public void sayGoodBye(){
-        System.out.println(Message.CLEAR_CELEBRATION);
-        System.out.println(Message.CELEBRATION);
+        System.out.println(view.ManageMessage.CLEAR_CELEBRATION);
+        System.out.println(view.ManageMessage.CELEBRATION);
 }
 
 public void sayTurnCount(int value){
-        System.out.println(Message.TURN_COUNT+""+value);
+        System.out.println(view.ManageMessage.TURN_COUNT+""+value);
 }
 
 public void sayTurnReset(){
-        System.out.println(Message.TURN_RESET);
+        System.out.println(view.ManageMessage.TURN_RESET);
 }
 ```
 
 <br/><br/><br/>
 
-### 9-2. List<GameResult> play(int stageNumber,List<Command> commands)
+### 9-2. List<view.GameResult> play(int stageNumber,List<view.Command> commands)
 
 <br/><br/>
 stageNumber을 통해 해당 스테이지를 찾고 명령을 전달한다.
 
 ```java
-public List<Command> getCommand(List<String> direction){
-        List<Command> commands=new ArrayList<>();
+public List<view.Command> getCommand(List<String> direction){
+        List<view.Command> commands=new ArrayList<>();
         for(int i=0;i<direction.size();i++){
-            Command command=getCommands(direction.get(i));
-                if(command.equals(Command.R)){
-                    return List.of(Command.R);
+            view.Command command=getCommands(direction.get(i));
+                if(command.equals(view.Command.R)){
+                    return List.of(view.Command.R);
                 }
                 validateQuit(command);
                 commands.add(command);
@@ -1796,12 +1807,12 @@ public int turnInit(){
 ## 추가/변경된 주요 클래스
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:-------------------:|:------|:---|
-|1|class|&nbsp;Init           |&nbsp; 데이터의 초기화를 담당하는 클래스                           |
-|2|class|&nbsp;StageData      |&nbsp; 명령어를 통해 불러올 수 있는 스테이지의 목록을 보여주기 위한 클래스  |
-|3|class|&nbsp;AES256Cipher   |&nbsp; 암호화/복호화를 위한 클래스                               |
-|4|class|&nbsp;Slot            |&nbsp; 캐릭터의 스테이지 상태를 저장한 클래스                       |
+|1|class|&nbsp;model.Init           |&nbsp; 데이터의 초기화를 담당하는 클래스                           |
+|2|class|&nbsp;model.StageData      |&nbsp; 명령어를 통해 불러올 수 있는 스테이지의 목록을 보여주기 위한 클래스  |
+|3|class|&nbsp;model.AES256Cipher   |&nbsp; 암호화/복호화를 위한 클래스                               |
+|4|class|&nbsp;model.Slot            |&nbsp; 캐릭터의 스테이지 상태를 저장한 클래스                       |
 
-## 1. Init 클래스
+## 1. model.Init 클래스
 
 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스. 사용자는 데이터를 사용하는 것에만 집중할 수 있도록 하기 위해 애플리케이션이 실행되는 시점에 데이터를 초기화한다.
 
@@ -1868,7 +1879,7 @@ private String[] splitByComma(String word) {
 
 
 ## 1-4. String[] joiningTextFileWord()
-텍스트 파일을 읽어들인 후 Stage("=======)를 기준으로 문자 배열을 만드는 메서드. 이를 통해 Stage를 구분한다.
+텍스트 파일을 읽어들인 후 model.Stage("=======)를 기준으로 문자 배열을 만드는 메서드. 이를 통해 Stage를 구분한다.
 
 
 ```java
@@ -1893,17 +1904,17 @@ String[] joiningTextFileWord() {
 <br/><br/><br/>
 
 
-## 2. StageData 클래스
+## 2. model.StageData 클래스
 현재 슬롯의 상태를 보여주기 위한 클래스. 가변 객체로 설정한 이유는 불변 클래스와의 비교를 통해 슬롯의 부족한 부분을 화면에 보여주기 위해서다. *맵을 4단계 까지밖에 구현하지 않아 5 이상은 보이지 않는다. 
 
 <br/><br/>
 ```java
-public class StageData {
+public class model.StageData {
 
     private int stageId;
     private String name;
 
-    public StageData(int stageId, String name) {
+    public model.StageData(int stageId, String name) {
         this.stageId = stageId;
         this.name = name;
     }
@@ -1933,23 +1944,23 @@ public class StageData {
 
 
 
-## 3. AES256Cipher 클래스
+## 3. model.AES256Cipher 클래스
 
 암호화/복호화를 위한 클래스. 
 
 <br/>
 
-### 3-1. static AES256Cipher getInstance()
+### 3-1. static model.AES256Cipher getInstance()
 
 싱글턴으로 객체를 생성하기 위한 스태틱 메서드. 
 <br/><br/>
 
 ```java
-public static AES256Cipher getInstance() {
+public static model.AES256Cipher getInstance() {
         if(INSTANCE==null){
-            synchronized (AES256Cipher.class){
+            synchronized (model.AES256Cipher.class){
                 if(INSTANCE==null)
-                    INSTANCE=new AES256Cipher();
+                    INSTANCE=new model.AES256Cipher();
                 }
             }
         return INSTANCE;
@@ -2024,18 +2035,18 @@ public static String AES_Decode(String str) {
 ```
 <br/><br/><br/>
 
-## 4. Slot 클래스
-Slot 클래스가 생성될 때 내부 데이터를 초기화 한다. 아래는 불변 클래스로 해당 배열과의 비교를 통해 빈 슬롯인지, 아닌지를 출력한다.
+## 4. model.Slot 클래스
+model.Slot 클래스가 생성될 때 내부 데이터를 초기화 한다. 아래는 불변 클래스로 해당 배열과의 비교를 통해 빈 슬롯인지, 아닌지를 출력한다.
 <br/>
 
 ```java
-private Slot() {
+private model.Slot() {
         for (int i = 1; i < 5; i++) {
-            saveData.add(new StageData(i, "Empty"));
+            saveData.add(new model.StageData(i, "Empty"));
         }
-        List<StageData> temp = new ArrayList<>();
+        List<model.StageData> temp = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            temp.add(new StageData(i, "Stage"+i));
+            temp.add(new model.StageData(i, "model.Stage"+i));
         }
         this.checkData = Collections.unmodifiableList(temp);
 }
@@ -2070,12 +2081,12 @@ public void saveData(int stageNumber, String[][] array) {
 ```
 <br/><br/><br/>
 
-### 4-2. List<StageData> getSlotData()
+### 4-2. List<model.StageData> getSlotData()
 빈 슬롯이 아닌 데이터의 이름을 변환하는 메서드. 이를 통해 사용자에게 슬롯의 상태를 출력해줄 수 있다. 
 <br/>
 
 ```java
-List<StageData> getSlotData() {
+List<model.StageData> getSlotData() {
         for (int i = 0; i < this.saveData.size(); i++) {
             if (loadStageData(i+1 ).length > minNumber) {
                 saveData.get(i).editName(checkData.get(i).getName());
@@ -2163,28 +2174,31 @@ private int[][] changeStringArrayToIntArrayOriginal(String[][] array) {
 `아래 내용을 문자열로 넘겨서` 처리하는 함수를 작성한다.
 
 ```java
-String word="Stage 1\n"+"#####\n"+"#OoP#\n"+"#####\n"+"=====\n"+"Stage 2\n"+"  #######  \n"+"###  O  ###\n"+"#    o    #\n"+"# Oo P oO #\n"+"###  o  ###\n"+" #   O  #  \n"+" ########  ";
+String word="model.Stage 1\n"+"#####\n"+"#OoP#\n"+"#####\n"+"=====\n"+"model.Stage 2\n"+"  #######  \n"+"###  O  ###\n"+"#    o    #\n"+"# Oo P oO #\n"+"###  o  ###\n"+" #   O  #  \n"+" ########  ";
 ```
 
 ```java
+import view.InputView;
+import view.OutputView;
+
 public class Main {
-    private static final InputView inputView = new InputView();
-    private static final OutputView outputView = new OutputView();
+  private static final InputView inputView = new InputView();
+  private static final OutputView outputView = new OutputView();
 
-    public static void main(String[] args) throws Exception {
-        String word = "Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
-        String[] words = word.split("\n");
-        List<String> lst = new ArrayList<>();
+  public static void main(String[] args) throws Exception {
+    String word = "model.Stage 1\n" + "#####\n" + "#OoP#\n" + "#####\n" + "=====\n" + "model.Stage 2\n" + "  #######  \n" + "###  O  ###\n" + "#    o    #\n" + "# Oo P oO #\n" + "###  o  ###\n" + " #   O  #  \n" + " ########  ";
+    String[] words = word.split("\n");
+    List<String> lst = new ArrayList<>();
 
-        for (int i = 0; i < words.length; i++) {
-            lst.add(words[i]);
-        }
-
-        InputView view = new InputView();
-        List<StageResult> results = view.inputMap(word);
-        OutputView outputView = new OutputView();
-        outputView.print(results);
+    for (int i = 0; i < words.length; i++) {
+      lst.add(words[i]);
     }
+
+    InputView view = new InputView();
+    List<StageResult> results = view.inputMap(word);
+    OutputView outputView = new OutputView();
+    outputView.print(results);
+  }
 }
 ```
 
@@ -2193,7 +2207,7 @@ public class Main {
 ## 🖥 출력
 
 ```text
-Stage: 1
+model.Stage: 1
 
 #####
 #OoP#
@@ -2205,7 +2219,7 @@ Stage: 1
 공의 수: 1
 플레이어 위치: (2, 4)
 
-Stage: 2
+model.Stage: 2
 
   #######  
 ###  O  ###
@@ -2242,23 +2256,30 @@ Stage: 2
 ```
 
 ```java
+import model.GameMachine;
+import model.GameManager;
+import view.Command;
+import view.GameResult;
+import view.InputView;
+import view.OutputView;
+
 public class Main {
 
-    private static final InputView inputView = new InputView();
-    private static final OutputView outputView = new OutputView();
+  private static final InputView inputView = new InputView();
+  private static final OutputView outputView = new OutputView();
 
-    public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws Exception {
 
-        GameMachine gameMachine = new GameMachine();
-        outputView.printInitStage(gameMachine.getBoard().getBoard());
-        GameManager manager = new GameManager();
+    GameMachine gameMachine = new GameMachine();
+    outputView.printInitStage(gameMachine.getBoard().getBoard());
+    GameManager manager = new GameManager();
 
-        while (true) {
-            List<String> inputValues = inputView.inputCommand();
-            List<Command> commands = manager.getCommand(inputValues);
-            GameResult result = gameMachine.move(commands);
-        }
+    while (true) {
+      List<String> inputValues = inputView.inputCommand();
+      List<Command> commands = manager.getCommand(inputValues);
+      GameResult result = gameMachine.move(commands);
     }
+  }
 }
 ```
 
@@ -2267,7 +2288,7 @@ public class Main {
 ## 🖥 동작 예시
 
 ```text
-Stage 2
+model.Stage 2
 
   #######  
 ###  O  ###
@@ -2346,7 +2367,7 @@ SOKOBAN> aass
 ###  
 
 
-Stage 1클리어!
+model.Stage 1클리어!
 
 턴수:3
 저장된 스테이지의 데이터를 불러오시겠습니까? (y/n) 
@@ -2415,5 +2436,3 @@ Bye~
 시험을 치면서 설계의 중요성을 다시 한 번 느꼈습니다. 설계가 좋지 않으니 뒤로 갈수록 하나를 고치면 다른 버그가 발생했기 때문입니다. 가장 큰 원인은 Main클래스 한 곳에서 클래스들의 로직이 이어지니 많은 분기문이 생기게 된 것이며, 이 분기문을
 위한 분기문이 또 생기게 된 것이 두 번째 큰 이유인것 같습니다. 실력 부족의 관계로 당장의 급급한 부분을 메우다 보니 많이 아쉽습니다. 그래도 짧은 시간동안 과제 전형을 경험하며 Gist, 복호화/암호화, 파일 읽어들이고 쓰기 등과 같은 평소
 잘 사용하지 않았던 부분을 공부할 수 있어 꽤 즐거웠습니다.   😃
-
-

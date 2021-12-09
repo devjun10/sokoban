@@ -1,3 +1,5 @@
+package view;
+
 public class OutputView {
 
     private final StringBuilder stringBuilder = new StringBuilder();

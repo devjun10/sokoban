@@ -1,3 +1,5 @@
+package view;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -11,12 +13,10 @@ public class InputView {
     private List<String> commands;
     private List<String> choices;
 
-    InputView() {
+    public InputView() {
         commands = Command.getCommands();
         choices = Choice.getChoices();
-    }
-
-    ;
+    };
 
     private class Input {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -98,7 +98,7 @@ public class InputView {
 
     public List<String> inputCommand() {
         String value;
-        System.out.print(Message.SOKOBAN);
+        System.out.print(ManageMessage.SOKOBAN);
         List<String> words;
         while (true) {
             try {

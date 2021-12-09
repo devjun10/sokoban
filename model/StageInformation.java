@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 
 public class StageInformation {
@@ -39,7 +41,7 @@ public class StageInformation {
 
     @Override
     public String toString() {
-        return "StageInformation=[" +
+        return "model.StageInformation=[" +
                 "id=" + id +
                 ", height=" + height +
                 ", width=" + width +

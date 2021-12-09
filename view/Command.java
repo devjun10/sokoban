@@ -1,3 +1,5 @@
+package view;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -8,7 +10,9 @@ public enum Command {
     DOWN("s", "S: 아랫쪽으로 이동합니다.", List.of(1, 0)),
     RIGHT("d", "D: 오른쪽으로 이동합니다.", List.of(0, 1)),
     LEFT("a", "A: 왼쪽으로 이동합니다.", List.of(0, -1)),
+
     INVALID_COMMAND(String.valueOf(Long.MAX_VALUE), "(경고!) 해당 명령을 수행할 수 없습니다!", List.of()),
+
     R("r", "R: 스테이지를 초기화합니다. ", List.of()),
     C("c", "S: 현재 진행상황을 저장합니다.", List.of()),
     L("l", "L: 세이브에서 진행상황을 불러옵니다", List.of()),
@@ -22,10 +26,6 @@ public enum Command {
         this.command = command;
         this.description = description;
         this.nextPosition = nextPosition;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public static Command getCommands(String input) {

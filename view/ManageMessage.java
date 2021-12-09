@@ -1,9 +1,11 @@
-public enum Message {
+package view;
+
+public enum ManageMessage {
 
     ASK_LOAD_STAGE_DATA("저장된 스테이지의 데이터를 불러오시겠습니까? (y/n) \n"),
     ASK_STAGE_NUMBER("몇 번째 스테이지의 데이터를 불러오시겠습니까? 데이터를 불러오는 작업을 하기 위해서는 추가 명령의 수행이 제한됩니다."),
     BYE("Bye~ "),
-    STAGE_INFO("Stage "),
+    STAGE_INFO("model.Stage "),
     BLANK("\n"),
     LINE("========================================================="),
     CELEBRATION("축하드립니다!"),
@@ -20,7 +22,7 @@ public enum Message {
 
     private final String message;
 
-    Message(String message) {
+    ManageMessage(String message) {
         this.message = message;
     }
 
