@@ -18,14 +18,6 @@ public class StageInformation {
         return id;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

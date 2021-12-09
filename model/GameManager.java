@@ -1,7 +1,7 @@
 package model;
 
 import view.Command;
-import view.ManageMessage;
+import view.SystemMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,32 +9,32 @@ import java.util.List;
 public class GameManager {
 
     public void sayHello() {
-        System.out.println(ManageMessage.GREET);
+        System.out.println(SystemMessage.GREET);
     }
 
     public void sayGoodBye() {
-        System.out.println(ManageMessage.CLEAR_CELEBRATION);
-        System.out.println(ManageMessage.CELEBRATION);
+        System.out.println(SystemMessage.CLEAR_CELEBRATION);
+        System.out.println(SystemMessage.CELEBRATION);
     }
 
     public void sayTurnOff() {
-        System.out.println(ManageMessage.BYE);
+        System.out.println(SystemMessage.BYE);
     }
 
     public void sayTurnCount(int value) {
-        System.out.println(ManageMessage.TURN_COUNT + "" + value);
+        System.out.println(SystemMessage.TURN_COUNT + "" + value);
     }
 
     public void sayTurnClear(int value) {
-        System.out.println(ManageMessage.BLANK + "" + ManageMessage.STAGE_INFO + "" + value + "" + ManageMessage.CLEAR + ManageMessage.BLANK);
+        System.out.println(SystemMessage.BLANK + "" + SystemMessage.STAGE_INFO + "" + value + "" + SystemMessage.CLEAR + SystemMessage.BLANK);
     }
 
     public void sayTurnReset() {
-        System.out.println(ManageMessage.TURN_RESET);
+        System.out.println(SystemMessage.TURN_RESET);
     }
 
     public void saySaveComplete() {
-        System.out.println(ManageMessage.SAVE);
+        System.out.println(SystemMessage.SAVE);
     }
 
     public List<Command> getCommand(List<String> direction) {
@@ -63,10 +63,10 @@ public class GameManager {
     }
 
     public void saySaveList() {
-        System.out.println(ManageMessage.ASK_STAGE_NUMBER);
+        System.out.println(SystemMessage.ASK_STAGE_NUMBER);
     }
 
     public void sayNoMap() {
-        System.out.println(ManageMessage.SAY_NO_MAP);
+        System.out.println(SystemMessage.SAY_NO_MAP);
     }
 }

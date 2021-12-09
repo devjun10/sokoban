@@ -1,6 +1,6 @@
 package model;
 
-import static utils.BoardUtils.copyIntArray;
+import static utils.BoardUtils.copyIntArrayOriginal;
 
 public class Answer {
 
@@ -10,20 +10,20 @@ public class Answer {
 
     public Answer(int[][] array) {
         this.original = array;
-        this.answer = calculateAnswer(array);
+        this.answer = changeSymbol(array);
     }
 
-    private int[][] calculateAnswer(int[][] array) {
+    private int[][] changeSymbol(int[][] array) {
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
-                temp[row][col] = changeNumber(array[row][col]);
+                temp[row][col] = changeIntSymbol(array[row][col]);
             }
         }
         return temp;
     }
 
-    private int changeNumber(int value) {
+    private int changeIntSymbol(int value) {
         if (value == 1) return 3;
         if (value == 2) return 0;
         if (value == 4) return 0;
@@ -31,7 +31,7 @@ public class Answer {
     }
 
     public boolean isAnswer(int[][] array) {
-        int[][] map = deleteCharacter(array);
+        int[][] map = deleteOnlyCharacter(array);
         int[][] answer = this.answer;
         for (int row = 0; row < answer.length; row++) {
             if(checkColumn(row, map[row])){
@@ -50,21 +50,21 @@ public class Answer {
         return false;
     }
 
-    public int[][] getOriginal() {
-        return copyIntArray(original);
+    public int[][] getOriginalBoard() {
+        return copyIntArrayOriginal(original);
     }
 
-    private int[][] deleteCharacter(int[][] array) {
+    private int[][] deleteOnlyCharacter(int[][] array) {
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
-                temp[row][col] = changeCharacter(array[row][col]);
+                temp[row][col] = changeCharacterIntSymbol(array[row][col]);
             }
         }
         return temp;
     }
 
-    private int changeCharacter(int value) {
+    private int changeCharacterIntSymbol(int value) {
         if (value == 4) {
             return 0;
         }

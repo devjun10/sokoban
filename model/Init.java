@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.BoardUtils.changeStringArrayToIntegerArray;
+import static utils.BoardUtils.changeStringArrayToIntArrayOriginal;
 import static utils.Parser.splitByComma;
 import static utils.Parser.splitByStage;
 
@@ -15,11 +15,11 @@ public class Init {
 
     private static final String mapFile = "map/map_enc.txt";
     private static final StringBuilder stringBuilder = new StringBuilder();
-    private static final StageInformationList STAGE_INFORMATION_LIST = StageInformationList.of();
+    private static final StageInformationList stageInformationList = StageInformationList.of();
     private AES256Cipher aes256Cipher = model.AES256Cipher.getInstance();
 
     {
-        List<StageInformation> information = STAGE_INFORMATION_LIST.getStageInformation();
+        List<StageInformation> information = stageInformationList.getStageInformation();
         List<String[][]> maps = null;
         try {
             maps = getMaps();
@@ -28,13 +28,16 @@ public class Init {
         }
 
         for (int i = 0; i < 4; i++) {
-            Board board = new Board(changeStringArrayToIntegerArray(maps.get(i)));
+            Board board = new Board(changeStringArrayToIntArrayOriginal(maps.get(i)));
             StageInformation info = information.get(i);
             Stages.putStage(i + 1, info, board);
         }
     }
 
-    private Init() {};
+    private Init() {
+    }
+
+    ;
 
     static Init of() {
         return new Init();

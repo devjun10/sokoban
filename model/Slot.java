@@ -77,7 +77,7 @@ public class Slot {
         return true;
     }
 
-    public int[][] loadSaveData(int stageNumber) {
+    int[][] loadSaveData(int stageNumber) {
         return changeStringArrayToIntArrayOriginal(loadStageData(stageNumber));
     }
 

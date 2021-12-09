@@ -949,20 +949,20 @@ public void reset(){
 
 ```java
 public void sayHello(){
-        System.out.println(view.ManageMessage.GREET);
+        System.out.println(view.SystemMessage.GREET);
 }
 
 public void sayGoodBye(){
-        System.out.println(view.ManageMessage.CLEAR_CELEBRATION);
-        System.out.println(view.ManageMessage.CELEBRATION);
+        System.out.println(view.SystemMessage.CLEAR_CELEBRATION);
+        System.out.println(view.SystemMessage.CELEBRATION);
 }
 
 public void sayTurnCount(int value){
-        System.out.println(view.ManageMessage.TURN_COUNT+""+value);
+        System.out.println(view.SystemMessage.TURN_COUNT+""+value);
 }
 
 public void sayTurnReset(){
-        System.out.println(view.ManageMessage.TURN_RESET);
+        System.out.println(view.SystemMessage.TURN_RESET);
 }
 ```
 

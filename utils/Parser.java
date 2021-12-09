@@ -1,6 +1,7 @@
 package utils;
 
 public class Parser {
+
     public static String[] splitByComma(String word) {
         return word.split(",");
     }

@@ -5,8 +5,7 @@ import utils.Position;
 import view.Command;
 import view.GameResult;
 
-import static utils.BoardUtils.changeStringArrayToIntArrayUsingSymbol;
-import static utils.Parser.changeIntSymbol;
+import static utils.BoardUtils.*;
 
 public class Board {
 
@@ -27,16 +26,16 @@ public class Board {
 
         int moveBlockX = point.getX() + command.getNextPosition().get(0);
         int moveBlockY = point.getY() + command.getNextPosition().get(1);
-        int[][] newBoard = copyBoard();
+        int[][] newBoard = copyIntArrayOriginal(this.board);
 
         if (moveable(Position.of(moveBlockX, moveBlockY))) {
             int[][] updatedBoard = move(point, newBoard, Position.of(moveBlockX, moveBlockY));
             update(updatedBoard);
-            gameResult.addBoard(this.getBoard());
+            gameResult.addBoard(this.getStringBoard());
         } else if (pushable(Position.of(moveBlockX, moveBlockY), command)) {
             int[][] updatedBoard = pushBall(point, newBoard, Position.of(moveBlockX, moveBlockY), command);
             update(updatedBoard);
-            gameResult.addBoard(this.getBoard());
+            gameResult.addBoard(this.getStringBoard());
         }
         checkGameResult(gameResult);
         return gameResult;
@@ -58,7 +57,7 @@ public class Board {
 
     private void checkGameResult(GameResult result) {
         if (result.getBoard() == null) {
-            result.addBoard(getBoard());
+            result.addBoard(getStringBoard());
         }
     }
 
@@ -96,22 +95,12 @@ public class Board {
         return this.board[point.getX()][point.getY()] == 4 || this.board[point.getX()][point.getY()] == 5;
     }
 
-    String[][] getBoard() {
-        String[][] copyBoard = new String[this.board.length][this.board[0].length];
-        for (int row = 0; row < this.board.length; row++) {
-            for (int col = 0; col < this.board[0].length; col++) {
-                copyBoard[row][col] = changeIntSymbol(this.board[row][col]);
-            }
-        }
-        return copyBoard;
+    String[][] getStringBoard() {
+        return changeIntArrayToStringArrayUsingSymbol(this.board);
     }
 
-    int[][] copyBoard() {
-        int[][] copyBoard = new int[this.board.length][this.board[0].length];
-        for (int row = 0; row < this.board.length; row++) {
-            copyBoard[row] = this.board[row].clone();
-        }
-        return copyBoard;
+    int[][] getIntBoard() {
+        return copyIntArrayOriginal(this.board);
     }
 
     protected void update(int[][] updatedBoard) {
@@ -119,7 +108,7 @@ public class Board {
         this.board = updatedBoard;
     }
 
-    protected Point findPlayerPosition() {
+    private Point findPlayerPosition() {
         for (int row = 0; row < this.board.length; row++) {
             for (int col = 0; col < this.board[0].length; col++) {
                 if (isPlayer(Position.of(row, col))) {
@@ -138,8 +127,8 @@ public class Board {
         return answer.isAnswer(changeStringArrayToIntArrayUsingSymbol(arry));
     }
 
-    protected void reset() {
-        int[][] reset = this.answer.getOriginal();
+    void reset() {
+        int[][] reset = this.answer.getOriginalBoard();
         update(reset);
     }
 }

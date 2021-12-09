@@ -15,11 +15,11 @@ public class Stage {
     Stage(Board board, StageInformation stageInformation) {
         this.board = board;
         this.stageInformation = stageInformation;
-        saveData.init(board.copyBoard());
+        saveData.init(board.getIntBoard());
     }
 
     public String[][] getBoard() {
-        return board.getBoard();
+        return board.getStringBoard();
     }
 
     List<GameResult> execute(List<Command> commandList) {
@@ -56,7 +56,7 @@ public class Stage {
 
     public GameResult resetStage() {
         this.board.reset();
-        return new GameResult(this.board.getBoard());
+        return new GameResult(this.board.getStringBoard());
     }
 
     public int getStageNumber(){
