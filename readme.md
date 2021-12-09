@@ -447,15 +447,15 @@ S>  3L
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:------------------------------------------|
-|1|class|&nbsp;model.GameManager       |&nbsp; 게임의 진행을 돕는 클래스로 게임의 부가적 정보 전달, 게임 외적인 일을 담당한다 | 
-|2|class|&nbsp;model.GameMachine       |&nbsp; 게임 데이터를 관리하고 내부 로직을 이어주는 역할을 담당하는 클래스     |
-|3|class|&nbsp;model.Disk              |&nbsp; 게임의 데이터를 관리하는 클래스. 클래스들의 데이터와 초기화, 생성을 관리한다 |
-|4|class|&nbsp;model.Init              |&nbsp; Stage에 대한 정보(Information, model.Board) 초기화를 담당하는 클래스 |
-|5|class|&nbsp;model.Slot              |&nbsp; 사용자의 게임 데이터를 저장하고 있는 클래스                      |
-|6|class|&nbsp;model.Stages            |&nbsp; 각 Stage에 대한 정보를 담고 있는 클래스                       |
-|7|class|&nbsp;model.Board             |&nbsp; Stage의 심볼을 나타내는 클래스                              |
-|8|class|&nbsp;model.StageInformation  |&nbsp; 해당 Board의 크기, 번호 등 정보를 저장하고 있는 클래스            |
-|9|class|&nbsp;model.Answer            |&nbsp; 정답과 원본 배열의 값을 저장하고 있는 클래스                     |
+|1|class|&nbsp;GameManager       |&nbsp; 게임의 진행을 돕는 클래스로 게임의 부가적 정보 전달, 게임 외적인 일을 담당한다 | 
+|2|class|&nbsp;GameMachine       |&nbsp; 게임 데이터를 관리하고 내부 로직을 이어주는 역할을 담당하는 클래스     |
+|3|class|&nbsp;Disk              |&nbsp; 게임의 데이터를 관리하는 클래스. 클래스들의 데이터와 초기화, 생성을 관리한다 |
+|4|class|&nbsp;Init              |&nbsp; Stage에 대한 정보(Information, model.Board) 초기화를 담당하는 클래스 |
+|5|class|&nbsp;Slot              |&nbsp; 사용자의 게임 데이터를 저장하고 있는 클래스                      |
+|6|class|&nbsp;Stages            |&nbsp; 각 Stage에 대한 정보를 담고 있는 클래스                       |
+|7|class|&nbsp;Board             |&nbsp; Stage의 심볼을 나타내는 클래스                              |
+|8|class|&nbsp;StageInformation  |&nbsp; 해당 Board의 크기, 번호 등 정보를 저장하고 있는 클래스            |
+|9|class|&nbsp;Answer            |&nbsp; 정답과 원본 배열의 값을 저장하고 있는 클래스                     |
 
 
 
@@ -493,13 +493,13 @@ S>  3L
 
 |No|종류|<center>이름</center>|<center>역할 및 책임</center>|
 |:----:|:---------------:|:------|:---|
-|1|class|&nbsp;model.Answer               |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
-|2|class|&nbsp;model.Disk                 |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
-|3|class|&nbsp;model.Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스                  |
-|4|class|&nbsp;model.Stage                |&nbsp; Board와 Stageinformation을 담고 있는 클래스                   |
-|5|class|&nbsp;model.Stages               |&nbsp; Stage들을 저장하고 있는 클래스                                 |
-|6|class|&nbsp;model.StageInformation     |&nbsp; 가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스               |
-|7|class|&nbsp;model.StageInformationList |&nbsp; model.StageInformation 클래스들을 저장하고 있는 클래스                 |
+|1|class|&nbsp;Answer               |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
+|2|class|&nbsp;Disk                 |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
+|3|class|&nbsp;Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스                  |
+|4|class|&nbsp;Stage                |&nbsp; Board와 Stageinformation을 담고 있는 클래스                   |
+|5|class|&nbsp;Stages               |&nbsp; Stage들을 저장하고 있는 클래스                                 |
+|6|class|&nbsp;StageInformation     |&nbsp; 가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스               |
+|7|class|&nbsp;StageInformationList |&nbsp; model.StageInformation 클래스들을 저장하고 있는 클래스                 |
 
 <br/><br/><br/><br/><br/>
 
