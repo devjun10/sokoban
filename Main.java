@@ -1,10 +1,10 @@
-import model.GameMachine;
-import model.GameManager;
-import model.Stage;
-import model.StageData;
-import view.*;
-import view.commands.MoveInputCommand;
+import model.*;
+import view.GameResult;
+import view.InputCommand;
+import view.InputView;
+import view.OutputView;
 import view.commands.StageProgress;
+import view.commands.SystemInputCommand;
 
 import java.util.List;
 
@@ -28,11 +28,11 @@ public class Main {
             outputView.printBoard(stage.getBoard());
 
             while (stage.isNotAnswer()) {
-                List<InputCommand> directionInputCommands = manager.getCommand(inputView.inputCommand());
-                List<GameResult> result = gameMachine.play(stageNumber, directionInputCommands);
+                List<InputCommand> inputCommands = manager.getCommand(inputView.inputCommand());
+                List<GameResult> result = gameMachine.play(stageNumber, inputCommands);
 
                 for (GameResult gameResult : result) {
-                    if (gameResult.getMessage().equals(MoveInputCommand.L.getCommand())) {
+                    if (gameResult.getMessage().equals(SystemInputCommand.L.getCommand())) {
                         List<StageData> data = manager.getSlotData(gameMachine);
                         data.forEach(System.out::println);
                         manager.saySaveList();
@@ -52,7 +52,7 @@ public class Main {
                         break;
                     }
 
-                    if (gameResult.getMessage().equals(MoveInputCommand.R.getCommand())) {
+                    if (gameResult.getMessage().equals(SystemInputCommand.R.getCommand())) {
                         stage.resetStage();
                         turn = 0;
                         manager.sayTurnReset();
@@ -60,13 +60,13 @@ public class Main {
                         break;
                     }
 
-                    if (gameResult.getMessage().equals(MoveInputCommand.Q.getCommand())) {
+                    if (gameResult.getMessage().equals(SystemInputCommand.Q.getCommand())) {
                         manager.sayTurnCount(turn);
                         manager.sayTurnOff();
                         manager.turnOffTheGame();
                     }
 
-                    if (gameResult.getMessage().equals(MoveInputCommand.C.getCommand())) {
+                    if (gameResult.getMessage().equals(SystemInputCommand.C.getCommand())) {
                         manager.saySaveComplete();
                         stageNumber = stage.getStageNumber();
                         gameMachine.saveStage(stageNumber);

@@ -1,13 +1,21 @@
 package model.commands;
 
 import model.Command;
-import view.GameResult;
 import view.InputCommand;
+import view.commands.DirectionInputCommand;
 
 public class Up implements Command {
-    @Override
-    public GameResult execute(InputCommand inputCommand) {
 
-        return null;
+    private final String command = "Up";
+
+    @Override
+    public String  execute(InputCommand inputCommand) {
+        DirectionInputCommand command = (DirectionInputCommand) inputCommand;
+        return command.getCommand();
+    }
+
+    @Override
+    public String toString() {
+        return command;
     }
 }

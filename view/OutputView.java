@@ -1,8 +1,8 @@
 package view;
 
-public class OutputView {
+import static utils.InputUtils.stringBuilder;
 
-    private final StringBuilder stringBuilder = new StringBuilder();
+public class OutputView {
 
     public void printBoard(String[][] board) {
         stringBuilder.setLength(0);

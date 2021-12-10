@@ -1,33 +1,58 @@
 package model;
 
 import view.InputCommand;
-import view.commands.MoveInputCommand;
 import view.message.SystemMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.InputUtils.stringBuilder;
+import static view.commands.DirectionInputCommand.getDirectionCommands;
+import static view.commands.SystemInputCommand.getSystemInputCommand;
+import static view.commands.SystemInputCommand.getSystemInputCommands;
+
 public class GameManager {
 
+    private final int zero = 0;
+    private final int one = 1;
+    private final List<String> systemCommands;
+    private final List<String> directionCommands;
+
+    public GameManager() {
+        systemCommands = getSystemInputCommands();
+        directionCommands = getDirectionCommands();
+    }
+
     public void sayHello() {
+        stringBuilder.setLength(zero);
         System.out.println(SystemMessage.GREET);
     }
 
     public void sayGoodBye() {
-        System.out.println(SystemMessage.CLEAR_CELEBRATION);
-        System.out.println(SystemMessage.CELEBRATION);
+        stringBuilder.setLength(zero);
+        stringBuilder.append(SystemMessage.CLEAR_CELEBRATION).append("\n")
+                .append(SystemMessage.CELEBRATION);
+        System.out.println(stringBuilder);
     }
 
     public void sayTurnOff() {
+        stringBuilder.setLength(zero);
         System.out.println(SystemMessage.BYE);
     }
 
     public void sayTurnCount(int value) {
-        System.out.println(SystemMessage.TURN_COUNT + "" + value);
+        stringBuilder.setLength(zero);
+        stringBuilder.append(SystemMessage.TURN_COUNT).append(value);
+        System.out.println(stringBuilder);
     }
 
     public void sayTurnClear(int value) {
-        System.out.println(SystemMessage.BLANK + "" + SystemMessage.STAGE_INFO + "" + value + "" + SystemMessage.CLEAR + SystemMessage.BLANK);
+        stringBuilder.setLength(zero);
+        stringBuilder.append(SystemMessage.ENTER)
+                .append(SystemMessage.STAGE_INFO).append(value)
+                .append(SystemMessage.CLEAR)
+                .append(SystemMessage.ENTER);
+        System.out.println(stringBuilder);
     }
 
     public void sayTurnReset() {
@@ -46,28 +71,32 @@ public class GameManager {
         System.out.println(SystemMessage.SAY_NO_MAP);
     }
 
-    public List<InputCommand> getCommand(List<String> direction) {
-        List<InputCommand> directionInputCommands = new ArrayList<>();
-        for (String s : direction) {
-            InputCommand inputCommand = MoveInputCommand.getCommands(s);
-            directionInputCommands.add(inputCommand);
+    public List<InputCommand> getCommand(List<String> inputCommands) {
+        List<InputCommand> commands = new ArrayList<>();
+        for (String inputCommand : inputCommands) {
+            if (this.directionCommands.contains(inputCommand)) {
+                commands.add(getDirectionCommands(inputCommand));
+            } else {
+                System.out.println(getSystemInputCommand(inputCommand));
+                commands.add(getSystemInputCommand(inputCommand));
+            }
         }
-        return directionInputCommands;
+        return commands;
     }
 
     public int plusCount(int value) {
-        return value+1;
+        return value + one;
     }
 
     public int turnInit() {
-        return 0;
+        return zero;
     }
 
     public void turnOffTheGame() {
-        System.exit(1);
+        System.exit(one);
     }
 
-    public List<StageData> getSlotData(GameMachine machine){
+    public List<StageData> getSlotData(GameMachine machine) {
         return machine.getSlotData();
     }
 }

@@ -3,46 +3,40 @@ package view.commands;
 import view.InputCommand;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum MoveInputCommand implements InputCommand {
+public enum DirectionInputCommand implements InputCommand {
 
     UP("w", "W: 윗쪽으로 이동합니다.", List.of(-1, 0)),
     DOWN("s", "S: 아랫쪽으로 이동합니다.", List.of(1, 0)),
     RIGHT("d", "D: 오른쪽으로 이동합니다.", List.of(0, 1)),
-    LEFT("a", "A: 왼쪽으로 이동합니다.", List.of(0, -1)),
-
-    INVALID_COMMAND(String.valueOf(Long.MAX_VALUE), "(경고!) 해당 명령을 수행할 수 없습니다!", List.of()),
-
-    R("r", "R: 스테이지를 초기화합니다. ", List.of()),
-    C("c", "S: 현재 진행상황을 저장합니다.", List.of()),
-    L("l", "L: 세이브에서 진행상황을 불러옵니다", List.of()),
-    Q("q", "Bye~", List.of());
+    LEFT("a", "A: 왼쪽으로 이동합니다.", List.of(0, -1));
 
     private final String command;
     private final String description;
     private final List<Integer> nextPosition;
 
-    MoveInputCommand(String command, String description, List<Integer> nextPosition) {
+    DirectionInputCommand(String command, String description, List<Integer> nextPosition) {
         this.command = command;
         this.description = description;
         this.nextPosition = nextPosition;
     }
 
-    public static MoveInputCommand getCommands(String input) {
+    public static DirectionInputCommand getDirectionCommands(String input) {
         return Stream.of(values())
                 .filter(position -> position.command.toLowerCase().equals(input))
                 .findAny()
-                .orElse(INVALID_COMMAND);
+                .orElseThrow(NoSuchElementException::new);
     }
 
-    public static List<String> getCommands() {
+    public static List<String> getDirectionCommands() {
         return Stream.of(values())
-                .map(MoveInputCommand::getCommand)
+                .map(DirectionInputCommand::getCommand)
                 .map(String::toLowerCase)
                 .sorted()
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 
     public String getCommand() {
@@ -52,4 +46,5 @@ public enum MoveInputCommand implements InputCommand {
     public List<Integer> getNextPosition() {
         return nextPosition;
     }
+
 }

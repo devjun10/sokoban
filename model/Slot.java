@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 import static utils.BoardUtils.convertStringArrayToIntArrayOriginal;
 import static utils.BoardUtils.convertStringArrayToIntArrayUsingSymbol;
+import static utils.InputUtils.stringBuilder;
 import static utils.Parser.*;
 
 
 public class Slot {
 
-    private static final StringBuilder stringBuilder = new StringBuilder();
     private final String empty = "Empty";
     private final String slot = "slot";
     private final String directory = "slot/";
@@ -44,6 +44,7 @@ public class Slot {
         validateStageNumber(stageNumber);
         stringBuilder.setLength(0);
         String name = directory + slot + stageNumber + txt;
+        System.out.println(name);
         File file = new File(name);
         int[][] intArray = convertStringArrayToIntArrayUsingSymbol(array);
         for (int row = 0; row < array.length; row++) {

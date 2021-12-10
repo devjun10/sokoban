@@ -1,12 +1,21 @@
 package model.commands;
 
 import model.Command;
-import view.GameResult;
 import view.InputCommand;
+import view.commands.SystemInputCommand;
 
 public class Load implements Command {
+
+    private final String command = "Load";
+
     @Override
-    public GameResult execute(InputCommand inputCommand) {
-        return null;
+    public String  execute(InputCommand inputCommand) {
+        SystemInputCommand command = (SystemInputCommand) inputCommand;
+        return command.getCommand();
+    }
+
+    @Override
+    public String toString() {
+        return command;
     }
 }

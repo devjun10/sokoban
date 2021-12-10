@@ -1,17 +1,21 @@
 package model.commands;
 
 import model.Command;
-import view.GameResult;
 import view.InputCommand;
+import view.commands.SystemInputCommand;
 
 public class Reset implements Command {
+
+    private final String command = "Reset";
+
     @Override
-    public GameResult execute(InputCommand inputCommand) {
-        return null;
+    public String execute(InputCommand inputCommand) {
+        SystemInputCommand command = (SystemInputCommand) inputCommand;
+        return command.getCommand();
     }
 
     @Override
-    public void inputMessage(GameResult gameResult, String message) {
-        gameResult.addMesage(message);
+    public String toString() {
+        return command;
     }
 }

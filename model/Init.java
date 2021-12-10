@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.BoardUtils.convertStringArrayToIntArrayOriginal;
+import static utils.InputUtils.stringBuilder;
 import static utils.Parser.splitByComma;
 import static utils.Parser.splitByStage;
 
 public class Init {
 
     private static final String mapFile = "map/map_enc.txt";
-    private static final StringBuilder stringBuilder = new StringBuilder();
     private static final StageInformationList stageInformationList = StageInformationList.of();
     private AES256Cipher aes256Cipher = model.AES256Cipher.getInstance();
 

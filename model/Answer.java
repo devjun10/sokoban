@@ -34,16 +34,16 @@ public class Answer {
         int[][] map = deleteOnlyCharacter(array);
         int[][] answer = this.answer;
         for (int row = 0; row < answer.length; row++) {
-            if(checkColumn(row, map[row])){
+            if (checkColumn(row, map[row])) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean checkColumn(int row, int[] array){
-        for(int col=0; col<answer[0].length; col++){
-            if(array[col] != this.answer[row][col]){
+    private boolean checkColumn(int row, int[] array) {
+        for (int col = 0; col < answer[0].length; col++) {
+            if (array[col] != this.answer[row][col]) {
                 return true;
             }
         }

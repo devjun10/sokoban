@@ -1,10 +1,11 @@
 package model;
 
+import utils.Number;
 import utils.Point;
 import utils.Position;
 import view.InputCommand;
 import view.GameResult;
-import view.commands.MoveInputCommand;
+import view.commands.DirectionInputCommand;
 
 import static utils.BoardUtils.*;
 
@@ -21,11 +22,10 @@ public class Board {
         this.answer = new Answer(board);
     }
 
-    GameResult push(InputCommand directionInputCommand) {
+    GameResult push(DirectionInputCommand directionInputCommand) {
         GameResult gameResult = new GameResult();
         Point point = findPlayerPosition();
-
-        MoveInputCommand moveCommand = (MoveInputCommand) directionInputCommand;
+        DirectionInputCommand moveCommand = directionInputCommand;
         int moveBlockX = point.getX() + moveCommand.getNextPosition().get(0);
         int moveBlockY = point.getY() + moveCommand.getNextPosition().get(1);
         int[][] newBoard = copyIntArrayOriginal(this.board);
@@ -44,13 +44,13 @@ public class Board {
     }
 
     private int[][] move(Point position, int[][] board, Point nextPosition) {
-        board[position.getX()][position.getY()] -= 4;
+        board[position.getX()][position.getY()] -= Number.FOUR.value();
         board[nextPosition.getX()][nextPosition.getY()] += 4;
         return board;
     }
 
     private int[][] pushBall(Point position, int[][] board, Point nextPosition, InputCommand directionInputCommand) {
-        MoveInputCommand moveCommand = (MoveInputCommand) directionInputCommand;
+        DirectionInputCommand moveCommand = (DirectionInputCommand) directionInputCommand;
 
         board[position.getX()][position.getY()] -= 4;
         board[nextPosition.getX()][nextPosition.getY()] += 4;
@@ -69,7 +69,7 @@ public class Board {
         int x = point.getX();
         int y = point.getY();
 
-        MoveInputCommand moveCommand = (MoveInputCommand) directionInputCommand;
+        DirectionInputCommand moveCommand = (DirectionInputCommand) directionInputCommand;
         int fonrtOfBallX = x + moveCommand.getNextPosition().get(0);
         int fonrtOfBallY = y + moveCommand.getNextPosition().get(1);
 
