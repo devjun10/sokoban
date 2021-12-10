@@ -1,4 +1,4 @@
-package view;
+package view.commands;
 
 public enum StageProgress {
     CLEAR,

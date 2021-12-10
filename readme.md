@@ -401,9 +401,51 @@ S>  3L
 <br/>
 
 </div>
+<br/><br/>
 </details>
 
+
+<details><summary>📂 구조</summary>
+<div markdown="1">
+
+## 📂 구조
+
+```text
+|-- java
+|   -- com
+|       -- junhopark
+|           -- javaracingcar
+|               |-- model
+|               |   -- Car.java
+|               |-- util
+|               |-- util
+|               |   |-- GameUtil.java
+|               |   |-- GameValidator.java
+|               |-- Main.java
+|
+|
+|
+|
+```
+
 <br/><br/>
+
+## 💫 실행 방법
+
+```shell
+
+```
+
+<br/><br/>
+
+
+</div>
+<br/><br/>
+</details>
+
+
+
+
 
 ## 목차
 
@@ -425,11 +467,12 @@ S>  3L
 
 # 프로젝트 개요
 
-문제를 풀 때 턴제 RPG이며 절차 지향적 게임이기 때문에 순서와 흐름이 필요할 것이며 조건 분기가 많이 등장하리라 생각됐습니다. 따라서 `각 객체의 역할은 명확하게 분배`하고 `분기문을 지양`
+턴제 RPG이며 절차 지향적 게임이기 때문에 순서와 흐름이 필요할 것이며 조건 분기가 많이 등장하리라 생각됐습니다. 따라서 `각 객체의 역할은 명확하게 분배`하고 `분기문을 지양`
 하되 `크게 구애받지 말자`고 생각했습니다. 큰 흐름은 아래와 같은 순서로 진행됩니다. 클래스들의 역할은 나누고 Main 클래스 위에서 이를 절차적으로 이어주었습니다.
 
 <br/>
 
+0. 프로그램이 실행되면 Disk 영역의 Init과 Slot으로 부터 애플리케이션에서 사용될 데이터가 초기화 된다. 
 1. InputView를 통해 사용자의 입력을 받는다.
 2. GameManager는 사용자의 입력이 적절한 명령인지 판단하고 이를 model.GameMachine 내부로 전달한다.
 3. GameMachine은 사용자의 명령을 받아 내부로직을 통해 이를 처리한다. 
@@ -442,6 +485,7 @@ S>  3L
 
 
 <br/><br/><br/><br/><br/>
+
 
 
 
@@ -459,7 +503,18 @@ S>  3L
 
 
 
+<br/><br/><br/><br/><br/><br/>
 
+## 2.역할과 책임
+
+프로젝트는 크게 입/출력을 담당하는 view 패키지, 각 역할과 책임을 나눈 클래스들의 model 패키지, 역할과 책임을 이어주는 Main 클래스 세 가지 파트로 구성됩니다.
+<br/><br/>
+
+| No  |content|    <center>설명 </center>     |
+|:---:|:----|:----------------------------------------------------------------------------------------|
+|  1  |&nbsp; view 패키지  |&nbsp; 사용자의|
+|  2  |&nbsp; model 패키지 |&nbsp; Model 패키지와 내부 클래스 / 인터페이스들의 역할과 책임 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|  3  |&nbsp; Main 클래스  |&nbsp; Main 클래스의 역할과 책임
 
 <details>
 <summary>📘	 Step 03.</summary>
@@ -673,18 +728,18 @@ Board와 Stageinformation을 담고 있는 클래스. 이전에는 Board에서 �
 크기, 세로 크기, 맵 등과 같은 자신과 연관된 정보를 가지고 있다.
 <br/>
 
-### 4-1. List<view.GameResult> execute(List<view.Command> commandList)
+### 4-1. List<view.GameResult> execute(List<view.commands.DirectionCommands.Command> directionInputCommandList)
 
 플레이 한 게임의 실행 결과를 반환하는 메서드. 리스트를 순회하며 사용자로 부터 입력받은 명령어를 실행하고 그 결과(Board의 상태)를 반환한다. 
 
 ```java
-public List<view.GameResult> execute(List<view.Command> commandList){
+public List<view.GameResult> execute(List<view.commands.DirectionCommands.Command> directionInputCommandList){
         List<view.GameResult> results=new ArrayList<>();
-        for(view.Command command:commandList){
-            if(command.equals(view.Command.R)){
+        for(view.commands.DirectionCommands.Command directionInputCommand:directionInputCommandList){
+            if(directionInputCommand.equals(view.commands.DirectionCommands.Command.R)){
                 return List.of(resetStage());
             }
-            results.add(this.board.push(command));
+            results.add(this.board.push(directionInputCommand));
         }
         return results;
 }
@@ -802,18 +857,18 @@ public class StageInformationList {
 
 각 Stage의 배열의 상태를 관리하며 정답 클래스로 Stage의 상태와 관련된 역할과 책임을 가진다. 따라서 배열의 이동, 상태 변화 등과 같은 모든 
 
-### 8-1. view.GameResult push(view.Command command)
+### 8-1. view.GameResult push(view.commands.DirectionCommands.Command directionInputCommand)
 
 배열을 변환하는 메서드. 현재 캐릭터의 위치를 기준으로 미는 방향의 한 칸, 두 칸 앞을 체크해서 배열을 변환할 지 결정한다. 모든 배열은 사이드 이펙트를 제거하기 위해 방어적 복사를 통해 값을 반환한다.
 <br/><br/>
 
 ```java
-view.GameResult push(view.Command command){
+view.GameResult push(view.commands.DirectionCommands.Command directionInputCommand){
         view.GameResult gameResult=new view.GameResult();
         utils.Point point=findPlayerPosition();
 
-        int moveBlockX=point.getX()+command.getNextPosition().get(0);
-        int moveBlockY=point.getY()+command.getNextPosition().get(1);
+        int moveBlockX=point.getX()+directionInputCommand.getNextPosition().get(0);
+        int moveBlockY=point.getY()+directionInputCommand.getNextPosition().get(1);
         int[][]newBoard=copyBoard();
 
         if(moveable(utils.Position.of(moveBlockX,moveBlockY))){
@@ -821,8 +876,8 @@ view.GameResult push(view.Command command){
             update(updatedBoard);
             gameResult.addBoard(this.getBoard());
         }else if(
-            pushable(utils.Position.of(moveBlockX,moveBlockY),command)){
-            int[][]updatedBoard=pushBall(point,newBoard,utils.Position.of(moveBlockX,moveBlockY),command);
+            pushable(utils.Position.of(moveBlockX,moveBlockY),directionInputCommand)){
+            int[][]updatedBoard=pushBall(point,newBoard,utils.Position.of(moveBlockX,moveBlockY),directionInputCommand);
             update(updatedBoard);
             gameResult.addBoard(this.getBoard());
         }
@@ -833,7 +888,7 @@ view.GameResult push(view.Command command){
 
 <br/><br/><br/>
 
-### 8-2. view.GameResult push(view.Command command)
+### 8-2. view.GameResult push(view.commands.DirectionCommands.Command directionInputCommand)
 
 push를 두 가지로 나눈 메서드로 캐릭터가 이동 가능할 때는 move를, move를 할 수 없지만 다음 칸에서 공을 밀 수 있을 때는 pushBall 메서드를 실행한다. 
 <br/><br/>
@@ -845,11 +900,11 @@ private int[][]move(utils.Point position,int[][]board,utils.Point nextPosition){
         return board;
 }
 
-private int[][]pushBall(utils.Point position,int[][]board,utils.Point nextPosition,view.Command command){
+private int[][]pushBall(utils.Point position,int[][]board,utils.Point nextPosition,view.commands.DirectionCommands.Command directionInputCommand){
         board[position.getX()][position.getY()]-=4;
         board[nextPosition.getX()][nextPosition.getY()]+=4;
         board[nextPosition.getX()][nextPosition.getY()]-=2;
-        board[nextPosition.getX()+command.getNextPosition().get(0)][nextPosition.getY()+command.getNextPosition().get(1)]+=2;
+        board[nextPosition.getX()+directionInputCommand.getNextPosition().get(0)][nextPosition.getY()+directionInputCommand.getNextPosition().get(1)]+=2;
         return board;
 }
 ```
@@ -949,42 +1004,42 @@ public void reset(){
 
 ```java
 public void sayHello(){
-        System.out.println(view.SystemMessage.GREET);
+        System.out.println(view.message.SystemMessage.GREET);
 }
 
 public void sayGoodBye(){
-        System.out.println(view.SystemMessage.CLEAR_CELEBRATION);
-        System.out.println(view.SystemMessage.CELEBRATION);
+        System.out.println(view.message.SystemMessage.CLEAR_CELEBRATION);
+        System.out.println(view.message.SystemMessage.CELEBRATION);
 }
 
 public void sayTurnCount(int value){
-        System.out.println(view.SystemMessage.TURN_COUNT+""+value);
+        System.out.println(view.message.SystemMessage.TURN_COUNT+""+value);
 }
 
 public void sayTurnReset(){
-        System.out.println(view.SystemMessage.TURN_RESET);
+        System.out.println(view.message.SystemMessage.TURN_RESET);
 }
 ```
 
 <br/><br/><br/>
 
-### 9-2. List<view.GameResult> play(int stageNumber,List<view.Command> commands)
+### 9-2. List<view.GameResult> play(int stageNumber,List<view.commands.DirectionCommands.Command> directionInputCommands)
 
 <br/><br/>
 stageNumber을 통해 해당 스테이지를 찾고 명령을 전달한다.
 
 ```java
-public List<view.Command> getCommand(List<String> direction){
-        List<view.Command> commands=new ArrayList<>();
+public List<view.commands.DirectionCommands.Command> getCommand(List<String> direction){
+        List<view.commands.DirectionCommands.Command> directionInputCommands=new ArrayList<>();
         for(int i=0;i<direction.size();i++){
-            view.Command command=getCommands(direction.get(i));
-                if(command.equals(view.Command.R)){
-                    return List.of(view.Command.R);
+            view.commands.DirectionCommands.Command directionInputCommand=getCommands(direction.get(i));
+                if(directionInputCommand.equals(view.commands.DirectionCommands.Command.R)){
+                    return List.of(view.commands.DirectionCommands.Command.R);
                 }
-                validateQuit(command);
-                commands.add(command);
+                validateQuit(directionInputCommand);
+                directionInputCommands.add(directionInputCommand);
             }
-        return commands;
+        return directionInputCommands;
 }
 ```
 

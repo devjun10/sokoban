@@ -2,8 +2,9 @@ package model;
 
 import utils.Point;
 import utils.Position;
-import view.Command;
+import view.InputCommand;
 import view.GameResult;
+import view.commands.MoveInputCommand;
 
 import static utils.BoardUtils.*;
 
@@ -20,20 +21,21 @@ public class Board {
         this.answer = new Answer(board);
     }
 
-    GameResult push(Command command) {
+    GameResult push(InputCommand directionInputCommand) {
         GameResult gameResult = new GameResult();
         Point point = findPlayerPosition();
 
-        int moveBlockX = point.getX() + command.getNextPosition().get(0);
-        int moveBlockY = point.getY() + command.getNextPosition().get(1);
+        MoveInputCommand moveCommand = (MoveInputCommand) directionInputCommand;
+        int moveBlockX = point.getX() + moveCommand.getNextPosition().get(0);
+        int moveBlockY = point.getY() + moveCommand.getNextPosition().get(1);
         int[][] newBoard = copyIntArrayOriginal(this.board);
 
         if (moveable(Position.of(moveBlockX, moveBlockY))) {
             int[][] updatedBoard = move(point, newBoard, Position.of(moveBlockX, moveBlockY));
             update(updatedBoard);
             gameResult.addBoard(this.getStringBoard());
-        } else if (pushable(Position.of(moveBlockX, moveBlockY), command)) {
-            int[][] updatedBoard = pushBall(point, newBoard, Position.of(moveBlockX, moveBlockY), command);
+        } else if (pushable(Position.of(moveBlockX, moveBlockY), directionInputCommand)) {
+            int[][] updatedBoard = pushBall(point, newBoard, Position.of(moveBlockX, moveBlockY), directionInputCommand);
             update(updatedBoard);
             gameResult.addBoard(this.getStringBoard());
         }
@@ -47,11 +49,13 @@ public class Board {
         return board;
     }
 
-    private int[][] pushBall(Point position, int[][] board, Point nextPosition, Command command) {
+    private int[][] pushBall(Point position, int[][] board, Point nextPosition, InputCommand directionInputCommand) {
+        MoveInputCommand moveCommand = (MoveInputCommand) directionInputCommand;
+
         board[position.getX()][position.getY()] -= 4;
         board[nextPosition.getX()][nextPosition.getY()] += 4;
         board[nextPosition.getX()][nextPosition.getY()] -= 2;
-        board[nextPosition.getX() + command.getNextPosition().get(0)][nextPosition.getY() + command.getNextPosition().get(1)] += 2;
+        board[nextPosition.getX() + moveCommand.getNextPosition().get(0)][nextPosition.getY() + moveCommand.getNextPosition().get(1)] += 2;
         return board;
     }
 
@@ -61,12 +65,13 @@ public class Board {
         }
     }
 
-    private boolean pushable(Point point, Command command) {
+    private boolean pushable(Point point, InputCommand directionInputCommand) {
         int x = point.getX();
         int y = point.getY();
 
-        int fonrtOfBallX = x + command.getNextPosition().get(0);
-        int fonrtOfBallY = y + command.getNextPosition().get(1);
+        MoveInputCommand moveCommand = (MoveInputCommand) directionInputCommand;
+        int fonrtOfBallX = x + moveCommand.getNextPosition().get(0);
+        int fonrtOfBallY = y + moveCommand.getNextPosition().get(1);
 
         return (isBall(point) && isBlank(Position.of(fonrtOfBallX, fonrtOfBallY)))
                 || (isBall(point) && isHall(Position.of(fonrtOfBallX, fonrtOfBallY)))

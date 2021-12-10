@@ -1,5 +1,10 @@
 package view;
 
+import view.commands.Choice;
+import view.commands.MoveInputCommand;
+import view.message.ErrorMessage;
+import view.message.SystemMessage;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -14,7 +19,7 @@ public class InputView {
     private List<String> choices;
 
     public InputView() {
-        commands = Command.getCommands();
+        commands = MoveInputCommand.getCommands();
         choices = Choice.getChoices();
     };
 

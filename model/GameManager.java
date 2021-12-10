@@ -1,7 +1,8 @@
 package model;
 
-import view.Command;
-import view.SystemMessage;
+import view.InputCommand;
+import view.commands.MoveInputCommand;
+import view.message.SystemMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +46,13 @@ public class GameManager {
         System.out.println(SystemMessage.SAY_NO_MAP);
     }
 
-    public List<Command> getCommand(List<String> direction) {
-        List<Command> commands = new ArrayList<>();
+    public List<InputCommand> getCommand(List<String> direction) {
+        List<InputCommand> directionInputCommands = new ArrayList<>();
         for (String s : direction) {
-            Command command = Command.getCommands(s);
-            commands.add(command);
+            InputCommand inputCommand = MoveInputCommand.getCommands(s);
+            directionInputCommands.add(inputCommand);
         }
-        return commands;
+        return directionInputCommands;
     }
 
     public int plusCount(int value) {

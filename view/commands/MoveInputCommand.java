@@ -1,10 +1,12 @@
-package view;
+package view.commands;
+
+import view.InputCommand;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum Command {
+public enum MoveInputCommand implements InputCommand {
 
     UP("w", "W: 윗쪽으로 이동합니다.", List.of(-1, 0)),
     DOWN("s", "S: 아랫쪽으로 이동합니다.", List.of(1, 0)),
@@ -22,13 +24,13 @@ public enum Command {
     private final String description;
     private final List<Integer> nextPosition;
 
-    Command(String command, String description, List<Integer> nextPosition) {
+    MoveInputCommand(String command, String description, List<Integer> nextPosition) {
         this.command = command;
         this.description = description;
         this.nextPosition = nextPosition;
     }
 
-    public static Command getCommands(String input) {
+    public static MoveInputCommand getCommands(String input) {
         return Stream.of(values())
                 .filter(position -> position.command.toLowerCase().equals(input))
                 .findAny()
@@ -37,7 +39,7 @@ public enum Command {
 
     public static List<String> getCommands() {
         return Stream.of(values())
-                .map(Command::getCommand)
+                .map(MoveInputCommand::getCommand)
                 .map(String::toLowerCase)
                 .sorted()
                 .collect(Collectors.toUnmodifiableList());

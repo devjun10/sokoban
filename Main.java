@@ -3,6 +3,8 @@ import model.GameManager;
 import model.Stage;
 import model.StageData;
 import view.*;
+import view.commands.MoveInputCommand;
+import view.commands.StageProgress;
 
 import java.util.List;
 
@@ -20,20 +22,21 @@ public class Main {
         int stageNumber = 1;
         int turn = 0;
 
-        while (stageNumber < 5) {
+        while (stageNumber < 10) {
             Stage stage = gameMachine.getStage(stageNumber);
             StageProgress currentStageProgress = StageProgress.NOT_CLEAR;
             outputView.printBoard(stage.getBoard());
 
             while (stage.isNotAnswer()) {
-                List<Command> commands = manager.getCommand(inputView.inputCommand());
-                List<GameResult> result = gameMachine.play(stageNumber, commands);
+                List<InputCommand> directionInputCommands = manager.getCommand(inputView.inputCommand());
+                List<GameResult> result = gameMachine.play(stageNumber, directionInputCommands);
 
                 for (GameResult gameResult : result) {
-                    if (gameResult.getMessage().equals(Command.L.getCommand())) {
+                    if (gameResult.getMessage().equals(MoveInputCommand.L.getCommand())) {
                         List<StageData> data = manager.getSlotData(gameMachine);
                         data.forEach(System.out::println);
                         manager.saySaveList();
+
                         String inputStage = inputView.inputStage();
                         int inputStageNumber = Integer.parseInt(inputStage.substring(0, 1));
 
@@ -49,7 +52,7 @@ public class Main {
                         break;
                     }
 
-                    if (gameResult.getMessage().equals(Command.R.getCommand())) {
+                    if (gameResult.getMessage().equals(MoveInputCommand.R.getCommand())) {
                         stage.resetStage();
                         turn = 0;
                         manager.sayTurnReset();
@@ -57,13 +60,13 @@ public class Main {
                         break;
                     }
 
-                    if (gameResult.getMessage().equals(Command.Q.getCommand())) {
+                    if (gameResult.getMessage().equals(MoveInputCommand.Q.getCommand())) {
                         manager.sayTurnCount(turn);
                         manager.sayTurnOff();
                         manager.turnOffTheGame();
                     }
 
-                    if (gameResult.getMessage().equals(Command.C.getCommand())) {
+                    if (gameResult.getMessage().equals(MoveInputCommand.C.getCommand())) {
                         manager.saySaveComplete();
                         stageNumber = stage.getStageNumber();
                         gameMachine.saveStage(stageNumber);
@@ -78,6 +81,7 @@ public class Main {
                         }
                         currentStageProgress = StageProgress.CLEAR;
                     }
+
                     if (currentStageProgress.equals(StageProgress.NOT_CLEAR)) {
                         turn = manager.plusCount(turn);
                         manager.sayTurnCount(turn);
@@ -85,7 +89,6 @@ public class Main {
                     }
                 }
             }
-            
             turn = manager.turnInit();
             gameMachine.clearStage(stageNumber);
             stageNumber = manager.plusCount(stageNumber);

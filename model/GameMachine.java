@@ -1,6 +1,6 @@
 package model;
 
-import view.Command;
+import view.InputCommand;
 import view.GameResult;
 
 import java.util.List;
@@ -14,9 +14,9 @@ public class GameMachine {
         return stages.getStage(value);
     }
 
-    public List<GameResult> play(int stageNumber, List<Command> commands) {
+    public List<GameResult> play(int stageNumber, List<InputCommand> directionInputCommands) {
         Stage stage = stages.getStage(stageNumber);
-        return stage.execute(commands);
+        return stage.execute(directionInputCommands);
     }
 
     public void saveStage(int stageNumber) {

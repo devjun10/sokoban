@@ -1,7 +1,8 @@
 package model;
 
-import view.Command;
+import view.InputCommand;
 import view.GameResult;
+import view.commands.MoveInputCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,35 +23,35 @@ public class Stage {
         return board.getStringBoard();
     }
 
-    List<GameResult> execute(List<Command> commandList) {
+    List<GameResult> execute(List<InputCommand> directionInputCommandList) {
         List<GameResult> results = new ArrayList<>();
-        for (Command command : commandList) {
-            if(command.equals(Command.L)){
-                results.add(new GameResult(Command.L.getCommand()));
+        for (InputCommand directionInputCommand : directionInputCommandList) {
+            if(directionInputCommand.equals(MoveInputCommand.L)){
+                results.add(new GameResult(MoveInputCommand.L.getCommand()));
                 return results;
             }
-            if (command.equals(Command.Q)) {
-                results.add(new GameResult(Command.Q.getCommand()));
+            if (directionInputCommand.equals(MoveInputCommand.Q)) {
+                results.add(new GameResult(MoveInputCommand.Q.getCommand()));
                 return results;
             }
-            if (command.equals(Command.R)) {
-                results.add(new GameResult(Command.R.getCommand()));
+            if (directionInputCommand.equals(MoveInputCommand.R)) {
+                results.add(new GameResult(MoveInputCommand.R.getCommand()));
                 continue;
             }
-            if (command.equals(Command.C)) {
-                results.add(new GameResult(Command.C.getCommand()));
+            if (directionInputCommand.equals(MoveInputCommand.C)) {
+                results.add(new GameResult(MoveInputCommand.C.getCommand()));
                 continue;
             }
-            GameResult result = getResult(command);
+            GameResult result = getResult((MoveInputCommand) directionInputCommand);
             results.add(result);
         }
         return results;
     }
 
-    private GameResult getResult(Command command){
-        GameResult result = this.board.push(command);
+    private GameResult getResult(MoveInputCommand directionCommand){
+        GameResult result = this.board.push(directionCommand);
         if(result.getMessage()==null)
-            result.addMesage(command.getCommand());
+            result.addMesage(directionCommand.getCommand());
         return result;
     }
 
