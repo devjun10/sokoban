@@ -1,11 +1,13 @@
 package view;
 
+import utils.Number;
+
 import static utils.InputUtils.stringBuilder;
 
 public class OutputView {
 
     public void printBoard(String[][] board) {
-        stringBuilder.setLength(0);
+        stringBuilder.setLength(Number.ZERO.getIntvalue());
 
         for (int row = 0; row < board.length; row++) {
             if (row != 0) {
@@ -20,7 +22,7 @@ public class OutputView {
     }
 
     public void printGameResult(GameResult result) {
-        stringBuilder.setLength(0);
+        stringBuilder.setLength(Number.ZERO.getIntvalue());
         String[][] board = result.getBoard();
         for (int row = 0; row < board.length; row++) {
             if (row != 0) {

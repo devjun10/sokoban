@@ -11,7 +11,6 @@ import java.util.Base64;
 public class AES256Cipher {
 
     private static volatile AES256Cipher INSTANCE;
-//    private static volatile AES256Cipher INSTANCE;
 
     final static String secretKey = "shplab123456789abcdefghijklmnopq";
     static String IV = "";

@@ -29,7 +29,7 @@ public class BoardUtils {
         int[][] temp = new int[array.length][array[0].length];
         for (int row = 0; row < array.length; row++) {
             for (int col = 0; col < array[0].length; col++) {
-                temp[row][col] = changeStringSymbol(array[row][col]).value();
+                temp[row][col] = changeStringSymbol(array[row][col]).getIntvalue();
             }
         }
         return temp;

@@ -26,12 +26,12 @@ public enum Number {
 
     public static Number findNumber(int inputNumber) {
         return Arrays.stream(values())
-                .filter(number -> number.value() == inputNumber)
+                .filter(number -> number.getIntvalue() == inputNumber)
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public int value() {
+    public int getIntvalue() {
         return value;
     }
 

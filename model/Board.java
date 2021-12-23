@@ -3,11 +3,11 @@ package model;
 import utils.Number;
 import utils.Point;
 import utils.Position;
-import view.InputCommand;
 import view.GameResult;
-import view.commands.DirectionInputCommand;
+import view.commands.DirectionCommand;
 
 import static utils.BoardUtils.*;
+import static utils.Number.*;
 
 public class Board {
 
@@ -22,84 +22,99 @@ public class Board {
         this.answer = new Answer(board);
     }
 
-    GameResult push(DirectionInputCommand directionInputCommand) {
+    GameResult push(DirectionCommand command) {
         GameResult gameResult = new GameResult();
-        Point point = findPlayerPosition();
-        DirectionInputCommand moveCommand = directionInputCommand;
-        int moveBlockX = point.getX() + moveCommand.getNextPosition().get(0);
-        int moveBlockY = point.getY() + moveCommand.getNextPosition().get(1);
-        int[][] newBoard = copyIntArrayOriginal(this.board);
+        Point currentPosition = findPlayerPosition();
 
-        if (moveable(Position.of(moveBlockX, moveBlockY))) {
-            int[][] updatedBoard = move(point, newBoard, Position.of(moveBlockX, moveBlockY));
-            update(updatedBoard);
-            gameResult.addBoard(this.getStringBoard());
-        } else if (pushable(Position.of(moveBlockX, moveBlockY), directionInputCommand)) {
-            int[][] updatedBoard = pushBall(point, newBoard, Position.of(moveBlockX, moveBlockY), directionInputCommand);
-            update(updatedBoard);
-            gameResult.addBoard(this.getStringBoard());
-        }
-        checkGameResult(gameResult);
+        int nextX = getNextPositionX(currentPosition, command);
+        int nextY = getNextPositionY(currentPosition, command);
+        int[][] board = copyIntArrayOriginal(this.board);
+        Point nextPosition = Position.of(nextX, nextY);
+
+        moveSymbol(currentPosition, board, nextPosition, command);
+        addGameResult(gameResult);
         return gameResult;
     }
 
-    private int[][] move(Point position, int[][] board, Point nextPosition) {
-        board[position.getX()][position.getY()] -= Number.FOUR.value();
-        board[nextPosition.getX()][nextPosition.getY()] += 4;
-        return board;
+    private int getNextPositionX(Point currentPosition, DirectionCommand command) {
+        return currentPosition.getX() + command.getNextPosition().getX();
     }
 
-    private int[][] pushBall(Point position, int[][] board, Point nextPosition, InputCommand directionInputCommand) {
-        DirectionInputCommand moveCommand = (DirectionInputCommand) directionInputCommand;
-
-        board[position.getX()][position.getY()] -= 4;
-        board[nextPosition.getX()][nextPosition.getY()] += 4;
-        board[nextPosition.getX()][nextPosition.getY()] -= 2;
-        board[nextPosition.getX() + moveCommand.getNextPosition().get(0)][nextPosition.getY() + moveCommand.getNextPosition().get(1)] += 2;
-        return board;
+    private int getNextPositionY(Point currentPosition, DirectionCommand command) {
+        return currentPosition.getY() + command.getNextPosition().getY();
     }
 
-    private void checkGameResult(GameResult result) {
-        if (result.getBoard() == null) {
-            result.addBoard(getStringBoard());
+    private void moveSymbol(Point currentPosition, int[][] board, Point nextPosition, DirectionCommand command) {
+        if (moveable(nextPosition)) {
+            int[][] updatedBoard = moveCharacter(currentPosition, board, nextPosition);
+            update(updatedBoard);
+        } else if (pushable(nextPosition, command)) {
+            int[][] updatedBoard = pushBall(currentPosition, board, nextPosition, command);
+            update(updatedBoard);
         }
     }
 
-    private boolean pushable(Point point, InputCommand directionInputCommand) {
-        int x = point.getX();
-        int y = point.getY();
+    private int[][] moveCharacter(Point currentPosition, int[][] board, Point nextPosition) {
+        board[currentPosition.getX()][currentPosition.getY()] -= FOUR.getIntvalue();
+        board[nextPosition.getX()][nextPosition.getY()] += FOUR.getIntvalue();
+        return board;
+    }
 
-        DirectionInputCommand moveCommand = (DirectionInputCommand) directionInputCommand;
-        int fonrtOfBallX = x + moveCommand.getNextPosition().get(0);
-        int fonrtOfBallY = y + moveCommand.getNextPosition().get(1);
+    private int[][] pushBall(Point currentPosition, int[][] board, Point nextPosition, DirectionCommand command) {
+        board[currentPosition.getX()][currentPosition.getY()] -= FOUR.getIntvalue();
+        board[nextPosition.getX()][nextPosition.getY()] += FOUR.getIntvalue();
+        board[nextPosition.getX()][nextPosition.getY()] -= TWO.getIntvalue();
+        board[nextPosition.getX() + command.getNextPosition().getX()][nextPosition.getY() + command.getNextPosition().getY()] += Number.TWO.getIntvalue();
+        return board;
+    }
 
-        return (isBall(point) && isBlank(Position.of(fonrtOfBallX, fonrtOfBallY)))
-                || (isBall(point) && isHall(Position.of(fonrtOfBallX, fonrtOfBallY)))
-                || isBallOnTheHole(point) && isBlank(Position.of(fonrtOfBallX, fonrtOfBallY));
+    private void addGameResult(GameResult result) {
+        result.addBoard(getStringBoard());
+    }
+
+    private boolean pushable(Point nextPosition, DirectionCommand command) {
+        int nextPositionX = nextPosition.getX();
+        int nextPositionY = nextPosition.getY();
+
+        int inFrontOfBallX = nextPositionX + command.getNextPosition().getX();
+        int inFrontOfBallY = nextPositionY + command.getNextPosition().getY();
+        Point inFrontOfBall = Position.of(inFrontOfBallX, inFrontOfBallY);
+
+        return (isBall(nextPosition) && isBlank(inFrontOfBall))
+                    || (isBall(nextPosition) && isHall(inFrontOfBall))
+                    || (isBallOnTheHole(nextPosition) && isBlank(inFrontOfBall));
     }
 
     private boolean isBall(Point point) {
-        return this.board[point.getX()][point.getY()] == 2;
+        int nextBlank = this.board[point.getX()][point.getY()];
+        return nextBlank == TWO.getIntvalue();
     }
 
     private boolean moveable(Point point) {
-        return this.board[point.getX()][point.getY()] == 0 || this.board[point.getX()][point.getY()] == 1;
+        int nextPositionX = this.board[point.getX()][point.getY()];
+        int nextPositionY = this.board[point.getX()][point.getY()];
+        return nextPositionX == ZERO.getIntvalue() || nextPositionY == ONE.getIntvalue();
     }
 
     private boolean isBlank(Point point) {
-        return this.board[point.getX()][point.getY()] == 0;
+        int nextBlank = this.board[point.getX()][point.getY()];
+        return nextBlank == ZERO.getIntvalue();
     }
 
     private boolean isHall(Point point) {
-        return this.board[point.getX()][point.getY()] == 1;
+        int nextBlank = this.board[point.getX()][point.getY()];
+        return nextBlank == ONE.getIntvalue();
     }
 
     private boolean isBallOnTheHole(Point point) {
-        return this.board[point.getX()][point.getY()] == 3;
+        int nextBlank = this.board[point.getX()][point.getY()];
+        return nextBlank == THREE.getIntvalue();
     }
 
     private boolean isPlayer(Point point) {
-        return this.board[point.getX()][point.getY()] == 4 || this.board[point.getX()][point.getY()] == 5;
+        int nextBlankPositionX = this.board[point.getX()][point.getY()];
+        int nextBlankPositionY = this.board[point.getX()][point.getY()];
+        return nextBlankPositionX == FOUR.getIntvalue() || nextBlankPositionY == FIVE.getIntvalue();
     }
 
     String[][] getStringBoard() {
@@ -116,14 +131,30 @@ public class Board {
     }
 
     private Point findPlayerPosition() {
-        for (int row = 0; row < this.board.length; row++) {
-            for (int col = 0; col < this.board[0].length; col++) {
-                if (isPlayer(Position.of(row, col))) {
-                    return Position.of(row, col);
-                }
+        Point playerPosition = null;
+        Point currentPosition = null;
+        for (int x = 0; x < this.board.length; x++) {
+            for (int y = 0; y < this.board[0].length; y++) {
+                currentPosition = getPlayerPosition(Position.of(x, y));
+                playerPosition = findPlayer(playerPosition, currentPosition);
+
             }
         }
-        return null;
+        return playerPosition;
+    }
+
+    private Point getPlayerPosition(Point point) {
+        if (isPlayer(point)) {
+            return point;
+        }
+        return Position.of(ZERO.getIntvalue(), ZERO.getIntvalue());
+    }
+
+    private Point findPlayer(Point playerPosition, Point position) {
+        if (isPlayer(position)) {
+            return position;
+        }
+        return playerPosition;
     }
 
     protected boolean isAnswer() {

@@ -3,6 +3,7 @@ package model;
 import view.GameResult;
 import view.InputCommand;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class GameMachine {
@@ -14,7 +15,7 @@ public class GameMachine {
         return stages.getStage(value);
     }
 
-    public List<GameResult> play(int stageNumber, List<InputCommand> commands) {
+    public List<GameResult> play(int stageNumber, List<InputCommand> commands) throws Exception {
         Stage stage = stages.getStage(stageNumber);
         return stage.execute(commands);
     }

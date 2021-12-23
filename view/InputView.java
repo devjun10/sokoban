@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static utils.Parser.NO_BLANK;
-import static view.commands.DirectionInputCommand.getDirectionCommands;
+import static view.commands.DirectionCommand.getDirectionCommands;
 import static view.commands.SystemInputCommand.getSystemInputCommands;
 
 public class InputView {

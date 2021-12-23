@@ -2,11 +2,12 @@ package model;
 
 import view.GameResult;
 import view.InputCommand;
-import view.commands.DirectionInputCommand;
+import view.commands.DirectionCommand;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.SystemCommandExecutionResultFactory.getCommand;
 import static utils.BoardUtils.convertIntArrayToStringArrayUsingSymbol;
 
 public class Stage {
@@ -25,26 +26,31 @@ public class Stage {
         return board.getStringBoard();
     }
 
-    List<GameResult> execute(List<InputCommand> commands) {
-        List<GameResult> results = new ArrayList<>();
+    List<GameResult> execute(List<InputCommand> commands) throws Exception {
+        List<GameResult> commandExecutableResults = new ArrayList<>();
 
         for (InputCommand inputCommand : commands) {
-            Command command = SystemCommandFactory.getCommand(inputCommand);
-            GameResult result = getResult(inputCommand);
+            GameResult eachResult = getBoard(inputCommand);
+            Command command = getCommand(inputCommand);
+
             String message = command.execute(inputCommand);
-            result.addMesage(message);
-            results.add(result);
+            addMessage(eachResult, message);
+
+            commandExecutableResults.add(eachResult);
         }
-        return results;
+        return commandExecutableResults;
     }
 
-    private GameResult getResult(InputCommand command) {
-        if(command instanceof DirectionInputCommand){
-            DirectionInputCommand directionInputCommand = (DirectionInputCommand) command;
-            return this.board.push(directionInputCommand);
-        }else {
-            return new GameResult(convertIntArrayToStringArrayUsingSymbol(this.board.getIntBoard()));
+    void addMessage(GameResult result, String message) {
+        result.addMesage(message);
+    }
+
+    private GameResult getBoard(InputCommand command) {
+        if (command instanceof DirectionCommand) {
+            DirectionCommand directionCommand = (DirectionCommand) command;
+            return this.board.push(directionCommand);
         }
+        return new GameResult(convertIntArrayToStringArrayUsingSymbol(this.board.getIntBoard()));
     }
 
     public GameResult resetStage() {

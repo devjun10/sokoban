@@ -29,10 +29,12 @@ public class Slot {
         for (int i = 1; i < 5; i++) {
             saveData.add(new StageData(i, empty));
         }
+
         List<StageData> temp = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
             temp.add(new StageData(i, stage + i));
         }
+
         this.checkData = Collections.unmodifiableList(temp);
     }
 
@@ -74,10 +76,7 @@ public class Slot {
     }
 
     private boolean validateStageNumber(int stageNumber) {
-        if (stageNumber <= 0 || stageNumber > 5) {
-            return false;
-        }
-        return true;
+        return stageNumber > 0 && stageNumber <= 5;
     }
 
     int[][] loadSaveData(int stageNumber) {

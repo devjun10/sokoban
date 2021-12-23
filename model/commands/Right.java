@@ -2,7 +2,7 @@ package model.commands;
 
 import model.Command;
 import view.InputCommand;
-import view.commands.DirectionInputCommand;
+import view.commands.DirectionCommand;
 
 public class Right implements Command {
 
@@ -10,7 +10,7 @@ public class Right implements Command {
 
     @Override
     public String execute(InputCommand inputCommand) {
-        DirectionInputCommand command = (DirectionInputCommand) inputCommand;
+        DirectionCommand command = (DirectionCommand) inputCommand;
         return command.getCommand();
     }
 

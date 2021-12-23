@@ -10,6 +10,7 @@ public class Quit implements Command {
 
     @Override
     public String execute(InputCommand inputCommand) {
+
         SystemInputCommand command = (SystemInputCommand) inputCommand;
         return command.getCommand();
     }

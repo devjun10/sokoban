@@ -1,39 +1,42 @@
 package view.commands;
 
+import utils.Point;
 import view.InputCommand;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum DirectionInputCommand implements InputCommand {
+import static utils.Position.movePoint;
 
-    UP("w", "W: 윗쪽으로 이동합니다.", List.of(-1, 0)),
-    DOWN("s", "S: 아랫쪽으로 이동합니다.", List.of(1, 0)),
-    RIGHT("d", "D: 오른쪽으로 이동합니다.", List.of(0, 1)),
-    LEFT("a", "A: 왼쪽으로 이동합니다.", List.of(0, -1));
+public enum DirectionCommand implements InputCommand {
+
+    UP("w", movePoint(-1, 0), "W: 윗쪽으로 이동합니다."),
+    DOWN("s", movePoint(1, 0), "S: 아랫쪽으로 이동합니다."),
+    RIGHT("d", movePoint(0, 1), "D: 오른쪽으로 이동합니다."),
+    LEFT("a", movePoint(0, -1), "A: 왼쪽으로 이동합니다."),
+    IN_PLACE("in_place", movePoint(0, 0), "I: 가만히 있습니다.");
 
     private final String command;
+    private final Point nextPosition;
     private final String description;
-    private final List<Integer> nextPosition;
 
-    DirectionInputCommand(String command, String description, List<Integer> nextPosition) {
+    DirectionCommand(String command, Point nextPosition, String description) {
         this.command = command;
         this.description = description;
         this.nextPosition = nextPosition;
     }
 
-    public static DirectionInputCommand getDirectionCommands(String input) {
+    public static DirectionCommand getDirectionCommands(String input) {
         return Stream.of(values())
                 .filter(position -> position.command.toLowerCase().equals(input))
                 .findAny()
-                .orElseThrow(NoSuchElementException::new);
+                .orElseGet(() -> IN_PLACE);
     }
 
     public static List<String> getDirectionCommands() {
         return Stream.of(values())
-                .map(DirectionInputCommand::getCommand)
+                .map(DirectionCommand::getCommand)
                 .map(String::toLowerCase)
                 .sorted()
                 .collect(Collectors.toList());
@@ -43,8 +46,7 @@ public enum DirectionInputCommand implements InputCommand {
         return command;
     }
 
-    public List<Integer> getNextPosition() {
+    public Point getNextPosition() {
         return nextPosition;
     }
-
 }
