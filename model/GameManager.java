@@ -12,36 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.InputUtils.stringBuilder;
-import static utils.Number.ONE;
-import static utils.Number.ZERO;
+import static utils.Number.*;
 import static view.commands.DirectionCommand.getDirectionCommands;
 import static view.commands.StageProgress.CLEAR;
 import static view.commands.StageProgress.NOT_CLEAR;
 import static view.commands.SystemInputCommand.getSystemInputCommand;
-import static view.commands.SystemInputCommand.getSystemInputCommands;
 
 public class GameManager {
 
-    private final List<String> systemCommands;
-    private final List<String> directionCommands;
+    private final CommandList c = new CommandList();
     private final OutputView outputView = new OutputView();
     private static final InputView inputView = new InputView();
     private final GameMachine gameMachine = new GameMachine();
-    StageProgress progressState = NOT_CLEAR;
+    private StageProgress progressState = NOT_CLEAR;
 
-    private int turn = 0;
-    private int currentStageNumber = 1;
-    private int finalStageNumber = 5;
+    private int turn;
+    private int currentStageNumber;
+    private final int finalStageNumber = FIVE.getIntvalue();
 
-    public GameManager() {
-        systemCommands = getSystemInputCommands();
-        directionCommands = getDirectionCommands();
-    }
+    public GameManager() {}
 
     public void proceedGame() throws Exception {
-        sayHello();
         Stage currentStage = gameMachine.getStage(currentStageNumber);
-
+        startGame();
         while (currentStageNumber < finalStageNumber) {
             showMap(currentStage);
             play(currentStage);
@@ -50,11 +43,16 @@ public class GameManager {
         sayGoodBye();
     }
 
+    public void startGame() {
+        sayHello();
+        turn = ZERO.getIntvalue();
+        currentStageNumber = ONE.getIntvalue();
+    }
+
     public void sayHello() {
         stringBuilder.setLength(ZERO.getIntvalue());
         System.out.println(SystemMessage.GREET);
     }
-
 
     public void sayTurnOff() {
         stringBuilder.setLength(ZERO.getIntvalue());
@@ -99,7 +97,7 @@ public class GameManager {
     public List<InputCommand> getCommand(List<String> inputCommands) {
         List<InputCommand> commands = new ArrayList<>();
         for (String inputCommand : inputCommands) {
-            if (this.directionCommands.contains(inputCommand)) {
+            if (this.c.getDirectionCommands().contains(inputCommand)) {
                 commands.add(getDirectionCommands(inputCommand));
                 continue;
             }
@@ -169,6 +167,7 @@ public class GameManager {
             }
             progressState = CLEAR;
         }
+
         if (progressState.equals(NOT_CLEAR)) {
             turn = plusCount(turn);
             sayTurnCount(turn);
@@ -228,6 +227,10 @@ public class GameManager {
 
     public int getCurrentStageNumber() {
         return this.currentStageNumber;
+    }
+
+    public int getFinalStageNumber() {
+        return finalStageNumber;
     }
 
     private void stageClear() {
