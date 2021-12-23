@@ -53,7 +53,7 @@ public class Stage {
         return new GameResult(convertIntArrayToStringArrayUsingSymbol(this.board.getIntBoard()));
     }
 
-    public GameResult resetStage() {
+    public GameResult resetMap() {
         this.board.reset();
         return new GameResult(this.board.getStringBoard());
     }

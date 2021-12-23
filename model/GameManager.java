@@ -1,6 +1,5 @@
 package model;
 
-import utils.Number;
 import view.GameResult;
 import view.InputCommand;
 import view.InputView;
@@ -13,27 +12,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.InputUtils.stringBuilder;
+import static utils.Number.ONE;
 import static utils.Number.ZERO;
 import static view.commands.DirectionCommand.getDirectionCommands;
+import static view.commands.StageProgress.CLEAR;
+import static view.commands.StageProgress.NOT_CLEAR;
 import static view.commands.SystemInputCommand.getSystemInputCommand;
 import static view.commands.SystemInputCommand.getSystemInputCommands;
 
 public class GameManager {
 
-    private final int zero = 0;
-    private final int one = 1;
     private final List<String> systemCommands;
     private final List<String> directionCommands;
     private final OutputView outputView = new OutputView();
     private static final InputView inputView = new InputView();
     private final GameMachine gameMachine = new GameMachine();
+    StageProgress progressState = NOT_CLEAR;
 
-    private int stageNumber = 1;
     private int turn = 0;
+    private int currentStageNumber = 1;
+    private int finalStageNumber = 5;
 
     public GameManager() {
         systemCommands = getSystemInputCommands();
         directionCommands = getDirectionCommands();
+    }
+
+    public void proceedGame() throws Exception {
+        sayHello();
+        Stage currentStage = gameMachine.getStage(currentStageNumber);
+
+        while (currentStageNumber < finalStageNumber) {
+            showMap(currentStage);
+            play(currentStage);
+            stageClear();
+        }
+        sayGoodBye();
     }
 
     public void sayHello() {
@@ -41,12 +55,6 @@ public class GameManager {
         System.out.println(SystemMessage.GREET);
     }
 
-    public void sayGoodBye() {
-        stringBuilder.setLength(ZERO.getIntvalue());
-        stringBuilder.append(SystemMessage.CLEAR_CELEBRATION).append("\n")
-                .append(SystemMessage.CELEBRATION);
-        System.out.println(stringBuilder);
-    }
 
     public void sayTurnOff() {
         stringBuilder.setLength(ZERO.getIntvalue());
@@ -101,109 +109,137 @@ public class GameManager {
     }
 
     public int plusCount(int value) {
-        return value + one;
+        return value + ONE.getIntvalue();
     }
 
     public int turnInit() {
-        return zero;
+        return ZERO.getIntvalue();
     }
 
-    public void turnOffTheGame() {
-        System.exit(one);
+    public void validateGameOff(GameResult gameResult) {
+        if (gameResult.getMessage().equals(SystemInputCommand.Q.getCommand())) {
+            sayTurnCount(turn);
+            sayTurnOff();
+            System.exit(ONE.getIntvalue());
+        }
     }
 
-    public List<StageData> getSlotData(GameMachine machine) {
-        return machine.getSlotData();
+    public List<StageData> getSlotData() {
+        return gameMachine.getSlotData();
     }
 
     public void showList(List<StageData> data) {
         data.forEach(System.out::println);
     }
 
-    public void proceedGame() throws Exception {
-        sayHello();
-
-        while (stageNumber < 5) {
-            Stage stage = gameMachine.getStage(stageNumber);
-            StageProgress currentStageProgress = StageProgress.NOT_CLEAR;
-            outputView.printBoard(stage.getBoard());
-
-            while (stage.isNotAnswer()) {
-                List<InputCommand> inputCommands = getCommand(inputView.inputCommand());
-                List<GameResult> result = gameMachine.play(stageNumber, inputCommands);
-
-                for (GameResult gameResult : result) {
-
-                    if (gameResult.getMessage().equals(SystemInputCommand.L.getCommand())) {
-                        List<StageData> data = getSlotData(gameMachine);
-
-                        showList(data);
-                        saySaveList();
-
-                        String inputStage = inputView.inputStage();
-                        int inputStageNumber = Integer.parseInt(inputStage.substring(0, 1));
-
-                        if (!data.get(inputStageNumber - 1).getName().equals("Empty")) {
-                            stage = gameMachine.loadSlotData(inputStageNumber);
-                            stageNumber = stage.getStageNumber();
-                            outputView.printBoard(stage.getBoard());
-                            turn = turnInit();
-                        } else {
-                            sayNoMap();
-                            outputView.printBoard(stage.getBoard());
-                        }
-                        break;
-                    }
-
-                    if (gameResult.getMessage().equals(SystemInputCommand.R.getCommand())) {
-                        stage.resetStage();
-                        turn = 0;
-                        sayTurnReset();
-                        outputView.printBoard(stage.getBoard());
-                        break;
-                    }
-
-                    if (gameResult.getMessage().equals(SystemInputCommand.Q.getCommand())) {
-                        sayTurnCount(turn);
-                        sayTurnOff();
-                        turnOffTheGame();
-                    }
-
-                    if (gameResult.getMessage().equals(SystemInputCommand.C.getCommand())) {
-                        saySaveComplete();
-                        stageNumber = stage.getStageNumber();
-                        gameMachine.saveStage(stageNumber);
-                        outputView.printBoard(stage.getBoard());
-                        continue;
-                    }
-
-                    if (stage.checkAnswer(gameResult.getBoard())) {
-                        if (currentStageProgress.equals(StageProgress.NOT_CLEAR)) {
-                            sayTurnClear(stageNumber);
-                            sayTurnCount(turn);
-                        }
-                        currentStageProgress = StageProgress.CLEAR;
-                    }
-
-                    if (currentStageProgress.equals(StageProgress.NOT_CLEAR)) {
-                        turn = plusCount(turn);
-                        sayTurnCount(turn);
-                        outputView.printGameResult(gameResult);
-                    }
-                }
-            }
-            stageClear();
+    private void play(Stage currentStage) throws Exception {
+        while (currentStage.isNotAnswer()) {
+            List<InputCommand> inputCommands = getCommand(inputView.inputCommand());
+            List<GameResult> results = gameMachine.play(this.currentStageNumber, inputCommands);
+            executeResult(currentStage, results);
         }
-        sayGoodBye();
     }
 
-    public int getStageNumber() {
-        return this.stageNumber;
+    private void executeResult(Stage currentStage, List<GameResult> results) {
+        for (GameResult executionResult : results) {
+            validateGameOff(executionResult);
+            if (isCommandL(executionResult)) {
+                showSavedList(currentStage);
+                break;
+            } else if (isCommandR(executionResult)) {
+                reset(currentStage);
+                break;
+            } else if (isCommandC(executionResult)) {
+                save(currentStage);
+                continue;
+            }
+            updateStageInformation(currentStage, progressState, executionResult);
+        }
     }
 
-    private void stageClear(){
+    private void showMap(Stage currentStage) {
+        outputView.printBoard(currentStage.getBoard());
+    }
+
+    private void updateStageInformation(Stage currentStage, StageProgress progressState, GameResult result) {
+        if (currentStage.checkAnswer(result.getBoard())) {
+            if (progressState.equals(NOT_CLEAR)) {
+                sayTurnClear(this.currentStageNumber);
+                sayTurnCount(turn);
+            }
+            progressState = CLEAR;
+        }
+        if (progressState.equals(NOT_CLEAR)) {
+            turn = plusCount(turn);
+            sayTurnCount(turn);
+            outputView.printGameResult(result);
+        }
+    }
+
+    private void reset(Stage stage) {
+        stage.resetMap();
+        turn = 0;
+        sayTurnReset();
+        outputView.printBoard(stage.getBoard());
+    }
+
+    private void showSavedList(Stage currentStage) {
+        List<StageData> data = showSlotList();
+
+        String inputStage = inputView.inputStage();
+        int inputStageNumber = Integer.parseInt(inputStage.substring(0, 1));
+
+        if (!data.get(inputStageNumber - 1).getName().equals("Empty")) {
+            currentStage = gameMachine.loadSlotData(inputStageNumber);
+            this.currentStageNumber = currentStage.getStageNumber();
+            outputView.printBoard(currentStage.getBoard());
+            turn = turnInit();
+        } else {
+            sayNoMap();
+            outputView.printBoard(currentStage.getBoard());
+        }
+    }
+
+    private List<StageData> showSlotList() {
+        List<StageData> data = getSlotData();
+        showList(data);
+        saySaveList();
+        return data;
+    }
+
+    private void save(Stage stage) {
+        saySaveComplete();
+        currentStageNumber = stage.getStageNumber();
+        gameMachine.saveStage(currentStageNumber);
+        outputView.printBoard(stage.getBoard());
+    }
+
+    private boolean isCommandC(GameResult gameResult) {
+        return gameResult.getMessage().equals(SystemInputCommand.C.getCommand());
+    }
+
+    private boolean isCommandR(GameResult gameResult) {
+        return gameResult.getMessage().equals(SystemInputCommand.R.getCommand());
+    }
+
+    private boolean isCommandL(GameResult gameResult) {
+        return gameResult.getMessage().equals(SystemInputCommand.L.getCommand());
+    }
+
+    public int getCurrentStageNumber() {
+        return this.currentStageNumber;
+    }
+
+    private void stageClear() {
         turn = turnInit();
-        gameMachine.clearStage(stageNumber);
-        stageNumber = plusCount(stageNumber);
+        gameMachine.clearStage(currentStageNumber);
+        currentStageNumber = plusCount(currentStageNumber);
+    }
+
+    public void sayGoodBye() {
+        stringBuilder.setLength(ZERO.getIntvalue());
+        stringBuilder.append(SystemMessage.CLEAR_CELEBRATION).append("\n")
+                .append(SystemMessage.CELEBRATION);
+        System.out.println(stringBuilder);
     }
 }

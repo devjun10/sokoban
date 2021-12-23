@@ -3,7 +3,6 @@ package model;
 import view.GameResult;
 import view.InputCommand;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class GameMachine {
@@ -34,7 +33,7 @@ public class GameMachine {
 
     public void clearStage(int stageNumber) {
         Stage stage = stages.getStage(stageNumber);
-        stage.resetStage();
+        stage.resetMap();
     }
 
     public List<StageData> getSlotData() {

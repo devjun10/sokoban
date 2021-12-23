@@ -425,25 +425,6 @@ S>  3L
 |6|`P`|&nbsp; 플레이어(Player) |&nbsp; 4|
 |7|`P`|&nbsp; 플레이어 + 구멍   |&nbsp; 5|
 
-<br/><br/><br/><br/>
-
-
-## 추가된 클래스
-
-
-|No|종류|<center>이름</center>|<center>역할 및 책임</center>|
-|:----:|:---------------:|:------|:---|
-|1|class|&nbsp;Answer               |&nbsp; 초기 Board의 상태와 다음 스테이지로 넘어갈지에 대한 정보를 담고 있는 클래스|
-|2|class|&nbsp;Disk                 |&nbsp; Init에 관련된 정보를 담고 있는 클래스                            |
-|3|class|&nbsp;Init                 |&nbsp; 각 Stage와 Sokoban 게임의 정보를 초기화하는 클래스                  |
-|4|class|&nbsp;Stage                |&nbsp; Board와 Stageinformation을 담고 있는 클래스                   |
-|5|class|&nbsp;Stages               |&nbsp; Stage들을 저장하고 있는 클래스                                 |
-|6|class|&nbsp;StageInformation     |&nbsp; 가로, 세로크기 등 Stage의 기본 정보를 담고 있는 클래스               |
-|7|class|&nbsp;StageInformationList |&nbsp; model.StageInformation 클래스들을 저장하고 있는 클래스                 |
-
-<br/><br/><br/><br/><br/>
-
-
 
 <br/><br/><br/><br/>
 
